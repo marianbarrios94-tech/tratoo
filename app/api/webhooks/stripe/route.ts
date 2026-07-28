@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { stripe } from '@/lib/stripe/server'
+import { createStripeClient } from '@/lib/stripe/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { SubscriptionStatus } from '@/lib/types/database'
 
@@ -50,6 +50,7 @@ async function syncFromSubscription(subscription: Stripe.Subscription, userId?: 
 }
 
 export async function POST(request: Request) {
+  const stripe = createStripeClient()
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 

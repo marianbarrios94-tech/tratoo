@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { stripe } from '@/lib/stripe/server'
+import { createStripeClient } from '@/lib/stripe/server'
 
 async function currentOrigin() {
   const headersList = await headers()
@@ -11,6 +11,7 @@ async function currentOrigin() {
 }
 
 export async function startCheckout(formData: FormData) {
+  const stripe = createStripeClient()
   const supabase = await createClient()
   const {
     data: { user },
@@ -67,6 +68,7 @@ export async function startCheckout(formData: FormData) {
 }
 
 export async function openBillingPortal() {
+  const stripe = createStripeClient()
   const supabase = await createClient()
   const {
     data: { user },
