@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zolvi
 
-## Getting Started
+Marketplace de servicios profesionales: conecta clientes con profesionales de
+hogar, consultoría y salud. Los profesionales se monetizan por suscripción.
 
-First, run the development server:
+Construido con Next.js 16 (App Router), React 19, Tailwind v4 y Supabase
+(auth + Postgres).
+
+## Setup
+
+### 1. Crear el proyecto de Supabase
+
+1. Entrá a [supabase.com](https://supabase.com) y creá una cuenta / iniciá sesión.
+2. Creá un proyecto nuevo (elegí una región cercana y una contraseña de base de datos).
+3. Andá a **Settings → API** y copiá el **Project URL** y la **anon public key**.
+
+### 2. Variables de entorno
+
+Copiá `.env.local.example` a `.env.local` y completá los valores:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.local.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+NEXT_PUBLIC_SUPABASE_URL=<tu Project URL>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<tu anon public key>
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Correr la migración de base de datos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Si el proyecto de Supabase es nuevo y vacío, andá directo al paso siguiente.
+Si es un proyecto reciclado que ya tenía tablas de un intento anterior,
+corré primero [`supabase/migrations/0000_reset_legacy_fixnow.sql`](supabase/migrations/0000_reset_legacy_fixnow.sql)
+en el SQL Editor para limpiarlas.
 
-## Learn More
+Después, corré en orden los archivos de `supabase/migrations/` que falten en tu
+proyecto (`0001_init.sql`, y a medida que se agreguen, los siguientes como
+`0002_profiles_visible_to_related_professional.sql`). Cada uno se pega entero en
+el SQL Editor y se ejecuta una sola vez.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Instalar dependencias y correr
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Abrí [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+## Estructura relevante
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `app/page.tsx` — landing pública con las tres verticales y los planes.
+- `app/(auth)/` — login, registro (con selector de rol) y server actions de auth.
+- `app/auth/callback/route.ts` — confirmación de email de Supabase.
+- `app/panel/` — dashboard de profesionales (protegido por `middleware.ts`).
+- `app/cuenta/` — dashboard de clientes (protegido por `middleware.ts`).
+- `lib/supabase/` — clientes de Supabase para browser, server components y middleware.
+- `lib/types/database.ts` — tipos manuales de la base (reemplazar con
+  `npx supabase gen types typescript` cuando el esquema esté estable).
+- `supabase/migrations/` — SQL versionado del esquema.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Roadmap
+
+- **Fase 2** — directorio público de profesionales + búsqueda por categoría/ciudad.
+- **Fase 3** — flujo de solicitud/reserva entre cliente y profesional.
+- **Fase 4** — suscripciones reales con Stripe (checkout, webhook, portal).
+- **Fase 5** — reseñas y pulido general.
+
+## Comandos
+
+```bash
+npm run dev     # desarrollo
+npm run build   # build de producción
+npm run lint    # eslint
+```

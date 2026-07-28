@@ -1,0 +1,101 @@
+'use server'
+
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import type { RequestStatus } from '@/lib/types/database'
+
+async function transition(
+  formData: FormData,
+  allowedFrom: RequestStatus[],
+  to: RequestStatus,
+  side: 'client' | 'professional'
+) {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  const requestId = formData.get('request_id') as string
+  const redirectTo = (formData.get('redirect_to') as string) || '/'
+
+  if (!user) {
+    redirect('/login')
+  }
+
+  const { data: request } = await supabase
+    .from('service_requests')
+    .select('id, status, client_id, professional_id')
+    .eq('id', requestId)
+    .maybeSingle()
+
+  const ownerId = side === 'client' ? request?.client_id : request?.professional_id
+
+  if (!request || ownerId !== user.id || !allowedFrom.includes(request.status)) {
+    redirect(`${redirectTo}?error=${encodeURIComponent('No se pudo actualizar la solicitud')}`)
+  }
+
+  const { error } = await supabase
+    .from('service_requests')
+    .update({ status: to })
+    .eq('id', requestId)
+
+  if (error) {
+    redirect(`${redirectTo}?error=${encodeURIComponent(error.message)}`)
+  }
+
+  redirect(redirectTo)
+}
+
+export async function acceptRequest(formData: FormData) {
+  await transition(formData, ['pending'], 'accepted', 'professional')
+}
+
+export async function rejectRequest(formData: FormData) {
+  await transition(formData, ['pending'], 'cancelled', 'professional')
+}
+
+export async function completeRequest(formData: FormData) {
+  await transition(formData, ['accepted'], 'completed', 'professional')
+}
+
+export async function cancelRequest(formData: FormData) {
+  await transition(formData, ['pending'], 'cancelled', 'client')
+}
+
+export async function leaveReview(formData: FormData) {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/login')
+  }
+
+  const requestId = formData.get('request_id') as string
+  const rating = Number(formData.get('rating'))
+  const comment = formData.get('comment') as string
+
+  const { data: request } = await supabase
+    .from('service_requests')
+    .select('id, status, client_id, professional_id')
+    .eq('id', requestId)
+    .maybeSingle()
+
+  if (!request || request.client_id !== user.id || request.status !== 'completed') {
+    redirect(`/cuenta/solicitudes?error=${encodeURIComponent('No se pudo dejar la reseña')}`)
+  }
+
+  const { error } = await supabase.from('reviews').insert({
+    request_id: requestId,
+    professional_id: request.professional_id,
+    rating,
+    comment: comment || null,
+  })
+
+  if (error) {
+    redirect(`/cuenta/solicitudes?error=${encodeURIComponent(error.message)}`)
+  }
+
+  redirect('/cuenta/solicitudes?message=¡Gracias por tu reseña!')
+}
