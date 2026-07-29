@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { starString } from '@/lib/rating'
+import { BackButton } from '@/components/BackButton'
 
 export default async function ProfesionalDetallePage({
   params,
@@ -51,9 +52,7 @@ export default async function ProfesionalDetallePage({
 
   return (
     <div className="mx-auto w-full max-w-2xl px-6 py-10">
-      <Link href="/profesionales" className="text-sm text-zinc-500 hover:underline">
-        ← Volver al directorio
-      </Link>
+      <BackButton label="← Volver al directorio" fallbackHref="/profesionales" />
 
       <div className="mt-4 flex items-start justify-between gap-2">
         <h1 className="text-2xl font-semibold">{professional.business_name}</h1>
