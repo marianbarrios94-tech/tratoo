@@ -15,11 +15,18 @@ export async function login(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) {
     redirect(`/login?error=${encodeURIComponent(error.message)}`)
   }
-  redirect('/')
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', data.user.id)
+    .maybeSingle()
+
+  redirect(profile?.role === 'professional' || profile?.role === 'admin' ? '/panel' : '/cuenta')
 }
 
 export async function signup(formData: FormData) {
@@ -41,7 +48,7 @@ export async function signup(formData: FormData) {
     redirect(`/registro?error=${encodeURIComponent(error.message)}`)
   }
   if (data.session) {
-    redirect('/')
+    redirect(role === 'professional' ? '/panel' : '/cuenta')
   }
   redirect('/login?message=Revisá tu email para confirmar la cuenta')
 }

@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { VERTICALS, CATEGORIES_BY_VERTICAL } from '@/lib/constants/categories'
+import { createClient } from '@/lib/supabase/server'
+import { logout } from '@/app/(auth)/actions'
 
 const PLANS = [
   {
@@ -27,7 +29,19 @@ const PLANS = [
   },
 ]
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  const { data: profile } = user
+    ? await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle()
+    : { data: null }
+
+  const dashboardHref =
+    profile?.role === 'professional' || profile?.role === 'admin' ? '/panel' : '/cuenta'
+
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
@@ -39,15 +53,39 @@ export default function Home() {
           >
             Ver profesionales
           </Link>
-          <Link href="/login" className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white">
-            Iniciar sesión
-          </Link>
-          <Link
-            href="/registro"
-            className="rounded-full bg-zinc-950 px-4 py-2 text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
-          >
-            Registrarme
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href={dashboardHref}
+                className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+              >
+                Mi cuenta
+              </Link>
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="rounded-full bg-zinc-950 px-4 py-2 text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+                >
+                  Cerrar sesión
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+              >
+                Iniciar sesión
+              </Link>
+              <Link
+                href="/registro"
+                className="rounded-full bg-zinc-950 px-4 py-2 text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+              >
+                Registrarme
+              </Link>
+            </>
+          )}
         </nav>
       </header>
 
@@ -61,18 +99,29 @@ export default function Home() {
             en un solo lugar.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/registro?role=client"
-              className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
-            >
-              Buscar un profesional
-            </Link>
-            <Link
-              href="/registro?role=professional"
-              className="rounded-full border border-zinc-300 px-6 py-3 font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
-            >
-              Ofrecer mis servicios
-            </Link>
+            {user ? (
+              <Link
+                href={dashboardHref}
+                className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+              >
+                Ir a mi cuenta
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/registro?role=client"
+                  className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+                >
+                  Buscar un profesional
+                </Link>
+                <Link
+                  href="/registro?role=professional"
+                  className="rounded-full border border-zinc-300 px-6 py-3 font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
+                >
+                  Ofrecer mis servicios
+                </Link>
+              </>
+            )}
           </div>
         </section>
 
