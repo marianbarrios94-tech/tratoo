@@ -25,7 +25,32 @@ cp .env.local.example .env.local
 ```
 NEXT_PUBLIC_SUPABASE_URL=<tu Project URL>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<tu anon public key>
+SUPABASE_SERVICE_ROLE_KEY=<Settings → API → service_role secret>
+STRIPE_SECRET_KEY=<Developers → API keys → Secret key, sk_test_...>
+STRIPE_WEBHOOK_SECRET=<ver sección de Stripe más abajo>
 ```
+
+`SUPABASE_SERVICE_ROLE_KEY` bypasea RLS — la usa únicamente el webhook de
+Stripe (`app/api/webhooks/stripe/route.ts`), nunca código que corre en el
+browser.
+
+### Stripe
+
+1. Creá cuenta en [stripe.com](https://stripe.com) (modo test).
+2. Creá un producto + precio recurrente mensual en Stripe por cada fila de
+   `subscription_plans` y completá su `stripe_price_id` (ver
+   [`supabase/migrations/0003_stripe_price_ids.sql`](supabase/migrations/0003_stripe_price_ids.sql)
+   como referencia del formato).
+3. Para desarrollo local, instalá la [Stripe CLI](https://github.com/stripe/stripe-cli/releases/latest),
+   corré `stripe login` y dejá corriendo
+   `stripe listen --forward-to localhost:3000/api/webhooks/stripe` — te va a
+   imprimir el `whsec_...` para `STRIPE_WEBHOOK_SECRET` local.
+4. Para producción, creá un webhook endpoint en el Dashboard de Stripe (o vía
+   API) apuntando a `https://<tu-dominio>/api/webhooks/stripe`, con los
+   eventos `checkout.session.completed`, `customer.subscription.updated` y
+   `customer.subscription.deleted`. Ese endpoint tiene su **propio**
+   `whsec_...`, distinto al de la CLI — va en `STRIPE_WEBHOOK_SECRET` del
+   entorno de producción (Vercel), no en `.env.local`.
 
 ### 3. Correr la migración de base de datos
 
@@ -48,24 +73,51 @@ npm run dev
 
 Abrí [http://localhost:3000](http://localhost:3000).
 
+## Deploy (Vercel)
+
+1. Importá el repo en [vercel.com](https://vercel.com) (Add New → Project).
+2. Cargá las 5 variables de entorno de arriba en Settings → Environment
+   Variables antes (o después, con un redeploy) del primer deploy.
+3. Una vez que tengas la URL de producción, creá el webhook endpoint de
+   Stripe de producción (ver sección de Stripe arriba) apuntando a esa URL,
+   y cargá su `whsec_...` en `STRIPE_WEBHOOK_SECRET` — después hay que
+   redesplegar para que tome el valor nuevo.
+
+Sitio en producción: https://zolvi-iota.vercel.app
+
+## CI
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) corre `npm run lint` y
+`npm run build` en cada push. El build no depende de que existan las
+variables de entorno (los clientes de Supabase y Stripe se instancian de
+forma diferida, no al importar el módulo), así que pasa igual sin secretos
+configurados en el repo.
+
 ## Estructura relevante
 
 - `app/page.tsx` — landing pública con las tres verticales y los planes.
 - `app/(auth)/` — login, registro (con selector de rol) y server actions de auth.
 - `app/auth/callback/route.ts` — confirmación de email de Supabase.
-- `app/panel/` — dashboard de profesionales (protegido por `middleware.ts`).
-- `app/cuenta/` — dashboard de clientes (protegido por `middleware.ts`).
-- `lib/supabase/` — clientes de Supabase para browser, server components y middleware.
+- `app/panel/` — dashboard de profesionales (protegido por `proxy.ts`).
+- `app/cuenta/` — dashboard de clientes (protegido por `proxy.ts`).
+- `app/profesionales/` — directorio público, detalle y flujo de solicitud.
+- `app/solicitudes/actions.ts` — transiciones de estado de `service_requests`
+  compartidas entre `/panel/solicitudes` y `/cuenta/solicitudes`.
+- `app/api/webhooks/stripe/route.ts` — sincroniza suscripciones desde Stripe.
+- `lib/supabase/` — clientes de Supabase para browser, server components,
+  proxy (`proxy.ts`, refresca la sesión) y admin (service role, solo webhook).
+- `lib/stripe/server.ts` — `createStripeClient()`, instanciado bajo demanda.
 - `lib/types/database.ts` — tipos manuales de la base (reemplazar con
   `npx supabase gen types typescript` cuando el esquema esté estable).
-- `supabase/migrations/` — SQL versionado del esquema.
+- `supabase/migrations/` — SQL versionado del esquema, en orden.
 
 ## Roadmap
 
-- **Fase 2** — directorio público de profesionales + búsqueda por categoría/ciudad.
-- **Fase 3** — flujo de solicitud/reserva entre cliente y profesional.
-- **Fase 4** — suscripciones reales con Stripe (checkout, webhook, portal).
-- **Fase 5** — reseñas y pulido general.
+- ✅ **Fase 1** — auth con roles, esquema, landing.
+- ✅ **Fase 2** — directorio público de profesionales + búsqueda por categoría/ciudad.
+- ✅ **Fase 3** — flujo de solicitud/reserva entre cliente y profesional.
+- ✅ **Fase 4** — suscripciones reales con Stripe (checkout, webhook, portal).
+- ✅ **Fase 5** — reseñas y pulido general.
 
 ## Comandos
 
