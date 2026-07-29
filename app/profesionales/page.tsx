@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { starString } from '@/lib/rating'
+import { BackButton } from '@/components/BackButton'
 
 export default async function ProfesionalesPage({
   searchParams,
@@ -44,7 +45,8 @@ export default async function ProfesionalesPage({
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-10">
-      <div>
+      <BackButton />
+      <div className="mt-4">
         <h1 className="text-2xl font-semibold">Directorio de profesionales</h1>
         <p className="mt-1 text-zinc-500">Encontrá al profesional que resuelve.</p>
       </div>

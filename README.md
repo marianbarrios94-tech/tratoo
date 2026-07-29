@@ -28,11 +28,21 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<tu anon public key>
 SUPABASE_SERVICE_ROLE_KEY=<Settings → API → service_role secret>
 STRIPE_SECRET_KEY=<Developers → API keys → Secret key, sk_test_...>
 STRIPE_WEBHOOK_SECRET=<ver sección de Stripe más abajo>
+RESEND_API_KEY=<Developers → API Keys en resend.com>
 ```
 
 `SUPABASE_SERVICE_ROLE_KEY` bypasea RLS — la usa únicamente el webhook de
-Stripe (`app/api/webhooks/stripe/route.ts`), nunca código que corre en el
-browser.
+Stripe (`app/api/webhooks/stripe/route.ts`) y las notificaciones por email
+(`lib/email/notify.ts`), nunca código que corre en el browser.
+
+### Resend (notificaciones por email)
+
+Sin un dominio propio verificado en [resend.com/domains](https://resend.com/domains),
+el remitente queda fijo en `onboarding@resend.dev` y Resend solo entrega a la
+casilla con la que se creó la cuenta — no a usuarios reales. Es el modo por
+defecto mientras no haya dominio; cuando lo haya, verificarlo en Resend y
+cambiar el `from` en `lib/email/notify.ts` activa el envío real a todos, sin
+tocar el resto del código.
 
 ### Stripe
 
@@ -105,8 +115,11 @@ configurados en el repo.
   compartidas entre `/panel/solicitudes` y `/cuenta/solicitudes`.
 - `app/api/webhooks/stripe/route.ts` — sincroniza suscripciones desde Stripe.
 - `lib/supabase/` — clientes de Supabase para browser, server components,
-  proxy (`proxy.ts`, refresca la sesión) y admin (service role, solo webhook).
+  proxy (`proxy.ts`, refresca la sesión) y admin (service role, solo webhook
+  y notificaciones).
 - `lib/stripe/server.ts` — `createStripeClient()`, instanciado bajo demanda.
+- `lib/email/notify.ts` — notificaciones por email (nueva solicitud al
+  profesional; cambio de estado al cliente), best-effort vía Resend.
 - `lib/types/database.ts` — tipos manuales de la base (reemplazar con
   `npx supabase gen types typescript` cuando el esquema esté estable).
 - `supabase/migrations/` — SQL versionado del esquema, en orden.

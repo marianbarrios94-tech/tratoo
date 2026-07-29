@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { notifyNewRequest } from '@/lib/email/notify'
 
 export async function createServiceRequest(formData: FormData) {
   const supabase = await createClient()
@@ -32,6 +33,18 @@ export async function createServiceRequest(formData: FormData) {
       `/profesionales/${professionalId}/solicitar?error=${encodeURIComponent(error.message)}`
     )
   }
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', user.id)
+    .maybeSingle()
+
+  await notifyNewRequest({
+    professionalId,
+    clientName: profile?.full_name ?? 'Un cliente',
+    message: message || null,
+  })
 
   redirect('/cuenta/solicitudes?message=Solicitud enviada')
 }

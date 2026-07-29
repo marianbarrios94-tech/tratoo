@@ -20,7 +20,16 @@ export default async function CuentaPage() {
         <p className="mt-1 text-zinc-500">Este es tu espacio como cliente en Zolvi.</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Link
+          href="/cuenta/perfil"
+          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+        >
+          <h2 className="font-medium">Tu perfil</h2>
+          <p className="mt-1 text-sm text-zinc-500">
+            Editá tu nombre, teléfono y ciudad.
+          </p>
+        </Link>
         <Link
           href="/profesionales"
           className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"

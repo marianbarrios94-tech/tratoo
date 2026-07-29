@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { signup } from '../actions'
+import { BackButton } from '@/components/BackButton'
 
 export default async function RegistroPage({
   searchParams,
@@ -12,7 +13,8 @@ export default async function RegistroPage({
   return (
     <div className="flex flex-1 items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold">Creá tu cuenta en Zolvi</h1>
+        <BackButton />
+        <h1 className="mt-4 text-2xl font-semibold">Creá tu cuenta en Zolvi</h1>
 
         {error && (
           <p className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>

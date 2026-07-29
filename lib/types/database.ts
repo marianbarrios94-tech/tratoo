@@ -18,6 +18,7 @@ export interface Database {
           avatar_url: string | null
           phone: string | null
           city: string | null
+          email: string | null
           created_at: string
         }
         Insert: {
@@ -27,6 +28,7 @@ export interface Database {
           avatar_url?: string | null
           phone?: string | null
           city?: string | null
+          email?: string | null
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['profiles']['Insert']>

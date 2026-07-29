@@ -3,12 +3,14 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import type { RequestStatus } from '@/lib/types/database'
+import { notifyRequestStatusChange } from '@/lib/email/notify'
 
 async function transition(
   formData: FormData,
   allowedFrom: RequestStatus[],
   to: RequestStatus,
-  side: 'client' | 'professional'
+  side: 'client' | 'professional',
+  notifyClient = false
 ) {
   const supabase = await createClient()
   const {
@@ -43,19 +45,33 @@ async function transition(
     redirect(`${redirectTo}?error=${encodeURIComponent(error.message)}`)
   }
 
+  if (notifyClient) {
+    const { data: professionalProfile } = await supabase
+      .from('professional_profiles')
+      .select('business_name')
+      .eq('user_id', user.id)
+      .maybeSingle()
+
+    await notifyRequestStatusChange({
+      clientId: request.client_id,
+      professionalName: professionalProfile?.business_name ?? 'Un profesional',
+      status: to,
+    })
+  }
+
   redirect(redirectTo)
 }
 
 export async function acceptRequest(formData: FormData) {
-  await transition(formData, ['pending'], 'accepted', 'professional')
+  await transition(formData, ['pending'], 'accepted', 'professional', true)
 }
 
 export async function rejectRequest(formData: FormData) {
-  await transition(formData, ['pending'], 'cancelled', 'professional')
+  await transition(formData, ['pending'], 'cancelled', 'professional', true)
 }
 
 export async function completeRequest(formData: FormData) {
-  await transition(formData, ['accepted'], 'completed', 'professional')
+  await transition(formData, ['accepted'], 'completed', 'professional', true)
 }
 
 export async function cancelRequest(formData: FormData) {
