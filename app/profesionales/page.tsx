@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { starString } from '@/lib/rating'
+import { stripAccents } from '@/lib/text'
 import { BackButton } from '@/components/BackButton'
 
 export default async function ProfesionalesPage({
@@ -38,7 +39,7 @@ export default async function ProfesionalesPage({
     query = query.in('category_id', categoryIds)
   }
   if (ciudad) {
-    query = query.ilike('city', `%${ciudad}%`)
+    query = query.ilike('city_unaccent', `%${stripAccents(ciudad)}%`)
   }
 
   const { data: professionals } = await query

@@ -79,6 +79,7 @@ export interface Database {
           business_name: string | null
           bio: string | null
           city: string | null
+          city_unaccent: string | null
           years_experience: number | null
           verified: boolean
           subscription_plan_id: string | null
