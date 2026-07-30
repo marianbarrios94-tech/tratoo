@@ -1,13 +1,17 @@
 import Link from 'next/link'
 import { logout } from '@/app/(auth)/actions'
+import { BackButton } from '@/components/BackButton'
 
 export default function CuentaLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-1 flex-col">
       <header className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-        <Link href="/" className="text-lg font-semibold">
-          Zolvi
-        </Link>
+        <div className="flex items-center gap-4">
+          <BackButton fallbackHref="/cuenta" />
+          <Link href="/" className="text-lg font-semibold">
+            Zolvi
+          </Link>
+        </div>
         <nav className="flex items-center gap-4 text-sm">
           <Link
             href="/cuenta"
