@@ -58,7 +58,13 @@ export default async function LoginPage({
           </button>
         </form>
 
-        <p className="mt-6 text-sm text-zinc-500">
+        <p className="mt-4 text-sm text-zinc-500">
+          <Link href="/olvide-contrasena" className="font-medium text-zinc-950 underline dark:text-zinc-50">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </p>
+
+        <p className="mt-2 text-sm text-zinc-500">
           ¿No tenés cuenta?{' '}
           <Link href="/registro" className="font-medium text-zinc-950 underline dark:text-zinc-50">
             Registrate

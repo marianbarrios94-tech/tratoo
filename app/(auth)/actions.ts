@@ -50,7 +50,40 @@ export async function signup(formData: FormData) {
   if (data.session) {
     redirect(role === 'professional' ? '/panel' : '/cuenta')
   }
-  redirect('/login?message=Revisá tu email para confirmar la cuenta')
+  redirect(`/login?message=${encodeURIComponent('Revisá tu email para confirmar la cuenta')}`)
+}
+
+export async function requestPasswordReset(formData: FormData) {
+  const supabase = await createClient()
+  const email = formData.get('email') as string
+
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${await currentOrigin()}/auth/callback?next=/actualizar-contrasena`,
+  })
+
+  redirect(
+    `/login?message=${encodeURIComponent('Si el email existe, te enviamos instrucciones para restablecer tu contraseña')}`
+  )
+}
+
+export async function updatePassword(formData: FormData) {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect(`/login?error=${encodeURIComponent('El enlace expiró, solicitá uno nuevo')}`)
+  }
+
+  const password = formData.get('password') as string
+
+  const { error } = await supabase.auth.updateUser({ password })
+  if (error) {
+    redirect(`/actualizar-contrasena?error=${encodeURIComponent(error.message)}`)
+  }
+
+  redirect(`/login?message=${encodeURIComponent('Contraseña actualizada, iniciá sesión')}`)
 }
 
 export async function logout() {

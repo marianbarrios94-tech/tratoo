@@ -19,7 +19,7 @@ export default async function SolicitarPage({
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect('/login?message=Iniciá sesión para solicitar un servicio')
+    redirect(`/login?message=${encodeURIComponent('Iniciá sesión para solicitar un servicio')}`)
   }
 
   if (user.id === id) {

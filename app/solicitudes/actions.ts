@@ -113,5 +113,5 @@ export async function leaveReview(formData: FormData) {
     redirect(`/cuenta/solicitudes?error=${encodeURIComponent(error.message)}`)
   }
 
-  redirect('/cuenta/solicitudes?message=¡Gracias por tu reseña!')
+  redirect(`/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña!')}`)
 }
