@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { starString } from '@/lib/rating'
+import { ACTIVE_SUBSCRIPTION_STATUSES } from '@/lib/constants/subscriptions'
 import { BackButton } from '@/components/BackButton'
 
 export default async function ProfesionalDetallePage({
@@ -27,6 +28,12 @@ export default async function ProfesionalDetallePage({
     data: { user },
   } = await supabase.auth.getUser()
 
+  const isOwnProfile = user?.id === id
+
+  if (!isOwnProfile && !ACTIVE_SUBSCRIPTION_STATUSES.includes(professional.subscription_status)) {
+    notFound()
+  }
+
   const [{ data: category }, { data: profile }, { data: viewerProfile }] = await Promise.all([
     professional.category_id
       ? supabase
@@ -41,7 +48,6 @@ export default async function ProfesionalDetallePage({
       : Promise.resolve({ data: null }),
   ])
 
-  const isOwnProfile = user?.id === id
   const canRequest = Boolean(user) && !isOwnProfile && viewerProfile?.role !== 'professional'
 
   const { data: reviews } = await supabase
@@ -85,7 +91,14 @@ export default async function ProfesionalDetallePage({
       )}
 
       {isOwnProfile ? (
-        <p className="mt-8 text-sm text-zinc-500">Este es tu perfil público.</p>
+        <div className="mt-8">
+          <p className="text-sm text-zinc-500">Este es tu perfil público.</p>
+          {!ACTIVE_SUBSCRIPTION_STATUSES.includes(professional.subscription_status) && (
+            <p className="mt-2 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
+              No aparece en el directorio porque no tenés una suscripción activa.
+            </p>
+          )}
+        </div>
       ) : viewerProfile?.role === 'professional' ? (
         <p className="mt-8 text-sm text-zinc-500">
           Los profesionales no pueden solicitar servicios a otros profesionales.

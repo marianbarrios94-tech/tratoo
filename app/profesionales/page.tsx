@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { starString } from '@/lib/rating'
 import { stripAccents } from '@/lib/text'
+import { ACTIVE_SUBSCRIPTION_STATUSES } from '@/lib/constants/subscriptions'
 import { BackButton } from '@/components/BackButton'
 
 export default async function ProfesionalesPage({
@@ -32,6 +33,7 @@ export default async function ProfesionalesPage({
     .from('professional_profiles')
     .select('*')
     .not('business_name', 'is', null)
+    .in('subscription_status', ACTIVE_SUBSCRIPTION_STATUSES)
     .order('verified', { ascending: false })
     .order('avg_rating', { ascending: false })
 

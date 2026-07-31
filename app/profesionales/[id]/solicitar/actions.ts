@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { notifyNewRequest } from '@/lib/email/notify'
+import { ACTIVE_SUBSCRIPTION_STATUSES } from '@/lib/constants/subscriptions'
 
 export async function createServiceRequest(formData: FormData) {
   const supabase = await createClient()
@@ -18,6 +19,16 @@ export async function createServiceRequest(formData: FormData) {
   const categoryId = formData.get('category_id') as string
   const message = formData.get('message') as string
   const scheduledAt = formData.get('scheduled_at') as string
+
+  const { data: professional } = await supabase
+    .from('professional_profiles')
+    .select('subscription_status')
+    .eq('user_id', professionalId)
+    .maybeSingle()
+
+  if (!professional || !ACTIVE_SUBSCRIPTION_STATUSES.includes(professional.subscription_status)) {
+    redirect('/profesionales')
+  }
 
   const { error } = await supabase.from('service_requests').insert({
     client_id: user.id,

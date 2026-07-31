@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { hasActiveSubscription } from '@/lib/constants/subscriptions'
 import { startCheckout, openBillingPortal } from './actions'
 
 const STATUS_LABEL: Record<string, string> = {
@@ -30,8 +31,7 @@ export default async function SuscripcionPage({
     supabase.from('subscription_plans').select('*').order('price_monthly'),
   ])
 
-  const hasActiveSubscription =
-    professional?.subscription_status === 'active' || professional?.subscription_status === 'trialing'
+  const isSubscribed = hasActiveSubscription(professional?.subscription_status)
 
   return (
     <div className="flex flex-col gap-6">
@@ -57,7 +57,7 @@ export default async function SuscripcionPage({
 
       <div className="grid gap-4 sm:grid-cols-3">
         {(plans ?? []).map((plan) => {
-          const isCurrent = plan.id === professional?.subscription_plan_id && hasActiveSubscription
+          const isCurrent = plan.id === professional?.subscription_plan_id && isSubscribed
           return (
             <div
               key={plan.id}

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createServiceRequest } from './actions'
+import { ACTIVE_SUBSCRIPTION_STATUSES } from '@/lib/constants/subscriptions'
 import { BackButton } from '@/components/BackButton'
 
 export default async function SolicitarPage({
@@ -38,12 +39,12 @@ export default async function SolicitarPage({
 
   const { data: professional } = await supabase
     .from('professional_profiles')
-    .select('business_name, category_id')
+    .select('business_name, category_id, subscription_status')
     .eq('user_id', id)
     .not('business_name', 'is', null)
     .maybeSingle()
 
-  if (!professional) {
+  if (!professional || !ACTIVE_SUBSCRIPTION_STATUSES.includes(professional.subscription_status)) {
     redirect('/profesionales')
   }
 
