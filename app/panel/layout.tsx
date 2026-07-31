@@ -19,6 +19,12 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
           >
             Panel
           </Link>
+          <Link
+            href="/cuenta"
+            className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+          >
+            Cuenta de cliente
+          </Link>
           <form action={logout}>
             <button
               type="submit"

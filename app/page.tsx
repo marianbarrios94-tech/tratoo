@@ -42,10 +42,7 @@ export default async function Home() {
   const dashboardHref =
     profile?.role === 'professional' || profile?.role === 'admin' ? '/panel' : '/cuenta'
 
-  const planHref =
-    user && (profile?.role === 'professional' || profile?.role === 'admin')
-      ? '/panel/suscripcion'
-      : '/registro?role=professional'
+  const planHref = user ? '/panel/suscripcion' : '/registro?role=professional'
 
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
@@ -105,12 +102,22 @@ export default async function Home() {
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             {user ? (
-              <Link
-                href={dashboardHref}
-                className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
-              >
-                Ir a mi cuenta
-              </Link>
+              <>
+                <Link
+                  href={dashboardHref}
+                  className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+                >
+                  Ir a mi cuenta
+                </Link>
+                {dashboardHref !== '/panel' && (
+                  <Link
+                    href="/panel"
+                    className="rounded-full border border-zinc-300 px-6 py-3 font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
+                  >
+                    Ofrecer mis servicios
+                  </Link>
+                )}
+              </>
             ) : (
               <>
                 <Link

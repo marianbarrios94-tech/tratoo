@@ -19,6 +19,12 @@ export default function CuentaLayout({ children }: { children: React.ReactNode }
           >
             Mi cuenta
           </Link>
+          <Link
+            href="/panel"
+            className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+          >
+            Ofrecer mis servicios
+          </Link>
           <form action={logout}>
             <button
               type="submit"

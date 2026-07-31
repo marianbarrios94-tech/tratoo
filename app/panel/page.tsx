@@ -88,6 +88,15 @@ export default async function PanelPage() {
               : 'Elegí un plan para aparecer en el directorio.'}
           </p>
         </Link>
+        <Link
+          href="/cuenta"
+          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+        >
+          <h2 className="font-medium">Cuenta de cliente</h2>
+          <p className="mt-1 text-sm text-zinc-500">
+            Buscá profesionales y seguí tus propias solicitudes.
+          </p>
+        </Link>
       </div>
     </div>
   )

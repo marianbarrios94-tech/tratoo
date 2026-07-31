@@ -27,16 +27,6 @@ export default async function SolicitarPage({
     redirect(`/profesionales/${id}`)
   }
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  if (profile?.role === 'professional') {
-    redirect(`/profesionales/${id}`)
-  }
-
   const { data: professional } = await supabase
     .from('professional_profiles')
     .select('business_name, category_id, subscription_status')

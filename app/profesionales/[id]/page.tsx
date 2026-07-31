@@ -34,7 +34,7 @@ export default async function ProfesionalDetallePage({
     notFound()
   }
 
-  const [{ data: category }, { data: profile }, { data: viewerProfile }] = await Promise.all([
+  const [{ data: category }, { data: profile }] = await Promise.all([
     professional.category_id
       ? supabase
           .from('categories')
@@ -43,12 +43,9 @@ export default async function ProfesionalDetallePage({
           .maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('profiles').select('full_name').eq('id', id).maybeSingle(),
-    user
-      ? supabase.from('profiles').select('role').eq('id', user.id).single()
-      : Promise.resolve({ data: null }),
   ])
 
-  const canRequest = Boolean(user) && !isOwnProfile && viewerProfile?.role !== 'professional'
+  const canRequest = Boolean(user) && !isOwnProfile
 
   const { data: reviews } = await supabase
     .from('reviews')
@@ -99,10 +96,6 @@ export default async function ProfesionalDetallePage({
             </p>
           )}
         </div>
-      ) : viewerProfile?.role === 'professional' ? (
-        <p className="mt-8 text-sm text-zinc-500">
-          Los profesionales no pueden solicitar servicios a otros profesionales.
-        </p>
       ) : (
         <Link
           href={

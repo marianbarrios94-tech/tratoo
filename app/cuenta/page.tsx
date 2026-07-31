@@ -46,6 +46,15 @@ export default async function CuentaPage() {
           <h2 className="font-medium">Tus solicitudes</h2>
           <p className="mt-1 text-sm text-zinc-500">Seguí el estado de tus pedidos de servicio.</p>
         </Link>
+        <Link
+          href="/panel"
+          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+        >
+          <h2 className="font-medium">Ofrecer tus servicios</h2>
+          <p className="mt-1 text-sm text-zinc-500">
+            Completá tu perfil profesional y elegí un plan.
+          </p>
+        </Link>
       </div>
     </div>
   )
