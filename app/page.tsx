@@ -42,6 +42,11 @@ export default async function Home() {
   const dashboardHref =
     profile?.role === 'professional' || profile?.role === 'admin' ? '/panel' : '/cuenta'
 
+  const planHref =
+    user && (profile?.role === 'professional' || profile?.role === 'admin')
+      ? '/panel/suscripcion'
+      : '/registro?role=professional'
+
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
@@ -156,9 +161,10 @@ export default async function Home() {
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             {PLANS.map((plan) => (
-              <div
+              <Link
                 key={plan.slug}
-                className={`rounded-2xl border p-6 ${
+                href={planHref}
+                className={`rounded-2xl border p-6 transition-colors hover:border-zinc-400 dark:hover:border-zinc-600 ${
                   plan.highlighted
                     ? 'border-zinc-950 dark:border-white'
                     : 'border-zinc-200 dark:border-zinc-800'
@@ -174,7 +180,10 @@ export default async function Home() {
                     <li key={f}>· {f}</li>
                   ))}
                 </ul>
-              </div>
+                <span className="mt-4 inline-block text-sm font-medium underline">
+                  Suscribirme
+                </span>
+              </Link>
             ))}
           </div>
         </section>
