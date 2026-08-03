@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createStripeClient } from '@/lib/stripe/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { hasActiveSubscription } from '@/lib/constants/subscriptions'
 import type { SubscriptionStatus } from '@/lib/types/database'
+
+const VERIFIED_PLAN_SLUGS = ['pro', 'premium']
 
 function mapStatus(status: Stripe.Subscription.Status): SubscriptionStatus {
   switch (status) {
@@ -26,17 +29,20 @@ async function syncFromSubscription(subscription: Stripe.Subscription, userId?: 
   const { data: plan } = priceId
     ? await supabase
         .from('subscription_plans')
-        .select('id')
+        .select('id, slug')
         .eq('stripe_price_id', priceId)
         .maybeSingle()
     : { data: null }
 
+  const status = mapStatus(subscription.status)
+
   const update = {
-    subscription_status: mapStatus(subscription.status),
+    subscription_status: status,
     subscription_plan_id: plan?.id ?? null,
     stripe_subscription_id: subscription.id,
     stripe_customer_id:
       typeof subscription.customer === 'string' ? subscription.customer : subscription.customer.id,
+    verified: hasActiveSubscription(status) && VERIFIED_PLAN_SLUGS.includes(plan?.slug ?? ''),
   }
 
   if (userId) {
@@ -84,7 +90,7 @@ export async function POST(request: Request) {
       const supabase = createAdminClient()
       await supabase
         .from('professional_profiles')
-        .update({ subscription_status: 'canceled' })
+        .update({ subscription_status: 'canceled', verified: false })
         .eq('stripe_subscription_id', subscription.id)
       break
     }
