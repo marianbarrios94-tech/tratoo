@@ -197,7 +197,18 @@ export default async function Home() {
       </main>
 
       <footer className="border-t border-zinc-200 py-8 text-center text-sm text-zinc-500 dark:border-zinc-800">
-        © {new Date().getFullYear()} Zolvi
+        <p>© {new Date().getFullYear()} Zolvi</p>
+        <nav className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <Link href="/terminos" className="hover:text-zinc-950 dark:hover:text-white">
+            Términos y condiciones
+          </Link>
+          <Link href="/privacidad" className="hover:text-zinc-950 dark:hover:text-white">
+            Privacidad
+          </Link>
+          <Link href="/reembolsos" className="hover:text-zinc-950 dark:hover:text-white">
+            Reembolsos y cancelación
+          </Link>
+        </nav>
       </footer>
     </div>
   )
