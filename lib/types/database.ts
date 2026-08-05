@@ -107,6 +107,18 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['professional_profiles']['Insert']>
         Relationships: []
       }
+      professional_contacts: {
+        Row: {
+          user_id: string
+          phone: string | null
+        }
+        Insert: {
+          user_id: string
+          phone?: string | null
+        }
+        Update: Partial<Database['public']['Tables']['professional_contacts']['Insert']>
+        Relationships: []
+      }
       service_requests: {
         Row: {
           id: string

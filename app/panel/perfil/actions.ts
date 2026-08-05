@@ -18,6 +18,7 @@ export async function saveProfessionalProfile(formData: FormData) {
   const city = formData.get('city') as string
   const yearsExperience = formData.get('years_experience') as string
   const bio = formData.get('bio') as string
+  const phone = formData.get('phone') as string
 
   const { error } = await supabase.from('professional_profiles').upsert({
     user_id: user.id,
@@ -30,6 +31,14 @@ export async function saveProfessionalProfile(formData: FormData) {
 
   if (error) {
     redirect(`/panel/perfil?error=${encodeURIComponent(error.message)}`)
+  }
+
+  const { error: contactError } = await supabase
+    .from('professional_contacts')
+    .upsert({ user_id: user.id, phone: phone || null })
+
+  if (contactError) {
+    redirect(`/panel/perfil?error=${encodeURIComponent(contactError.message)}`)
   }
 
   redirect('/panel/perfil?message=Perfil guardado')

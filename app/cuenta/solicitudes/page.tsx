@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { cancelRequest, leaveReview } from '@/app/solicitudes/actions'
 import { REQUEST_STATUS_LABEL } from '@/lib/constants/requests'
 import { starString } from '@/lib/rating'
+import { whatsAppLink } from '@/lib/whatsapp'
 
 export default async function CuentaSolicitudesPage({
   searchParams,
@@ -27,7 +28,7 @@ export default async function CuentaSolicitudesPage({
     ...new Set((requests ?? []).map((r) => r.category_id).filter((v): v is string => Boolean(v))),
   ]
 
-  const [{ data: professionals }, { data: categories }] = await Promise.all([
+  const [{ data: professionals }, { data: categories }, { data: contacts }] = await Promise.all([
     professionalIds.length
       ? supabase
           .from('professional_profiles')
@@ -37,10 +38,14 @@ export default async function CuentaSolicitudesPage({
     categoryIds.length
       ? supabase.from('categories').select('id, name').in('id', categoryIds)
       : Promise.resolve({ data: [] }),
+    professionalIds.length
+      ? supabase.from('professional_contacts').select('user_id, phone').in('user_id', professionalIds)
+      : Promise.resolve({ data: [] }),
   ])
 
   const professionalById = new Map((professionals ?? []).map((p) => [p.user_id, p]))
   const categoryById = new Map((categories ?? []).map((c) => [c.id, c]))
+  const phoneByProfessionalId = new Map((contacts ?? []).map((c) => [c.user_id, c.phone]))
 
   const completedIds = (requests ?? [])
     .filter((r) => r.status === 'completed')
@@ -94,6 +99,22 @@ export default async function CuentaSolicitudesPage({
                   {new Date(r.scheduled_at).toLocaleString('es-AR')}
                 </p>
               )}
+
+              {(r.status === 'accepted' || r.status === 'completed') &&
+                (() => {
+                  const phone = phoneByProfessionalId.get(r.professional_id)
+                  if (!phone) return null
+                  return (
+                    <a
+                      href={whatsAppLink(phone, `Hola! Te escribo por tu solicitud en Zolvi.`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-block rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+                    >
+                      Contactar por WhatsApp
+                    </a>
+                  )
+                })()}
 
               {r.status === 'pending' && (
                 <form action={cancelRequest} className="mt-4">

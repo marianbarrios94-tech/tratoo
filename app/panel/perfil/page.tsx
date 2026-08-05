@@ -13,9 +13,12 @@ export default async function PerfilProfesionalPage({
     data: { user },
   } = await supabase.auth.getUser()
 
-  const [{ data: profile }, { data: categories }] = await Promise.all([
+  const [{ data: profile }, { data: contact }, { data: categories }] = await Promise.all([
     user
       ? supabase.from('professional_profiles').select('*').eq('user_id', user.id).maybeSingle()
+      : Promise.resolve({ data: null }),
+    user
+      ? supabase.from('professional_contacts').select('phone').eq('user_id', user.id).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('categories').select('id, slug, name, vertical').order('name'),
   ])
@@ -91,6 +94,23 @@ export default async function PerfilProfesionalPage({
             defaultValue={profile?.city ?? ''}
             className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
           />
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium">
+            Teléfono (WhatsApp)
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="+54 9 11 1234-5678"
+            defaultValue={contact?.phone ?? ''}
+            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
+          />
+          <p className="mt-1 text-xs text-zinc-500">
+            Incluí el código de país. Solo lo ven los clientes cuya solicitud aceptaste.
+          </p>
         </div>
 
         <div>
