@@ -3,6 +3,7 @@ import { cancelRequest, leaveReview } from '@/app/solicitudes/actions'
 import { REQUEST_STATUS_LABEL } from '@/lib/constants/requests'
 import { starString } from '@/lib/rating'
 import { whatsAppLink } from '@/lib/whatsapp'
+import { WhatsAppContactLink } from '@/components/WhatsAppContactLink'
 
 export default async function CuentaSolicitudesPage({
   searchParams,
@@ -105,14 +106,10 @@ export default async function CuentaSolicitudesPage({
                   const phone = phoneByProfessionalId.get(r.professional_id)
                   if (!phone) return null
                   return (
-                    <a
+                    <WhatsAppContactLink
+                      professionalId={r.professional_id}
                       href={whatsAppLink(phone, `Hola! Te escribo por tu solicitud en Zolvi.`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-block rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
-                    >
-                      Contactar por WhatsApp
-                    </a>
+                    />
                   )
                 })()}
 

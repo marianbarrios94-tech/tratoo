@@ -85,7 +85,16 @@ export default async function PanelPage() {
           <p className="mt-1 text-sm text-zinc-500">
             {currentPlan
               ? `Plan ${currentPlan.name}, ${STATUS_LABEL[professionalProfile!.subscription_status]}.`
-              : 'Elegí un plan para aparecer en el directorio.'}
+              : 'Estás en el plan gratuito. Pasate a un plan pago para más visibilidad.'}
+          </p>
+        </Link>
+        <Link
+          href="/panel/estadisticas"
+          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+        >
+          <h2 className="font-medium">Estadísticas</h2>
+          <p className="mt-1 text-sm text-zinc-500">
+            Vistas, contactos de WhatsApp y solicitudes que generó tu perfil.
           </p>
         </Link>
         <Link

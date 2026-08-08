@@ -6,6 +6,7 @@ export type UserRole = 'client' | 'professional' | 'admin'
 export type Vertical = 'hogar' | 'consultoria' | 'salud'
 export type SubscriptionStatus = 'trialing' | 'active' | 'past_due' | 'canceled'
 export type RequestStatus = 'pending' | 'accepted' | 'completed' | 'cancelled'
+export type ProfileEventType = 'view' | 'whatsapp_click'
 
 export interface Database {
   public: {
@@ -161,6 +162,22 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['reviews']['Insert']>
+        Relationships: []
+      }
+      profile_events: {
+        Row: {
+          id: string
+          professional_id: string
+          event_type: ProfileEventType
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          professional_id: string
+          event_type: ProfileEventType
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['profile_events']['Insert']>
         Relationships: []
       }
     }

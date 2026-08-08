@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { hasActiveSubscription } from '@/lib/constants/subscriptions'
+import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
 import { startCheckout, openBillingPortal } from './actions'
 
 const STATUS_LABEL: Record<string, string> = {
@@ -33,12 +33,22 @@ export default async function SuscripcionPage({
 
   const isSubscribed = hasActiveSubscription(professional?.subscription_status)
 
+  // El plan Básico se retiró de la oferta a nuevos suscriptores: queda
+  // redundante frente al tier gratuito. Se sigue mostrando solo si es el
+  // plan que ya tiene contratado un profesional existente.
+  const visiblePlans = (plans ?? []).filter(
+    (plan) => plan.slug !== 'basico' || plan.id === professional?.subscription_plan_id
+  )
+
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-semibold">Tu suscripción</h1>
         <p className="mt-1 text-zinc-500">
-          Elegí un plan para aparecer en el directorio y recibir solicitudes.
+          Tu perfil ya es visible en el directorio gratis, con hasta{' '}
+          {FREE_TIER_MONTHLY_REQUEST_LIMIT} solicitudes por mes. Pasate a un plan
+          pago para solicitudes ilimitadas, insignia de verificado y prioridad en
+          resultados.
         </p>
       </div>
 
@@ -56,7 +66,7 @@ export default async function SuscripcionPage({
       )}
 
       <div className="grid gap-4 sm:grid-cols-3">
-        {(plans ?? []).map((plan) => {
+        {visiblePlans.map((plan) => {
           const isCurrent = plan.id === professional?.subscription_plan_id && isSubscribed
           return (
             <div

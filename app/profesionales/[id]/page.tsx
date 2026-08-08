@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { starString } from '@/lib/rating'
-import { ACTIVE_SUBSCRIPTION_STATUSES } from '@/lib/constants/subscriptions'
+import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
 import { BackButton } from '@/components/BackButton'
 
 export default async function ProfesionalDetallePage({
@@ -30,8 +30,9 @@ export default async function ProfesionalDetallePage({
 
   const isOwnProfile = user?.id === id
 
-  if (!isOwnProfile && !ACTIVE_SUBSCRIPTION_STATUSES.includes(professional.subscription_status)) {
-    notFound()
+  if (!isOwnProfile) {
+    // Best-effort: no debe romper el render del perfil si falla.
+    await supabase.from('profile_events').insert({ professional_id: id, event_type: 'view' })
   }
 
   const [{ data: category }, { data: profile }] = await Promise.all([
@@ -90,9 +91,14 @@ export default async function ProfesionalDetallePage({
       {isOwnProfile ? (
         <div className="mt-8">
           <p className="text-sm text-zinc-500">Este es tu perfil público.</p>
-          {!ACTIVE_SUBSCRIPTION_STATUSES.includes(professional.subscription_status) && (
+          {!hasActiveSubscription(professional.subscription_status) && (
             <p className="mt-2 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
-              No aparece en el directorio porque no tenés una suscripción activa.
+              Estás en el plan gratuito: tu perfil es visible y podés recibir
+              hasta {FREE_TIER_MONTHLY_REQUEST_LIMIT} solicitudes por mes.{' '}
+              <Link href="/panel/suscripcion" className="underline">
+                Pasate a un plan pago
+              </Link>{' '}
+              para solicitudes ilimitadas y prioridad en resultados.
             </p>
           )}
         </div>
