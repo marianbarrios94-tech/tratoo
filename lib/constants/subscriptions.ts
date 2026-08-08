@@ -13,6 +13,8 @@ export function hasActiveSubscription(status: SubscriptionStatus | null | undefi
   return status != null && ACTIVE_SUBSCRIPTION_STATUSES.includes(status)
 }
 
-// Free-tier professionals can receive at most this many service requests per
-// calendar month before clients are asked to wait or pick someone else.
-export const FREE_TIER_MONTHLY_REQUEST_LIMIT = 3
+// Free-tier professionals can receive contact from at most this many
+// distinct clients per calendar month. A client who already contacted them
+// this month never gets blocked by their own repeat messages — only a new
+// client past the limit does (see lib/freeTier.ts).
+export const FREE_TIER_MONTHLY_REQUEST_LIMIT = 5

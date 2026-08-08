@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createServiceRequest } from './actions'
 import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
-import { startOfCurrentMonthISO } from '@/lib/date'
+import { getMonthlyClientIds } from '@/lib/freeTier'
 import { BackButton } from '@/components/BackButton'
 
 export default async function SolicitarPage({
@@ -42,12 +42,9 @@ export default async function SolicitarPage({
 
   let capReached = false
   if (!hasActiveSubscription(professional.subscription_status)) {
-    const { count } = await supabase
-      .from('service_requests')
-      .select('id', { count: 'exact', head: true })
-      .eq('professional_id', id)
-      .gte('created_at', startOfCurrentMonthISO())
-    capReached = (count ?? 0) >= FREE_TIER_MONTHLY_REQUEST_LIMIT
+    const distinctClients = new Set(await getMonthlyClientIds(supabase, id))
+    // Si este cliente ya le escribió este mes, no consume un cupo nuevo.
+    capReached = !distinctClients.has(user.id) && distinctClients.size >= FREE_TIER_MONTHLY_REQUEST_LIMIT
   }
 
   return (

@@ -94,7 +94,8 @@ export default async function ProfesionalDetallePage({
           {!hasActiveSubscription(professional.subscription_status) && (
             <p className="mt-2 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
               Estás en el plan gratuito: tu perfil es visible y podés recibir
-              hasta {FREE_TIER_MONTHLY_REQUEST_LIMIT} solicitudes por mes.{' '}
+              contacto de hasta {FREE_TIER_MONTHLY_REQUEST_LIMIT} clientes nuevos por mes
+              (un mismo cliente que te escribe varias veces cuenta una sola vez).{' '}
               <Link href="/panel/suscripcion" className="underline">
                 Pasate a un plan pago
               </Link>{' '}

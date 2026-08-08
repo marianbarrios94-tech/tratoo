@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { notifyNewRequest } from '@/lib/email/notify'
 import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
-import { startOfCurrentMonthISO } from '@/lib/date'
+import { getMonthlyClientIds } from '@/lib/freeTier'
 
 export async function createServiceRequest(formData: FormData) {
   const supabase = await createClient()
@@ -32,13 +32,9 @@ export async function createServiceRequest(formData: FormData) {
   }
 
   if (!hasActiveSubscription(professional.subscription_status)) {
-    const { count } = await supabase
-      .from('service_requests')
-      .select('id', { count: 'exact', head: true })
-      .eq('professional_id', professionalId)
-      .gte('created_at', startOfCurrentMonthISO())
-
-    if ((count ?? 0) >= FREE_TIER_MONTHLY_REQUEST_LIMIT) {
+    const distinctClients = new Set(await getMonthlyClientIds(supabase, professionalId))
+    // Si este cliente ya le escribió este mes, no consume un cupo nuevo.
+    if (!distinctClients.has(user.id) && distinctClients.size >= FREE_TIER_MONTHLY_REQUEST_LIMIT) {
       redirect(
         `/profesionales/${professionalId}/solicitar?error=${encodeURIComponent(
           'Este profesional ya alcanzó su límite de contactos gratuitos este mes.'

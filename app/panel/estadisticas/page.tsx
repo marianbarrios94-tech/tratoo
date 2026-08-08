@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
 import { startOfCurrentMonthISO } from '@/lib/date'
+import { getMonthlyClientIds } from '@/lib/freeTier'
 import Link from 'next/link'
 
 async function countEvents(
@@ -27,23 +28,19 @@ export default async function EstadisticasPage() {
     return null
   }
 
-  const [{ data: professional }, views, whatsappClicks, { count: requestsCount }] =
-    await Promise.all([
-      supabase
-        .from('professional_profiles')
-        .select('subscription_status')
-        .eq('user_id', user.id)
-        .maybeSingle(),
-      countEvents(supabase, user.id, 'view'),
-      countEvents(supabase, user.id, 'whatsapp_click'),
-      supabase
-        .from('service_requests')
-        .select('id', { count: 'exact', head: true })
-        .eq('professional_id', user.id)
-        .gte('created_at', startOfCurrentMonthISO()),
-    ])
+  const [{ data: professional }, views, whatsappClicks, clientIds] = await Promise.all([
+    supabase
+      .from('professional_profiles')
+      .select('subscription_status')
+      .eq('user_id', user.id)
+      .maybeSingle(),
+    countEvents(supabase, user.id, 'view'),
+    countEvents(supabase, user.id, 'whatsapp_click'),
+    getMonthlyClientIds(supabase, user.id),
+  ])
 
-  const requests = requestsCount ?? 0
+  const requests = clientIds.length
+  const distinctClients = new Set(clientIds).size
   const isSubscribed = hasActiveSubscription(professional?.subscription_status)
 
   return (
@@ -71,10 +68,12 @@ export default async function EstadisticasPage() {
       {!isSubscribed && (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-amber-950">
           <p className="text-sm text-amber-700 dark:text-amber-400">
-            Estás en el plan gratuito: usaste {Math.min(requests, FREE_TIER_MONTHLY_REQUEST_LIMIT)}{' '}
-            de {FREE_TIER_MONTHLY_REQUEST_LIMIT} solicitudes gratis este mes.
+            Estás en el plan gratuito: usaste{' '}
+            {Math.min(distinctClients, FREE_TIER_MONTHLY_REQUEST_LIMIT)} de{' '}
+            {FREE_TIER_MONTHLY_REQUEST_LIMIT} cupos de clientes gratis este mes. Si un mismo
+            cliente te escribe varias veces, solo cuenta una vez.
           </p>
-          {requests >= FREE_TIER_MONTHLY_REQUEST_LIMIT && (
+          {distinctClients >= FREE_TIER_MONTHLY_REQUEST_LIMIT && (
             <p className="mt-2 text-sm font-medium text-amber-700 dark:text-amber-400">
               Llegaste al límite — los clientes nuevos no van a poder contactarte hasta
               el mes que viene, salvo que pases a un plan pago.

@@ -45,9 +45,9 @@ export default async function SuscripcionPage({
       <div>
         <h1 className="text-2xl font-semibold">Tu suscripción</h1>
         <p className="mt-1 text-zinc-500">
-          Tu perfil ya es visible en el directorio gratis, con hasta{' '}
-          {FREE_TIER_MONTHLY_REQUEST_LIMIT} solicitudes por mes. Pasate a un plan
-          pago para solicitudes ilimitadas, insignia de verificado y prioridad en
+          Tu perfil ya es visible en el directorio gratis, con contacto de hasta{' '}
+          {FREE_TIER_MONTHLY_REQUEST_LIMIT} clientes nuevos por mes. Pasate a un plan
+          pago para clientes ilimitados, insignia de verificado y prioridad en
           resultados.
         </p>
       </div>
