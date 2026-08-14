@@ -32,7 +32,7 @@ export async function createServiceRequest(formData: FormData) {
   }
 
   if (!hasActiveSubscription(professional.subscription_status)) {
-    const distinctClients = new Set(await getMonthlyClientIds(supabase, professionalId))
+    const distinctClients = new Set(await getMonthlyClientIds(professionalId))
     // Si este cliente ya le escribió este mes, no consume un cupo nuevo.
     if (!distinctClients.has(user.id) && distinctClients.size >= FREE_TIER_MONTHLY_REQUEST_LIMIT) {
       redirect(

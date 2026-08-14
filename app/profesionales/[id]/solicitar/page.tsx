@@ -42,7 +42,7 @@ export default async function SolicitarPage({
 
   let capReached = false
   if (!hasActiveSubscription(professional.subscription_status)) {
-    const distinctClients = new Set(await getMonthlyClientIds(supabase, id))
+    const distinctClients = new Set(await getMonthlyClientIds(id))
     // Si este cliente ya le escribió este mes, no consume un cupo nuevo.
     capReached = !distinctClients.has(user.id) && distinctClients.size >= FREE_TIER_MONTHLY_REQUEST_LIMIT
   }

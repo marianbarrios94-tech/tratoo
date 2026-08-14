@@ -36,7 +36,7 @@ export default async function EstadisticasPage() {
       .maybeSingle(),
     countEvents(supabase, user.id, 'view'),
     countEvents(supabase, user.id, 'whatsapp_click'),
-    getMonthlyClientIds(supabase, user.id),
+    getMonthlyClientIds(user.id),
   ])
 
   const requests = clientIds.length
