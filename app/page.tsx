@@ -5,22 +5,16 @@ import { logout } from '@/app/(auth)/actions'
 
 const PLANS = [
   {
-    slug: 'basico',
-    name: 'Básico',
-    price: 9.99,
-    features: ['Perfil en el directorio', 'Hasta 5 solicitudes por mes'],
-  },
-  {
     slug: 'pro',
     name: 'Pro',
-    price: 19.99,
+    price: 9.99,
     features: ['Solicitudes ilimitadas', 'Insignia de verificado', 'Estadísticas básicas'],
     highlighted: true,
   },
   {
     slug: 'premium',
     name: 'Premium',
-    price: 34.99,
+    price: 24.99,
     features: [
       'Todo lo de Pro',
       'Prioridad en resultados de búsqueda',
@@ -166,7 +160,7 @@ export default async function Home() {
               Suscribite para aparecer en el directorio y recibir solicitudes de clientes.
             </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-2">
             {PLANS.map((plan) => (
               <Link
                 key={plan.slug}
