@@ -55,14 +55,23 @@ export async function startCheckout(formData: FormData) {
       .upsert({ user_id: user.id, stripe_customer_id: customerId })
   }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: 'subscription',
-    customer: customerId,
-    client_reference_id: user.id,
-    line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
-    success_url: `${origin}/panel/suscripcion?checkout=success`,
-    cancel_url: `${origin}/panel/suscripcion?checkout=cancelled`,
-  })
+  let session
+  try {
+    session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      customer: customerId,
+      client_reference_id: user.id,
+      line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
+      success_url: `${origin}/panel/suscripcion?checkout=success`,
+      cancel_url: `${origin}/panel/suscripcion?checkout=cancelled`,
+    })
+  } catch (err) {
+    const message =
+      err instanceof Error && err.message.includes('combine currencies')
+        ? 'No pudimos iniciar el pago porque tu cuenta de facturación ya tiene una moneda distinta. Escribinos para ayudarte a migrar de plan.'
+        : 'No pudimos iniciar el pago, intentá de nuevo en unos minutos'
+    redirect(`/panel/suscripcion?error=${encodeURIComponent(message)}`)
+  }
 
   redirect(session.url!)
 }

@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
+import { formatPrice } from '@/lib/currency'
 import { startCheckout, openBillingPortal } from './actions'
 
 const STATUS_LABEL: Record<string, string> = {
@@ -79,7 +80,7 @@ export default async function SuscripcionPage({
             >
               <h2 className="font-semibold">{plan.name}</h2>
               <p className="mt-2 text-2xl font-semibold">
-                ${plan.price_monthly}
+                {formatPrice(plan.price_monthly, plan.currency)}
                 <span className="text-sm font-normal text-zinc-500">/mes</span>
               </p>
               <ul className="mt-4 flex flex-col gap-1 text-sm text-zinc-600 dark:text-zinc-400">

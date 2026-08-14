@@ -2,19 +2,20 @@ import Link from 'next/link'
 import { VERTICALS, CATEGORIES_BY_VERTICAL } from '@/lib/constants/categories'
 import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/(auth)/actions'
+import { formatPrice } from '@/lib/currency'
 
 const PLANS = [
   {
     slug: 'pro',
     name: 'Pro',
-    price: 9.99,
+    price: 15000,
     features: ['Solicitudes ilimitadas', 'Insignia de verificado', 'Estadísticas básicas'],
     highlighted: true,
   },
   {
     slug: 'premium',
     name: 'Premium',
-    price: 24.99,
+    price: 35000,
     features: [
       'Todo lo de Pro',
       'Prioridad en resultados de búsqueda',
@@ -173,7 +174,7 @@ export default async function Home() {
               >
                 <h3 className="text-lg font-semibold">{plan.name}</h3>
                 <p className="mt-2 text-3xl font-semibold">
-                  ${plan.price}
+                  {formatPrice(plan.price, 'ars')}
                   <span className="text-base font-normal text-zinc-500">/mes</span>
                 </p>
                 <ul className="mt-4 flex flex-col gap-2 text-sm text-zinc-600 dark:text-zinc-400">

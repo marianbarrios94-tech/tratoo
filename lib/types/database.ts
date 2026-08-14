@@ -59,6 +59,7 @@ export interface Database {
           slug: string
           name: string
           price_monthly: number
+          currency: string
           features: string[]
           stripe_price_id: string | null
         }
@@ -67,6 +68,7 @@ export interface Database {
           slug: string
           name: string
           price_monthly: number
+          currency?: string
           features?: string[]
           stripe_price_id?: string | null
         }
