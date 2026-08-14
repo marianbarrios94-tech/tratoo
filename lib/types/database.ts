@@ -79,6 +79,7 @@ export interface Database {
         Row: {
           user_id: string
           category_id: string | null
+          custom_profession: string | null
           business_name: string | null
           bio: string | null
           city: string | null
@@ -95,6 +96,7 @@ export interface Database {
         Insert: {
           user_id: string
           category_id?: string | null
+          custom_profession?: string | null
           business_name?: string | null
           bio?: string | null
           city?: string | null

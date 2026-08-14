@@ -68,7 +68,9 @@ export default async function ProfesionalDetallePage({
       </div>
 
       <div className="mt-2 flex flex-wrap gap-x-4 text-sm text-zinc-500">
-        {category && <span>{category.name}</span>}
+        {(category || professional.custom_profession) && (
+          <span>{category?.name ?? professional.custom_profession}</span>
+        )}
         {professional.city && <span>{professional.city}</span>}
         <span>
           {starString(Number(professional.avg_rating))} {Number(professional.avg_rating).toFixed(1)}

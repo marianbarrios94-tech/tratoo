@@ -64,13 +64,10 @@ export default async function PerfilProfesionalPage({
           <select
             id="category_id"
             name="category_id"
-            required
             defaultValue={profile?.category_id ?? ''}
             className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
           >
-            <option value="" disabled>
-              Elegí una categoría
-            </option>
+            <option value="">Ninguna de estas</option>
             {VERTICALS.map((v) => (
               <optgroup key={v.slug} label={v.label}>
                 {categoriesByVertical.get(v.slug)?.map((c) => (
@@ -81,6 +78,24 @@ export default async function PerfilProfesionalPage({
               </optgroup>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label htmlFor="custom_profession" className="block text-sm font-medium">
+            ¿Tu profesión no está en la lista?
+          </label>
+          <input
+            id="custom_profession"
+            name="custom_profession"
+            type="text"
+            placeholder="Ej: Profesor de inglés"
+            defaultValue={profile?.custom_profession ?? ''}
+            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
+          />
+          <p className="mt-1 text-xs text-zinc-500">
+            Escribila acá y aparece tal cual en tu perfil. Necesitás elegir una categoría o
+            completar esto.
+          </p>
         </div>
 
         <div>

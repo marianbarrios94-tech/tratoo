@@ -121,7 +121,11 @@ export default async function ProfesionalesPage({
                   </span>
                 )}
               </div>
-              {category && <p className="mt-1 text-sm text-zinc-500">{category.name}</p>}
+              {(category || p.custom_profession) && (
+                <p className="mt-1 text-sm text-zinc-500">
+                  {category?.name ?? p.custom_profession}
+                </p>
+              )}
               {p.city && <p className="text-sm text-zinc-500">{p.city}</p>}
               <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                 {starString(Number(p.avg_rating))} {Number(p.avg_rating).toFixed(1)}
