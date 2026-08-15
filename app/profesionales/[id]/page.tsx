@@ -84,6 +84,12 @@ export default async function ProfesionalDetallePage({
         <p className="mt-1 text-sm text-zinc-500">Atendido por {profile.full_name}</p>
       )}
 
+      {professional.license_number && (
+        <p className="mt-1 text-sm text-zinc-500">
+          Matrícula: {professional.license_number}
+        </p>
+      )}
+
       {professional.bio && (
         <p className="mt-6 whitespace-pre-line text-zinc-700 dark:text-zinc-300">
           {professional.bio}

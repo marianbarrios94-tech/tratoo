@@ -7,7 +7,17 @@ export const VERTICALS: { slug: Vertical; label: string; tagline: string }[] = [
 ]
 
 export const CATEGORIES_BY_VERTICAL: Record<Vertical, string[]> = {
-  hogar: ['Plomería', 'Electricidad', 'Gas', 'Limpieza'],
+  hogar: [
+    'Plomería',
+    'Electricidad',
+    'Gas',
+    'Limpieza',
+    'Cerrajería',
+    'Mudanzas',
+    'Refrigeración y aires',
+    'Herrería',
+    'Reparación de electrodomésticos',
+  ],
   consultoria: ['Abogacía', 'Contabilidad', 'Diseño', 'Marketing'],
   salud: ['Psicología', 'Nutrición', 'Entrenamiento personal', 'Medicina general'],
 }

@@ -1,9 +1,8 @@
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
-import { starString } from '@/lib/rating'
 import { stripAccents } from '@/lib/text'
 import { BackButton } from '@/components/BackButton'
+import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGrid'
 
 export default async function ProfesionalesPage({
   searchParams,
@@ -101,39 +100,19 @@ export default async function ProfesionalesPage({
         </button>
       </form>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {(professionals ?? []).length === 0 && (
-          <p className="text-zinc-500">No encontramos profesionales con esos filtros.</p>
-        )}
-        {(professionals ?? []).map((p) => {
+      <ProfessionalDirectoryGrid
+        professionals={(professionals ?? []).map((p) => {
           const category = p.category_id ? categoryById.get(p.category_id) : null
-          return (
-            <Link
-              key={p.user_id}
-              href={`/profesionales/${p.user_id}`}
-              className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <h2 className="font-semibold">{p.business_name}</h2>
-                {p.verified && (
-                  <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-                    Verificado
-                  </span>
-                )}
-              </div>
-              {(category || p.custom_profession) && (
-                <p className="mt-1 text-sm text-zinc-500">
-                  {category?.name ?? p.custom_profession}
-                </p>
-              )}
-              {p.city && <p className="text-sm text-zinc-500">{p.city}</p>}
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                {starString(Number(p.avg_rating))} {Number(p.avg_rating).toFixed(1)}
-              </p>
-            </Link>
-          )
+          return {
+            user_id: p.user_id,
+            business_name: p.business_name,
+            verified: p.verified,
+            city: p.city,
+            avg_rating: p.avg_rating,
+            categoryLabel: category?.name ?? p.custom_profession ?? null,
+          }
         })}
-      </div>
+      />
     </div>
   )
 }

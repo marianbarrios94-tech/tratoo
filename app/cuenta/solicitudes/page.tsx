@@ -100,6 +100,13 @@ export default async function CuentaSolicitudesPage({
                   {new Date(r.scheduled_at).toLocaleString('es-AR')}
                 </p>
               )}
+              {r.quoted_price != null && (
+                <p className="mt-1 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                  Presupuesto: {Number(r.quoted_price).toLocaleString('es-AR', {
+                    maximumFractionDigits: 0,
+                  })}
+                </p>
+              )}
 
               {(r.status === 'accepted' || r.status === 'completed') &&
                 (() => {

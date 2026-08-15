@@ -81,6 +81,7 @@ export interface Database {
           category_id: string | null
           custom_profession: string | null
           business_name: string | null
+          license_number: string | null
           bio: string | null
           city: string | null
           city_unaccent: string | null
@@ -98,6 +99,7 @@ export interface Database {
           category_id?: string | null
           custom_profession?: string | null
           business_name?: string | null
+          license_number?: string | null
           bio?: string | null
           city?: string | null
           years_experience?: number | null
@@ -133,6 +135,7 @@ export interface Database {
           status: RequestStatus
           message: string | null
           scheduled_at: string | null
+          quoted_price: number | null
           created_at: string
         }
         Insert: {
@@ -143,6 +146,7 @@ export interface Database {
           status?: RequestStatus
           message?: string | null
           scheduled_at?: string | null
+          quoted_price?: number | null
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['service_requests']['Insert']>

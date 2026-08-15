@@ -10,7 +10,8 @@ async function transition(
   allowedFrom: RequestStatus[],
   to: RequestStatus,
   side: 'client' | 'professional',
-  notifyClient = false
+  notifyClient = false,
+  extra: Record<string, unknown> = {}
 ) {
   const supabase = await createClient()
   const {
@@ -38,7 +39,7 @@ async function transition(
 
   const { error } = await supabase
     .from('service_requests')
-    .update({ status: to })
+    .update({ status: to, ...extra })
     .eq('id', requestId)
 
   if (error) {
@@ -63,7 +64,11 @@ async function transition(
 }
 
 export async function acceptRequest(formData: FormData) {
-  await transition(formData, ['pending'], 'accepted', 'professional', true)
+  const quotedPriceRaw = formData.get('quoted_price') as string
+  const quotedPrice = quotedPriceRaw ? Number(quotedPriceRaw) : null
+  await transition(formData, ['pending'], 'accepted', 'professional', true, {
+    quoted_price: quotedPrice,
+  })
 }
 
 export async function rejectRequest(formData: FormData) {

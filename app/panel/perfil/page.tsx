@@ -99,6 +99,24 @@ export default async function PerfilProfesionalPage({
         </div>
 
         <div>
+          <label htmlFor="license_number" className="block text-sm font-medium">
+            Matrícula o credencial (opcional)
+          </label>
+          <input
+            id="license_number"
+            name="license_number"
+            type="text"
+            placeholder="Ej: Matrícula N° 12345"
+            defaultValue={profile?.license_number ?? ''}
+            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
+          />
+          <p className="mt-1 text-xs text-zinc-500">
+            Si tenés una matrícula profesional o habilitación, mostrala en tu perfil para generar
+            más confianza.
+          </p>
+        </div>
+
+        <div>
           <label htmlFor="city" className="block text-sm font-medium">
             Ciudad
           </label>

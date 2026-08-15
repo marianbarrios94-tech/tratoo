@@ -95,6 +95,9 @@ export default async function Home() {
             Zolvi conecta clientes con profesionales verificados de hogar, consultoría y salud,
             en un solo lugar.
           </p>
+          <p className="max-w-xl text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            Hecho para el NEA: Misiones, Corrientes, Chaco y Entre Ríos.
+          </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             {user ? (
               <>
@@ -159,6 +162,10 @@ export default async function Home() {
             <h2 className="text-2xl font-semibold">Planes para profesionales</h2>
             <p className="mt-1 text-zinc-500">
               Suscribite para aparecer en el directorio y recibir solicitudes de clientes.
+            </p>
+            <p className="mx-auto mt-2 max-w-md text-sm text-zinc-500">
+              No hace falta mudarte a Buenos Aires para crecer: sumate desde Posadas, Corrientes,
+              Resistencia, Paraná o cualquier ciudad del NEA.
             </p>
           </div>
           <div className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-2">

@@ -16,6 +16,7 @@ export async function saveProfessionalProfile(formData: FormData) {
   const businessName = formData.get('business_name') as string
   const categoryId = formData.get('category_id') as string
   const customProfession = formData.get('custom_profession') as string
+  const licenseNumber = formData.get('license_number') as string
   const city = formData.get('city') as string
   const yearsExperience = formData.get('years_experience') as string
   const bio = formData.get('bio') as string
@@ -32,6 +33,7 @@ export async function saveProfessionalProfile(formData: FormData) {
     business_name: businessName,
     category_id: categoryId || null,
     custom_profession: categoryId ? null : customProfession || null,
+    license_number: licenseNumber || null,
     city: city || null,
     years_experience: yearsExperience ? Number(yearsExperience) : null,
     bio: bio || null,
