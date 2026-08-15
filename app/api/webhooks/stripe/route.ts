@@ -36,13 +36,19 @@ async function syncFromSubscription(subscription: Stripe.Subscription, userId?: 
 
   const status = mapStatus(subscription.status)
 
+  // Si el price_id de la suscripción no matchea ningún plan actual (p.ej. un
+  // Price ID viejo que quedó reemplazado por una migración de precios), no
+  // pisamos subscription_plan_id ni verified — dejamos el valor que ya tenía
+  // en vez de borrarle el plan y la insignia a una suscripción que sigue activa.
   const update = {
     subscription_status: status,
-    subscription_plan_id: plan?.id ?? null,
     stripe_subscription_id: subscription.id,
     stripe_customer_id:
       typeof subscription.customer === 'string' ? subscription.customer : subscription.customer.id,
-    verified: hasActiveSubscription(status) && VERIFIED_PLAN_SLUGS.includes(plan?.slug ?? ''),
+    ...(plan && {
+      subscription_plan_id: plan.id,
+      verified: hasActiveSubscription(status) && VERIFIED_PLAN_SLUGS.includes(plan.slug),
+    }),
   }
 
   if (userId) {
