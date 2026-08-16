@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
 import { formatPrice } from '@/lib/currency'
-import { startCheckout, openBillingPortal } from './actions'
+import { startCheckout, cancelSubscription } from './actions'
 
 const STATUS_LABEL: Record<string, string> = {
   trialing: 'En prueba',
@@ -13,9 +13,9 @@ const STATUS_LABEL: Record<string, string> = {
 export default async function SuscripcionPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; checkout?: string }>
+  searchParams: Promise<{ error?: string; checkout?: string; message?: string }>
 }) {
-  const { error, checkout } = await searchParams
+  const { error, checkout, message } = await searchParams
   const supabase = await createClient()
   const {
     data: { user },
@@ -25,7 +25,7 @@ export default async function SuscripcionPage({
     user
       ? supabase
           .from('professional_profiles')
-          .select('subscription_plan_id, subscription_status, stripe_customer_id')
+          .select('subscription_plan_id, subscription_status, mp_preapproval_id')
           .eq('user_id', user.id)
           .maybeSingle()
       : Promise.resolve({ data: null }),
@@ -57,6 +57,9 @@ export default async function SuscripcionPage({
         <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
           ¡Listo! Puede tardar unos segundos en reflejarse el pago.
         </p>
+      )}
+      {message && (
+        <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{message}</p>
       )}
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
@@ -109,13 +112,13 @@ export default async function SuscripcionPage({
         })}
       </div>
 
-      {professional?.stripe_customer_id && (
-        <form action={openBillingPortal}>
+      {professional?.mp_preapproval_id && isSubscribed && (
+        <form action={cancelSubscription}>
           <button
             type="submit"
             className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
           >
-            Gestionar suscripción
+            Cancelar suscripción
           </button>
         </form>
       )}

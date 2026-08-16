@@ -61,7 +61,6 @@ export interface Database {
           price_monthly: number
           currency: string
           features: string[]
-          stripe_price_id: string | null
         }
         Insert: {
           id?: string
@@ -70,7 +69,6 @@ export interface Database {
           price_monthly: number
           currency?: string
           features?: string[]
-          stripe_price_id?: string | null
         }
         Update: Partial<Database['public']['Tables']['subscription_plans']['Insert']>
         Relationships: []
@@ -89,8 +87,7 @@ export interface Database {
           verified: boolean
           subscription_plan_id: string | null
           subscription_status: SubscriptionStatus
-          stripe_customer_id: string | null
-          stripe_subscription_id: string | null
+          mp_preapproval_id: string | null
           avg_rating: number
           created_at: string
         }
@@ -106,8 +103,7 @@ export interface Database {
           verified?: boolean
           subscription_plan_id?: string | null
           subscription_status?: SubscriptionStatus
-          stripe_customer_id?: string | null
-          stripe_subscription_id?: string | null
+          mp_preapproval_id?: string | null
           avg_rating?: number
           created_at?: string
         }

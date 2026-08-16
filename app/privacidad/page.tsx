@@ -29,8 +29,8 @@ export default function PrivacidadPage() {
               experiencia y descripción, si ofrecés servicios.
             </li>
             <li>
-              · Datos de facturación: gestionados directamente por Stripe. Zolvi nunca recibe ni
-              almacena el número completo de tu tarjeta.
+              · Datos de facturación: gestionados directamente por Mercado Pago. Zolvi nunca
+              recibe ni almacena el número completo de tu tarjeta.
             </li>
             <li>
               · Contenido de solicitudes y reseñas que escribís dentro de la plataforma.
@@ -55,7 +55,8 @@ export default function PrivacidadPage() {
           </h2>
           <p className="mt-2">
             Compartimos datos únicamente con los proveedores que necesitamos para funcionar:
-            Supabase (base de datos y autenticación), Stripe (pagos) y Resend (envío de emails).
+            Supabase (base de datos y autenticación), Mercado Pago (pagos) y Resend (envío de
+            emails).
             Ninguno de ellos puede usar tus datos para fines propios de marketing.
           </p>
         </section>

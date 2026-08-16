@@ -55,7 +55,8 @@ export default function TerminosPage() {
           </h2>
           <p className="mt-2">
             Los profesionales pueden suscribirse a un plan pago para aparecer en el directorio
-            público y recibir solicitudes de clientes. Los pagos se procesan a través de Stripe.
+            público y recibir solicitudes de clientes. Los pagos se procesan a través de Mercado
+            Pago.
             Ver la{' '}
             <a href="/reembolsos" className="underline">
               política de reembolsos y cancelación

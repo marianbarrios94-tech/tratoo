@@ -2,8 +2,9 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { PreApproval } from 'mercadopago'
 import { createClient } from '@/lib/supabase/server'
-import { createStripeClient } from '@/lib/stripe/server'
+import { createMercadoPagoClient } from '@/lib/mercadopago/server'
 
 async function currentOrigin() {
   const headersList = await headers()
@@ -11,7 +12,7 @@ async function currentOrigin() {
 }
 
 export async function startCheckout(formData: FormData) {
-  const stripe = createStripeClient()
+  const mpClient = createMercadoPagoClient()
   const supabase = await createClient()
   const {
     data: { user },
@@ -25,59 +26,45 @@ export async function startCheckout(formData: FormData) {
 
   const { data: plan } = await supabase
     .from('subscription_plans')
-    .select('stripe_price_id')
+    .select('name, price_monthly, currency')
     .eq('id', planId)
     .single()
 
-  if (!plan?.stripe_price_id) {
+  if (!plan) {
     redirect(
       `/panel/suscripcion?error=${encodeURIComponent('Este plan todavía no está disponible para pago')}`
     )
   }
 
-  const { data: profile } = await supabase
-    .from('professional_profiles')
-    .select('stripe_customer_id')
-    .eq('user_id', user.id)
-    .maybeSingle()
-
   const origin = await currentOrigin()
 
-  let customerId = profile?.stripe_customer_id ?? null
-  if (!customerId) {
-    const customer = await stripe.customers.create({
-      email: user.email ?? undefined,
-      metadata: { user_id: user.id },
-    })
-    customerId = customer.id
-    await supabase
-      .from('professional_profiles')
-      .upsert({ user_id: user.id, stripe_customer_id: customerId })
-  }
-
-  let session
+  let preapproval
   try {
-    session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
-      customer: customerId,
-      client_reference_id: user.id,
-      line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
-      success_url: `${origin}/panel/suscripcion?checkout=success`,
-      cancel_url: `${origin}/panel/suscripcion?checkout=cancelled`,
+    preapproval = await new PreApproval(mpClient).create({
+      body: {
+        reason: `Zolvi — Plan ${plan.name}`,
+        external_reference: `${user.id}:${planId}`,
+        payer_email: user.email,
+        back_url: `${origin}/panel/suscripcion?checkout=success`,
+        auto_recurring: {
+          frequency: 1,
+          frequency_type: 'months',
+          transaction_amount: plan.price_monthly,
+          currency_id: plan.currency.toUpperCase(),
+        },
+      },
     })
-  } catch (err) {
-    const message =
-      err instanceof Error && err.message.includes('combine currencies')
-        ? 'No pudimos iniciar el pago porque tu cuenta de facturación ya tiene una moneda distinta. Escribinos para ayudarte a migrar de plan.'
-        : 'No pudimos iniciar el pago, intentá de nuevo en unos minutos'
-    redirect(`/panel/suscripcion?error=${encodeURIComponent(message)}`)
+  } catch {
+    redirect(
+      `/panel/suscripcion?error=${encodeURIComponent('No pudimos iniciar el pago, intentá de nuevo en unos minutos')}`
+    )
   }
 
-  redirect(session.url!)
+  redirect(preapproval.init_point!)
 }
 
-export async function openBillingPortal() {
-  const stripe = createStripeClient()
+export async function cancelSubscription() {
+  const mpClient = createMercadoPagoClient()
   const supabase = await createClient()
   const {
     data: { user },
@@ -89,22 +76,28 @@ export async function openBillingPortal() {
 
   const { data: profile } = await supabase
     .from('professional_profiles')
-    .select('stripe_customer_id')
+    .select('mp_preapproval_id')
     .eq('user_id', user.id)
     .maybeSingle()
 
-  if (!profile?.stripe_customer_id) {
+  if (!profile?.mp_preapproval_id) {
     redirect(
       `/panel/suscripcion?error=${encodeURIComponent('Todavía no tenés una suscripción activa')}`
     )
   }
 
-  const origin = await currentOrigin()
+  try {
+    await new PreApproval(mpClient).update({
+      id: profile.mp_preapproval_id,
+      body: { status: 'cancelled' },
+    })
+  } catch {
+    redirect(
+      `/panel/suscripcion?error=${encodeURIComponent('No pudimos cancelar la suscripción, intentá de nuevo en unos minutos')}`
+    )
+  }
 
-  const session = await stripe.billingPortal.sessions.create({
-    customer: profile.stripe_customer_id,
-    return_url: `${origin}/panel/suscripcion`,
-  })
-
-  redirect(session.url)
+  redirect(
+    `/panel/suscripcion?message=${encodeURIComponent('Suscripción cancelada')}`
+  )
 }
