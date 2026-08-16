@@ -54,10 +54,9 @@ export async function startCheckout(formData: FormData) {
         },
       },
     })
-  } catch {
-    redirect(
-      `/panel/suscripcion?error=${encodeURIComponent('No pudimos iniciar el pago, intentá de nuevo en unos minutos')}`
-    )
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : String(err)
+    redirect(`/panel/suscripcion?error=${encodeURIComponent(`DEBUG: ${detail}`)}`)
   }
 
   redirect(preapproval.init_point!)
