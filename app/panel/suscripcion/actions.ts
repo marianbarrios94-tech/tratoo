@@ -56,7 +56,10 @@ export async function startCheckout(formData: FormData) {
     })
   } catch (err) {
     const detail = err instanceof Error ? err.message : String(err)
-    redirect(`/panel/suscripcion?error=${encodeURIComponent(`DEBUG: ${detail}`)}`)
+    const tokenLen = (process.env.MP_ACCESS_TOKEN ?? '').length
+    redirect(
+      `/panel/suscripcion?error=${encodeURIComponent(`DEBUG: ${detail} | token_len=${tokenLen}`)}`
+    )
   }
 
   redirect(preapproval.init_point!)
