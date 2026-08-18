@@ -39,7 +39,7 @@ export default function ReembolsosPage() {
           </h2>
           <p className="mt-2">
             Pasado el plazo de arrepentimiento, podés cancelar tu suscripción en cualquier momento
-            desde &quot;Gestionar suscripción&quot; en tu panel. La cancelación no es inmediata: tu
+            desde &quot;Cancelar suscripción&quot; en tu panel. La cancelación no es inmediata: tu
             plan sigue activo (con acceso al directorio y a nuevas solicitudes) hasta el final del
             período ya pagado, y no se te cobra el siguiente ciclo. No se realizan reembolsos
             parciales por el tiempo restante de un período ya iniciado.
