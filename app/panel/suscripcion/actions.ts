@@ -54,11 +54,9 @@ export async function startCheckout(formData: FormData) {
         },
       },
     })
-  } catch (err) {
-    const detail = err instanceof Error ? err.message : String(err)
-    const tokenLen = (process.env.MP_ACCESS_TOKEN ?? '').length
+  } catch {
     redirect(
-      `/panel/suscripcion?error=${encodeURIComponent(`DEBUG: ${detail} | token_len=${tokenLen}`)}`
+      `/panel/suscripcion?error=${encodeURIComponent('No pudimos iniciar el pago, intentá de nuevo en unos minutos')}`
     )
   }
 
