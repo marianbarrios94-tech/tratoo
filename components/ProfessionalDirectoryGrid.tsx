@@ -10,6 +10,7 @@ type ProfessionalCard = {
   business_name: string | null
   verified: boolean
   city: string | null
+  province: string | null
   avg_rating: number
   categoryLabel: string | null
 }
@@ -67,7 +68,11 @@ export function ProfessionalDirectoryGrid({
               {p.categoryLabel && (
                 <p className="mt-1 text-sm text-zinc-500">{p.categoryLabel}</p>
               )}
-              {p.city && <p className="text-sm text-zinc-500">{p.city}</p>}
+              {(p.city || p.province) && (
+                <p className="text-sm text-zinc-500">
+                  {[p.city, p.province].filter(Boolean).join(', ')}
+                </p>
+              )}
               <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                 {starString(Number(p.avg_rating))} {Number(p.avg_rating).toFixed(1)}
               </p>

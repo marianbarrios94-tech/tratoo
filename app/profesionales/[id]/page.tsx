@@ -71,7 +71,9 @@ export default async function ProfesionalDetallePage({
         {(category || professional.custom_profession) && (
           <span>{category?.name ?? professional.custom_profession}</span>
         )}
-        {professional.city && <span>{professional.city}</span>}
+        {(professional.city || professional.province) && (
+          <span>{[professional.city, professional.province].filter(Boolean).join(', ')}</span>
+        )}
         <span>
           {starString(Number(professional.avg_rating))} {Number(professional.avg_rating).toFixed(1)}
         </span>

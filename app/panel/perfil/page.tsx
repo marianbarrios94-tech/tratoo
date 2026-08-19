@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
+import { PROVINCES } from '@/lib/constants/provinces'
 import { saveProfessionalProfile } from './actions'
 
 export default async function PerfilProfesionalPage({
@@ -127,6 +128,28 @@ export default async function PerfilProfesionalPage({
             defaultValue={profile?.city ?? ''}
             className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
           />
+        </div>
+
+        <div>
+          <label htmlFor="province" className="block text-sm font-medium">
+            Provincia
+          </label>
+          <select
+            id="province"
+            name="province"
+            required
+            defaultValue={profile?.province ?? ''}
+            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
+          >
+            <option value="" disabled>
+              Elegí tu provincia
+            </option>
+            {PROVINCES.map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

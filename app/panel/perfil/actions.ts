@@ -18,6 +18,7 @@ export async function saveProfessionalProfile(formData: FormData) {
   const customProfession = formData.get('custom_profession') as string
   const licenseNumber = formData.get('license_number') as string
   const city = formData.get('city') as string
+  const province = formData.get('province') as string
   const yearsExperience = formData.get('years_experience') as string
   const bio = formData.get('bio') as string
   const phone = formData.get('phone') as string
@@ -28,6 +29,10 @@ export async function saveProfessionalProfile(formData: FormData) {
     )
   }
 
+  if (!province) {
+    redirect(`/panel/perfil?error=${encodeURIComponent('Elegí tu provincia')}`)
+  }
+
   const { error } = await supabase.from('professional_profiles').upsert({
     user_id: user.id,
     business_name: businessName,
@@ -35,6 +40,7 @@ export async function saveProfessionalProfile(formData: FormData) {
     custom_profession: categoryId ? null : customProfession || null,
     license_number: licenseNumber || null,
     city: city || null,
+    province,
     years_experience: yearsExperience ? Number(yearsExperience) : null,
     bio: bio || null,
   })

@@ -83,6 +83,7 @@ export interface Database {
           bio: string | null
           city: string | null
           city_unaccent: string | null
+          province: string | null
           years_experience: number | null
           verified: boolean
           subscription_plan_id: string | null
@@ -99,6 +100,7 @@ export interface Database {
           license_number?: string | null
           bio?: string | null
           city?: string | null
+          province?: string | null
           years_experience?: number | null
           verified?: boolean
           subscription_plan_id?: string | null

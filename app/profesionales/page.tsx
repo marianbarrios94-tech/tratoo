@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
+import { PROVINCES } from '@/lib/constants/provinces'
 import { stripAccents } from '@/lib/text'
 import { BackButton } from '@/components/BackButton'
 import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGrid'
@@ -7,9 +8,9 @@ import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGri
 export default async function ProfesionalesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ vertical?: string; categoria?: string; ciudad?: string }>
+  searchParams: Promise<{ vertical?: string; categoria?: string; ciudad?: string; provincia?: string }>
 }) {
-  const { vertical, categoria, ciudad } = await searchParams
+  const { vertical, categoria, ciudad, provincia } = await searchParams
   const supabase = await createClient()
 
   const { data: categories } = await supabase
@@ -39,6 +40,9 @@ export default async function ProfesionalesPage({
   }
   if (ciudad) {
     query = query.ilike('city_unaccent', `%${stripAccents(ciudad)}%`)
+  }
+  if (provincia) {
+    query = query.eq('province', provincia)
   }
 
   const { data: professionals } = await query
@@ -92,6 +96,19 @@ export default async function ProfesionalesPage({
           className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
         />
 
+        <select
+          name="provincia"
+          defaultValue={provincia ?? ''}
+          className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+        >
+          <option value="">Todas las provincias</option>
+          {PROVINCES.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
+
         <button
           type="submit"
           className="rounded-md bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
@@ -108,6 +125,7 @@ export default async function ProfesionalesPage({
             business_name: p.business_name,
             verified: p.verified,
             city: p.city,
+            province: p.province,
             avg_rating: p.avg_rating,
             categoryLabel: category?.name ?? p.custom_profession ?? null,
           }
