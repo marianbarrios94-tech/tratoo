@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { logout } from '@/app/(auth)/actions'
 import { BackButton } from '@/components/BackButton'
+import { LogoMark } from '@/components/Logo'
 
 export default function CuentaLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +9,8 @@ export default function CuentaLayout({ children }: { children: React.ReactNode }
       <header className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
         <div className="flex items-center gap-4">
           <BackButton fallbackHref="/cuenta" />
-          <Link href="/" className="text-lg font-semibold">
+          <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
+            <LogoMark className="h-7 w-7" />
             Tratoo
           </Link>
         </div>

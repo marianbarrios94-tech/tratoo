@@ -3,6 +3,7 @@ import { VERTICALS, CATEGORIES_BY_VERTICAL } from '@/lib/constants/categories'
 import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/(auth)/actions'
 import { formatPrice } from '@/lib/currency'
+import { LogoMark } from '@/components/Logo'
 
 const PLANS = [
   {
@@ -42,7 +43,10 @@ export default async function Home() {
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-        <span className="text-xl font-semibold tracking-tight">Tratoo</span>
+        <span className="flex items-center gap-2 text-xl font-semibold tracking-tight">
+          <LogoMark />
+          Tratoo
+        </span>
         <nav className="flex items-center gap-4 text-sm font-medium">
           <Link
             href="/profesionales"
