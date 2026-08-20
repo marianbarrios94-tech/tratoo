@@ -13,7 +13,7 @@ export default async function LoginPage({
     <div className="flex flex-1 items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
         <BackButton />
-        <h1 className="mt-4 text-2xl font-semibold">Iniciá sesión en Zolvi</h1>
+        <h1 className="mt-4 text-2xl font-semibold">Iniciá sesión en Tratoo</h1>
         <p className="mt-1 text-sm text-zinc-500">Encontrá al profesional que resuelve.</p>
 
         {message && (

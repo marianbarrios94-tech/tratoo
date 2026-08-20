@@ -1,7 +1,7 @@
 import { BackButton } from '@/components/BackButton'
 
 export const metadata = {
-  title: 'Política de reembolsos y cancelación — Zolvi',
+  title: 'Política de reembolsos y cancelación — Tratoo',
 }
 
 export default function ReembolsosPage() {
@@ -26,8 +26,8 @@ export default function ReembolsosPage() {
             contrataste tu suscripción a través de internet tenés derecho a revocar la compra
             dentro de los 10 días corridos desde la contratación, sin necesidad de justificar el
             motivo y sin cargo alguno. Para ejercer este derecho, escribinos a{' '}
-            <a href="mailto:hola@zolvi.com" className="underline">
-              hola@zolvi.com
+            <a href="mailto:hola@tratoo.com" className="underline">
+              hola@tratoo.com
             </a>{' '}
             dentro de ese plazo y te reembolsamos el monto pagado en su totalidad.
           </p>
@@ -62,7 +62,7 @@ export default function ReembolsosPage() {
             4. Servicios entre cliente y profesional
           </h2>
           <p className="mt-2">
-            Esta política cubre únicamente los pagos de suscripción realizados a Zolvi. Zolvi no
+            Esta política cubre únicamente los pagos de suscripción realizados a Tratoo. Tratoo no
             procesa ni interviene en los pagos por los servicios acordados directamente entre un
             cliente y un profesional; cualquier reembolso relacionado con esos servicios debe
             acordarse entre las partes.
@@ -74,8 +74,8 @@ export default function ReembolsosPage() {
           <p className="mt-2">
             Para solicitar un reembolso o resolver cualquier duda sobre tu suscripción, escribinos
             a{' '}
-            <a href="mailto:hola@zolvi.com" className="underline">
-              hola@zolvi.com
+            <a href="mailto:hola@tratoo.com" className="underline">
+              hola@tratoo.com
             </a>
             .
           </p>

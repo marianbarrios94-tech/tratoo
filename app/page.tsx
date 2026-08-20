@@ -42,7 +42,7 @@ export default async function Home() {
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-        <span className="text-xl font-semibold tracking-tight">Zolvi</span>
+        <span className="text-xl font-semibold tracking-tight">Tratoo</span>
         <nav className="flex items-center gap-4 text-sm font-medium">
           <Link
             href="/profesionales"
@@ -92,7 +92,7 @@ export default async function Home() {
             Encontrá al profesional que resuelve
           </h1>
           <p className="max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-            Zolvi conecta clientes con profesionales verificados de hogar, consultoría y salud,
+            Tratoo conecta clientes con profesionales verificados de hogar, consultoría y salud,
             en un solo lugar.
           </p>
           <p className="max-w-xl text-sm font-medium text-zinc-500 dark:text-zinc-400">
@@ -199,7 +199,7 @@ export default async function Home() {
       </main>
 
       <footer className="border-t border-zinc-200 py-8 text-center text-sm text-zinc-500 dark:border-zinc-800">
-        <p>© {new Date().getFullYear()} Zolvi</p>
+        <p>© {new Date().getFullYear()} Tratoo</p>
         <nav className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
           <Link href="/terminos" className="hover:text-zinc-950 dark:hover:text-white">
             Términos y condiciones

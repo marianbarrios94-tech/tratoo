@@ -1,4 +1,4 @@
-# Zolvi
+# Tratoo
 
 Marketplace de servicios profesionales: conecta clientes con profesionales de
 hogar, consultoría y salud. Los profesionales se monetizan por suscripción.

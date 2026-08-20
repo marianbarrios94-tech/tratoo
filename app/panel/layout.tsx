@@ -9,7 +9,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
         <div className="flex items-center gap-4">
           <BackButton fallbackHref="/panel" />
           <Link href="/" className="text-lg font-semibold">
-            Zolvi
+            Tratoo
           </Link>
         </div>
         <nav className="flex items-center gap-4 text-sm">

@@ -1,7 +1,7 @@
 import { createResendClient } from '@/lib/resend/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-const FROM = 'Zolvi <onboarding@resend.dev>'
+const FROM = 'Tratoo <onboarding@resend.dev>'
 
 async function getProfileEmail(userId: string) {
   const admin = createAdminClient()
@@ -26,8 +26,8 @@ export async function notifyNewRequest({
     await resend.emails.send({
       from: FROM,
       to: email,
-      subject: 'Tenés una nueva solicitud en Zolvi',
-      html: `<p><strong>${clientName}</strong> te envió una solicitud de servicio en Zolvi.</p>${
+      subject: 'Tenés una nueva solicitud en Tratoo',
+      html: `<p><strong>${clientName}</strong> te envió una solicitud de servicio en Tratoo.</p>${
         message ? `<p>"${message}"</p>` : ''
       }<p>Entrá a tu panel para aceptarla o rechazarla.</p>`,
     })
@@ -63,7 +63,7 @@ export async function notifyRequestStatusChange({
       from: FROM,
       to: email,
       subject: `${professionalName} ${statusText}`,
-      html: `<p><strong>${professionalName}</strong> ${statusText} en Zolvi. Entrá a tu cuenta para ver el detalle.</p>`,
+      html: `<p><strong>${professionalName}</strong> ${statusText} en Tratoo. Entrá a tu cuenta para ver el detalle.</p>`,
     })
   } catch {
     // best-effort: un fallo de email nunca debe romper el flujo principal

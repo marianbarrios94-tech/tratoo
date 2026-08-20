@@ -14,7 +14,7 @@ export default async function RegistroPage({
     <div className="flex flex-1 items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
         <BackButton />
-        <h1 className="mt-4 text-2xl font-semibold">Creá tu cuenta en Zolvi</h1>
+        <h1 className="mt-4 text-2xl font-semibold">Creá tu cuenta en Tratoo</h1>
 
         {error && (
           <p className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>

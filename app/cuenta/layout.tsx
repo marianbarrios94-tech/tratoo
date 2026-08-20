@@ -9,7 +9,7 @@ export default function CuentaLayout({ children }: { children: React.ReactNode }
         <div className="flex items-center gap-4">
           <BackButton fallbackHref="/cuenta" />
           <Link href="/" className="text-lg font-semibold">
-            Zolvi
+            Tratoo
           </Link>
         </div>
         <nav className="flex items-center gap-4 text-sm">

@@ -1,7 +1,7 @@
 import { BackButton } from '@/components/BackButton'
 
 export const metadata = {
-  title: 'Términos y condiciones — Zolvi',
+  title: 'Términos y condiciones — Tratoo',
 }
 
 export default function TerminosPage() {
@@ -18,11 +18,11 @@ export default function TerminosPage() {
 
       <div className="mt-8 flex flex-col gap-6 text-sm text-zinc-700 dark:text-zinc-300">
         <section>
-          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">1. Qué es Zolvi</h2>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">1. Qué es Tratoo</h2>
           <p className="mt-2">
-            Zolvi es una plataforma que conecta a personas que buscan un servicio (&quot;clientes&quot;)
+            Tratoo es una plataforma que conecta a personas que buscan un servicio (&quot;clientes&quot;)
             con personas que lo ofrecen (&quot;profesionales&quot;) en las áreas de hogar, consultoría y
-            salud. Zolvi actúa únicamente como intermediario tecnológico: no presta los servicios
+            salud. Tratoo actúa únicamente como intermediario tecnológico: no presta los servicios
             solicitados, no emplea a los profesionales listados en el directorio, y no participa en
             la ejecución del trabajo acordado entre cliente y profesional.
           </p>
@@ -31,7 +31,7 @@ export default function TerminosPage() {
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">2. Cuentas</h2>
           <p className="mt-2">
-            Para usar Zolvi hace falta crear una cuenta con un email válido. Sos responsable de
+            Para usar Tratoo hace falta crear una cuenta con un email válido. Sos responsable de
             mantener la confidencialidad de tu contraseña y de toda actividad realizada desde tu
             cuenta. Una misma cuenta puede actuar como cliente y como profesional a la vez.
           </p>
@@ -43,7 +43,7 @@ export default function TerminosPage() {
           </h2>
           <p className="mt-2">
             El contrato de prestación de servicios se celebra directamente entre el cliente y el
-            profesional. Zolvi no garantiza la calidad, idoneidad, legalidad ni el resultado del
+            profesional. Tratoo no garantiza la calidad, idoneidad, legalidad ni el resultado del
             servicio prestado, y no es parte de ese acuerdo. Cualquier reclamo sobre el servicio en
             sí debe resolverse entre las partes involucradas.
           </p>
@@ -70,7 +70,7 @@ export default function TerminosPage() {
             5. Conducta prohibida
           </h2>
           <p className="mt-2">
-            No está permitido usar Zolvi para publicar información falsa, suplantar identidad,
+            No está permitido usar Tratoo para publicar información falsa, suplantar identidad,
             evadir el pago de una suscripción activa, ni usar la plataforma con fines distintos a
             conectar clientes y profesionales.
           </p>
@@ -81,7 +81,7 @@ export default function TerminosPage() {
             6. Limitación de responsabilidad
           </h2>
           <p className="mt-2">
-            En la medida permitida por la ley aplicable, Zolvi no es responsable por daños
+            En la medida permitida por la ley aplicable, Tratoo no es responsable por daños
             indirectos, pérdida de ganancias, ni por perjuicios derivados de los servicios
             contratados entre clientes y profesionales a través de la plataforma.
           </p>
@@ -101,8 +101,8 @@ export default function TerminosPage() {
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">8. Contacto</h2>
           <p className="mt-2">
             Ante cualquier consulta sobre estos términos, escribinos a{' '}
-            <a href="mailto:hola@zolvi.com" className="underline">
-              hola@zolvi.com
+            <a href="mailto:hola@tratoo.com" className="underline">
+              hola@tratoo.com
             </a>
             .
           </p>

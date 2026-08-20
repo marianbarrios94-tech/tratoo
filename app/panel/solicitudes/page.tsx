@@ -42,7 +42,7 @@ export default async function PanelSolicitudesPage({
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-semibold">Tus solicitudes</h1>
-        <p className="mt-1 text-zinc-500">Solicitudes de clientes recibidas en Zolvi.</p>
+        <p className="mt-1 text-zinc-500">Solicitudes de clientes recibidas en Tratoo.</p>
       </div>
 
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}

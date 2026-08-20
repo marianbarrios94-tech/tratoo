@@ -115,7 +115,7 @@ export default async function CuentaSolicitudesPage({
                   return (
                     <WhatsAppContactLink
                       professionalId={r.professional_id}
-                      href={whatsAppLink(phone, `Hola! Te escribo por tu solicitud en Zolvi.`)}
+                      href={whatsAppLink(phone, `Hola! Te escribo por tu solicitud en Tratoo.`)}
                     />
                   )
                 })()}

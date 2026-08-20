@@ -1,7 +1,7 @@
 import { BackButton } from '@/components/BackButton'
 
 export const metadata = {
-  title: 'Política de privacidad — Zolvi',
+  title: 'Política de privacidad — Tratoo',
 }
 
 export default function PrivacidadPage() {
@@ -29,7 +29,7 @@ export default function PrivacidadPage() {
               experiencia y descripción, si ofrecés servicios.
             </li>
             <li>
-              · Datos de facturación: gestionados directamente por Mercado Pago. Zolvi nunca
+              · Datos de facturación: gestionados directamente por Mercado Pago. Tratoo nunca
               recibe ni almacena el número completo de tu tarjeta.
             </li>
             <li>
@@ -69,8 +69,8 @@ export default function PrivacidadPage() {
             De acuerdo con la Ley de Protección de Datos Personales (Ley 25.326), podés acceder,
             rectificar o solicitar la eliminación de tus datos personales en cualquier momento
             escribiendo a{' '}
-            <a href="mailto:hola@zolvi.com" className="underline">
-              hola@zolvi.com
+            <a href="mailto:hola@tratoo.com" className="underline">
+              hola@tratoo.com
             </a>
             . También podés editar tu nombre, teléfono y ciudad directamente desde tu cuenta.
           </p>
@@ -88,8 +88,8 @@ export default function PrivacidadPage() {
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">6. Contacto</h2>
           <p className="mt-2">
             Ante cualquier consulta sobre privacidad, escribinos a{' '}
-            <a href="mailto:hola@zolvi.com" className="underline">
-              hola@zolvi.com
+            <a href="mailto:hola@tratoo.com" className="underline">
+              hola@tratoo.com
             </a>
             .
           </p>

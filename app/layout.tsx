@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Zolvi — Encontrá al profesional que resuelve",
+  title: "Tratoo — Encontrá al profesional que resuelve",
   description:
-    "Zolvi conecta clientes con profesionales verificados de hogar, consultoría y salud.",
+    "Tratoo conecta clientes con profesionales verificados de hogar, consultoría y salud.",
 };
 
 export default function RootLayout({

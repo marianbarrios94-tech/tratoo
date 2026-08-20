@@ -17,7 +17,7 @@ export default async function CuentaPage() {
         <h1 className="text-2xl font-semibold">
           Hola{profile?.full_name ? `, ${profile.full_name}` : ''}
         </h1>
-        <p className="mt-1 text-zinc-500">Este es tu espacio como cliente en Zolvi.</p>
+        <p className="mt-1 text-zinc-500">Este es tu espacio como cliente en Tratoo.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

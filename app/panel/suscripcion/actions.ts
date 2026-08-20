@@ -42,7 +42,7 @@ export async function startCheckout(formData: FormData) {
   try {
     preapproval = await new PreApproval(mpClient).create({
       body: {
-        reason: `Zolvi — Plan ${plan.name}`,
+        reason: `Tratoo — Plan ${plan.name}`,
         external_reference: `${user.id}:${planId}`,
         payer_email: user.email,
         back_url: `${origin}/panel/suscripcion?checkout=success`,
