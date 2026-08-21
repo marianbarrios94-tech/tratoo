@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { PROVINCES } from '@/lib/constants/provinces'
+import { AvatarUpload } from '@/components/AvatarUpload'
 import { saveProfessionalProfile } from './actions'
 
 export default async function PerfilProfesionalPage({
@@ -14,15 +15,19 @@ export default async function PerfilProfesionalPage({
     data: { user },
   } = await supabase.auth.getUser()
 
-  const [{ data: profile }, { data: contact }, { data: categories }] = await Promise.all([
-    user
-      ? supabase.from('professional_profiles').select('*').eq('user_id', user.id).maybeSingle()
-      : Promise.resolve({ data: null }),
-    user
-      ? supabase.from('professional_contacts').select('phone').eq('user_id', user.id).maybeSingle()
-      : Promise.resolve({ data: null }),
-    supabase.from('categories').select('id, slug, name, vertical').order('name'),
-  ])
+  const [{ data: profile }, { data: contact }, { data: categories }, { data: baseProfile }] =
+    await Promise.all([
+      user
+        ? supabase.from('professional_profiles').select('*').eq('user_id', user.id).maybeSingle()
+        : Promise.resolve({ data: null }),
+      user
+        ? supabase.from('professional_contacts').select('phone').eq('user_id', user.id).maybeSingle()
+        : Promise.resolve({ data: null }),
+      supabase.from('categories').select('id, slug, name, vertical').order('name'),
+      user
+        ? supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).maybeSingle()
+        : Promise.resolve({ data: null }),
+    ])
 
   const categoriesByVertical = new Map(VERTICALS.map((v) => [v.slug, [] as typeof categories]))
   for (const category of categories ?? []) {
@@ -44,6 +49,11 @@ export default async function PerfilProfesionalPage({
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <form action={saveProfessionalProfile} className="flex max-w-lg flex-col gap-4">
+        <AvatarUpload
+          avatarUrl={baseProfile?.avatar_url ?? null}
+          name={profile?.business_name || baseProfile?.full_name || ''}
+        />
+
         <div>
           <label htmlFor="business_name" className="block text-sm font-medium">
             Nombre o marca

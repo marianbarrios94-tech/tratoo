@@ -13,6 +13,7 @@ type ProfessionalCard = {
   province: string | null
   avg_rating: number
   categoryLabel: string | null
+  avatarUrl: string | null
 }
 
 export function ProfessionalDirectoryGrid({
@@ -56,26 +57,40 @@ export function ProfessionalDirectoryGrid({
               />
               Comparar
             </label>
-            <Link href={`/profesionales/${p.user_id}`} className="block pr-16">
-              <div className="flex items-start justify-between gap-2">
-                <h2 className="font-semibold">{p.business_name}</h2>
-                {p.verified && (
-                  <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-                    Verificado
-                  </span>
+            <Link href={`/profesionales/${p.user_id}`} className="flex gap-3 pr-16">
+              {p.avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element -- URL externa de Supabase Storage
+                <img
+                  src={p.avatarUrl}
+                  alt=""
+                  className="h-10 w-10 shrink-0 rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-sm font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                  {(p.business_name ?? '?').charAt(0).toUpperCase()}
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <h2 className="font-semibold">{p.business_name}</h2>
+                  {p.verified && (
+                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                      Verificado
+                    </span>
+                  )}
+                </div>
+                {p.categoryLabel && (
+                  <p className="mt-1 text-sm text-zinc-500">{p.categoryLabel}</p>
                 )}
-              </div>
-              {p.categoryLabel && (
-                <p className="mt-1 text-sm text-zinc-500">{p.categoryLabel}</p>
-              )}
-              {(p.city || p.province) && (
-                <p className="text-sm text-zinc-500">
-                  {[p.city, p.province].filter(Boolean).join(', ')}
+                {(p.city || p.province) && (
+                  <p className="text-sm text-zinc-500">
+                    {[p.city, p.province].filter(Boolean).join(', ')}
+                  </p>
+                )}
+                <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                  {starString(Number(p.avg_rating))} {Number(p.avg_rating).toFixed(1)}
                 </p>
-              )}
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                {starString(Number(p.avg_rating))} {Number(p.avg_rating).toFixed(1)}
-              </p>
+              </div>
             </Link>
           </div>
         ))}

@@ -43,7 +43,7 @@ export default async function ProfesionalDetallePage({
           .eq('id', professional.category_id)
           .maybeSingle()
       : Promise.resolve({ data: null }),
-    supabase.from('profiles').select('full_name').eq('id', id).maybeSingle(),
+    supabase.from('profiles').select('full_name, avatar_url').eq('id', id).maybeSingle(),
   ])
 
   const canRequest = Boolean(user) && !isOwnProfile
@@ -58,13 +58,27 @@ export default async function ProfesionalDetallePage({
     <div className="mx-auto w-full max-w-2xl px-6 py-10">
       <BackButton label="← Volver al directorio" fallbackHref="/profesionales" />
 
-      <div className="mt-4 flex items-start justify-between gap-2">
-        <h1 className="text-2xl font-semibold">{professional.business_name}</h1>
-        {professional.verified && (
-          <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-            Verificado
-          </span>
+      <div className="mt-4 flex items-start gap-4">
+        {profile?.avatar_url ? (
+          // eslint-disable-next-line @next/next/no-img-element -- URL externa de Supabase Storage
+          <img
+            src={profile.avatar_url}
+            alt=""
+            className="h-16 w-16 shrink-0 rounded-full object-cover"
+          />
+        ) : (
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xl font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+            {(professional.business_name ?? '?').charAt(0).toUpperCase()}
+          </div>
         )}
+        <div className="flex flex-1 items-start justify-between gap-2">
+          <h1 className="text-2xl font-semibold">{professional.business_name}</h1>
+          {professional.verified && (
+            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+              Verificado
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="mt-2 flex flex-wrap gap-x-4 text-sm text-zinc-500">

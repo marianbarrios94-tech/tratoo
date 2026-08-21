@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { AvatarUpload } from '@/components/AvatarUpload'
 import { saveClientProfile } from './actions'
 
 export default async function PerfilClientePage({
@@ -15,7 +16,7 @@ export default async function PerfilClientePage({
   const { data: profile } = user
     ? await supabase
         .from('profiles')
-        .select('full_name, phone, city')
+        .select('full_name, phone, city, avatar_url')
         .eq('id', user.id)
         .maybeSingle()
     : { data: null }
@@ -33,6 +34,8 @@ export default async function PerfilClientePage({
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <form action={saveClientProfile} className="flex max-w-lg flex-col gap-4">
+        <AvatarUpload avatarUrl={profile?.avatar_url ?? null} name={profile?.full_name ?? ''} />
+
         <div>
           <label htmlFor="full_name" className="block text-sm font-medium">
             Nombre completo

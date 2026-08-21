@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { uploadAvatarIfProvided } from '@/lib/avatar'
 
 export async function saveClientProfile(formData: FormData) {
   const supabase = await createClient()
@@ -11,6 +12,11 @@ export async function saveClientProfile(formData: FormData) {
 
   if (!user) {
     redirect('/login')
+  }
+
+  const avatarError = await uploadAvatarIfProvided(supabase, user.id, formData)
+  if (avatarError) {
+    redirect(`/cuenta/perfil?error=${encodeURIComponent(avatarError)}`)
   }
 
   const fullName = formData.get('full_name') as string

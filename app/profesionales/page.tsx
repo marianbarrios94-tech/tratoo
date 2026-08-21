@@ -47,6 +47,12 @@ export default async function ProfesionalesPage({
 
   const { data: professionals } = await query
 
+  const userIds = (professionals ?? []).map((p) => p.user_id)
+  const { data: avatarRows } = userIds.length
+    ? await supabase.from('profiles').select('id, avatar_url').in('id', userIds)
+    : { data: [] }
+  const avatarByUserId = new Map((avatarRows ?? []).map((a) => [a.id, a.avatar_url]))
+
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-10">
       <BackButton />
@@ -128,6 +134,7 @@ export default async function ProfesionalesPage({
             province: p.province,
             avg_rating: p.avg_rating,
             categoryLabel: category?.name ?? p.custom_profession ?? null,
+            avatarUrl: avatarByUserId.get(p.user_id) ?? null,
           }
         })}
       />
