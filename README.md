@@ -93,7 +93,7 @@ Abrí [http://localhost:3000](http://localhost:3000).
    y cargá su `whsec_...` en `STRIPE_WEBHOOK_SECRET` — después hay que
    redesplegar para que tome el valor nuevo.
 
-Sitio en producción: https://tratoo-iota.vercel.app
+Sitio en producción: https://usetratoo.vercel.app
 
 ## CI
 
