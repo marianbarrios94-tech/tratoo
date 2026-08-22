@@ -48,10 +48,12 @@ export default async function CuentaPage() {
         </Link>
         <Link
           href="/panel"
-          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+          className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 transition-colors hover:border-emerald-400 dark:border-emerald-900 dark:bg-emerald-950 dark:hover:border-emerald-700"
         >
-          <h2 className="font-medium">Ofrecer tus servicios</h2>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h2 className="font-medium text-emerald-700 dark:text-emerald-300">
+            Cambiar a cuenta profesional
+          </h2>
+          <p className="mt-1 text-sm text-emerald-700/80 dark:text-emerald-400">
             Completá tu perfil profesional y elegí un plan.
           </p>
         </Link>

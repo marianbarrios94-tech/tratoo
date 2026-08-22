@@ -46,10 +46,8 @@ export default async function SuscripcionPage({
       <div>
         <h1 className="text-2xl font-semibold">Tu suscripción</h1>
         <p className="mt-1 text-zinc-500">
-          Tu perfil ya es visible en el directorio gratis, con contacto de hasta{' '}
-          {FREE_TIER_MONTHLY_REQUEST_LIMIT} clientes nuevos por mes. Pasate a un plan
-          pago para clientes ilimitados, insignia de verificado y prioridad en
-          resultados.
+          Pasate a un plan pago para clientes ilimitados, insignia de verificado y
+          prioridad en resultados.
         </p>
       </div>
 
@@ -70,6 +68,29 @@ export default async function SuscripcionPage({
       )}
 
       <div className="grid gap-4 sm:grid-cols-3">
+        <div
+          className={`rounded-2xl border p-6 ${
+            !isSubscribed
+              ? 'border-zinc-950 dark:border-white'
+              : 'border-zinc-200 dark:border-zinc-800'
+          }`}
+        >
+          <h2 className="font-semibold">Gratis</h2>
+          <p className="mt-2 text-2xl font-semibold">
+            {formatPrice(0, 'ars')}
+            <span className="text-sm font-normal text-zinc-500">/mes</span>
+          </p>
+          <ul className="mt-4 flex flex-col gap-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <li>· Visible en el directorio</li>
+            <li>· Contacto de hasta {FREE_TIER_MONTHLY_REQUEST_LIMIT} clientes nuevos por mes</li>
+            <li>· Sin costo, para siempre</li>
+          </ul>
+          {!isSubscribed && (
+            <span className="mt-4 inline-block rounded-full bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
+              Tu plan actual
+            </span>
+          )}
+        </div>
         {visiblePlans.map((plan) => {
           const isCurrent = plan.id === professional?.subscription_plan_id && isSubscribed
           return (

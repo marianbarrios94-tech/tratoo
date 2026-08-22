@@ -23,9 +23,9 @@ export default function CuentaLayout({ children }: { children: React.ReactNode }
           </Link>
           <Link
             href="/panel"
-            className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+            className="font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
           >
-            Ofrecer mis servicios
+            Cambiar a cuenta profesional
           </Link>
           <form action={logout}>
             <button

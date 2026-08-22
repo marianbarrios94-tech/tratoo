@@ -51,7 +51,7 @@ export default async function PanelPage() {
         <h1 className="text-2xl font-semibold">
           Hola{profile?.full_name ? `, ${profile.full_name}` : ''}
         </h1>
-        <p className="mt-1 text-zinc-500">Este es tu panel de profesional.</p>
+        <p className="mt-1 text-zinc-500">Este es tu espacio como profesional en Tratoo.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -99,10 +99,10 @@ export default async function PanelPage() {
         </Link>
         <Link
           href="/cuenta"
-          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+          className="rounded-2xl border border-blue-200 bg-blue-50 p-6 transition-colors hover:border-blue-400 dark:border-blue-900 dark:bg-blue-950 dark:hover:border-blue-700"
         >
-          <h2 className="font-medium">Cuenta de cliente</h2>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h2 className="font-medium text-blue-700 dark:text-blue-300">Cambiar a cuenta cliente</h2>
+          <p className="mt-1 text-sm text-blue-700/80 dark:text-blue-400">
             Buscá profesionales y seguí tus propias solicitudes.
           </p>
         </Link>

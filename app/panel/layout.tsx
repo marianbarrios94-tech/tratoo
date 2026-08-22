@@ -19,13 +19,13 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
             href="/panel"
             className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
           >
-            Panel
+            Mi cuenta
           </Link>
           <Link
             href="/cuenta"
-            className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+            className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            Cuenta de cliente
+            Cambiar a cuenta cliente
           </Link>
           <form action={logout}>
             <button

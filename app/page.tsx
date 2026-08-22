@@ -7,11 +7,23 @@ import { LogoMark } from '@/components/Logo'
 
 const PLANS = [
   {
+    slug: 'gratis',
+    name: 'Gratis',
+    price: 0,
+    features: [
+      'Visible en el directorio',
+      'Contacto de hasta 5 clientes nuevos por mes',
+      'Sin costo, para siempre',
+    ],
+    cta: 'Empezar gratis',
+  },
+  {
     slug: 'pro',
     name: 'Pro',
     price: 15000,
     features: ['Solicitudes ilimitadas', 'Insignia de verificado', 'Estadísticas básicas'],
     highlighted: true,
+    cta: 'Suscribirme',
   },
   {
     slug: 'premium',
@@ -22,6 +34,7 @@ const PLANS = [
       'Prioridad en resultados de búsqueda',
       'Soporte prioritario',
     ],
+    cta: 'Suscribirme',
   },
 ]
 
@@ -172,7 +185,7 @@ export default async function Home() {
               Resistencia, Formosa o cualquier ciudad del NEA.
             </p>
           </div>
-          <div className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
             {PLANS.map((plan) => (
               <Link
                 key={plan.slug}
@@ -194,7 +207,7 @@ export default async function Home() {
                   ))}
                 </ul>
                 <span className="mt-4 inline-block text-sm font-medium underline">
-                  Suscribirme
+                  {plan.cta}
                 </span>
               </Link>
             ))}
