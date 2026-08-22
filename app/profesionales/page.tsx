@@ -4,6 +4,7 @@ import { PROVINCES } from '@/lib/constants/provinces'
 import { stripAccents } from '@/lib/text'
 import { BackButton } from '@/components/BackButton'
 import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGrid'
+import { ProfesionalesFilters } from '@/components/ProfesionalesFilters'
 
 export default async function ProfesionalesPage({
   searchParams,
@@ -61,67 +62,15 @@ export default async function ProfesionalesPage({
         <p className="mt-1 text-zinc-500">Encontrá al profesional que resuelve.</p>
       </div>
 
-      <form method="get" className="mt-6 flex flex-wrap gap-3">
-        <select
-          name="vertical"
-          defaultValue={vertical ?? ''}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-        >
-          <option value="">Todos los rubros</option>
-          {VERTICALS.map((v) => (
-            <option key={v.slug} value={v.slug}>
-              {v.label}
-            </option>
-          ))}
-        </select>
-
-        <select
-          name="categoria"
-          defaultValue={categoria ?? ''}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-        >
-          <option value="">Todas las categorías</option>
-          {VERTICALS.map((v) => (
-            <optgroup key={v.slug} label={v.label}>
-              {(categories ?? [])
-                .filter((c) => c.vertical === v.slug)
-                .map((c) => (
-                  <option key={c.id} value={c.slug}>
-                    {c.name}
-                  </option>
-                ))}
-            </optgroup>
-          ))}
-        </select>
-
-        <input
-          name="ciudad"
-          type="text"
-          placeholder="Ciudad"
-          defaultValue={ciudad ?? ''}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-        />
-
-        <select
-          name="provincia"
-          defaultValue={provincia ?? ''}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-        >
-          <option value="">Todas las provincias</option>
-          {PROVINCES.map((p) => (
-            <option key={p} value={p}>
-              {p}
-            </option>
-          ))}
-        </select>
-
-        <button
-          type="submit"
-          className="rounded-md bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
-        >
-          Buscar
-        </button>
-      </form>
+      <ProfesionalesFilters
+        verticals={VERTICALS}
+        categories={categories ?? []}
+        provinces={PROVINCES}
+        defaultVertical={vertical ?? ''}
+        defaultCategoria={categoria ?? ''}
+        defaultCiudad={ciudad ?? ''}
+        defaultProvincia={provincia ?? ''}
+      />
 
       <ProfessionalDirectoryGrid
         professionals={(professionals ?? []).map((p) => {
