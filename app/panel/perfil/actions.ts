@@ -2,7 +2,6 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { uploadAvatarIfProvided } from '@/lib/avatar'
 
 export async function saveProfessionalProfile(formData: FormData) {
   const supabase = await createClient()
@@ -12,11 +11,6 @@ export async function saveProfessionalProfile(formData: FormData) {
 
   if (!user) {
     redirect('/login')
-  }
-
-  const avatarError = await uploadAvatarIfProvided(supabase, user.id, formData)
-  if (avatarError) {
-    redirect(`/panel/perfil?error=${encodeURIComponent(avatarError)}`)
   }
 
   const businessName = formData.get('business_name') as string

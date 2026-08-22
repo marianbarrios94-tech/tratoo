@@ -1,5 +1,78 @@
-export function AvatarUpload({ avatarUrl, name }: { avatarUrl: string | null; name: string }) {
+'use client'
+
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { saveAvatarUrl } from '@/lib/avatar'
+
+const MAX_AVATAR_BYTES = 3 * 1024 * 1024
+
+export function AvatarUpload({
+  avatarUrl: initialAvatarUrl,
+  name,
+}: {
+  avatarUrl: string | null
+  name: string
+}) {
+  const [avatarUrl, setAvatarUrl] = useState(initialAvatarUrl)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const initial = name.trim().charAt(0).toUpperCase() || '?'
+
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+
+    if (!file.type.startsWith('image/')) {
+      setError('La foto de perfil debe ser una imagen')
+      return
+    }
+    if (file.size > MAX_AVATAR_BYTES) {
+      setError('La foto de perfil no puede superar los 3MB')
+      return
+    }
+
+    setUploading(true)
+    setError(null)
+
+    const supabase = createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      setError('Iniciá sesión de nuevo para subir una foto')
+      setUploading(false)
+      return
+    }
+
+    const ext = file.name.split('.').pop() || 'jpg'
+    const path = `${user.id}/${Date.now()}.${ext}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(path, file, { contentType: file.type })
+
+    if (uploadError) {
+      setError(uploadError.message)
+      setUploading(false)
+      return
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('avatars').getPublicUrl(path)
+
+    const saveError = await saveAvatarUrl(publicUrl)
+    if (saveError) {
+      setError(saveError)
+      setUploading(false)
+      return
+    }
+
+    setAvatarUrl(publicUrl)
+    setUploading(false)
+  }
 
   return (
     <div>
@@ -15,12 +88,19 @@ export function AvatarUpload({ avatarUrl, name }: { avatarUrl: string | null; na
         )}
         <input
           type="file"
-          name="avatar"
           accept="image/*"
-          className="text-sm text-zinc-600 file:mr-3 file:rounded-full file:border-0 file:bg-zinc-100 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-zinc-700 hover:file:bg-zinc-200 dark:text-zinc-400 dark:file:bg-zinc-800 dark:file:text-zinc-300"
+          disabled={uploading}
+          onChange={handleChange}
+          className="text-sm text-zinc-600 file:mr-3 file:rounded-full file:border-0 file:bg-zinc-100 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-zinc-700 hover:file:bg-zinc-200 disabled:opacity-50 dark:text-zinc-400 dark:file:bg-zinc-800 dark:file:text-zinc-300"
         />
       </div>
-      <p className="mt-1 text-xs text-zinc-500">JPG o PNG, hasta 3MB.</p>
+      {uploading && <p className="mt-1 text-xs text-zinc-500">Subiendo...</p>}
+      {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
+      {!uploading && !error && (
+        <p className="mt-1 text-xs text-zinc-500">
+          JPG o PNG, hasta 3MB. Se guarda automáticamente al elegirla.
+        </p>
+      )}
     </div>
   )
 }

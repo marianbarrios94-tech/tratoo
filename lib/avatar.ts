@@ -1,50 +1,26 @@
-import type { SupabaseClient } from '@supabase/supabase-js'
-import type { Database } from '@/lib/types/database'
+'use server'
 
-const MAX_AVATAR_BYTES = 3 * 1024 * 1024
+import { createClient } from '@/lib/supabase/server'
 
 /**
- * Uploads the "avatar" file from formData (if present) to the "avatars"
- * storage bucket and saves its public URL on profiles.avatar_url. Returns
- * an error message on failure, or null on success / no file provided.
+ * Saves an already-uploaded avatar's public URL on profiles.avatar_url.
+ * The upload itself happens client-side (AvatarUpload component), direct to
+ * Supabase Storage — sending the file through a Server Action here hits a
+ * Next.js 16 proxy bug where multipart bodies on proxy-matched routes cause
+ * the session to be lost mid-request. Returns an error message, or null on
+ * success.
  */
-export async function uploadAvatarIfProvided(
-  supabase: SupabaseClient<Database>,
-  userId: string,
-  formData: FormData
-): Promise<string | null> {
-  const file = formData.get('avatar')
-  if (!(file instanceof File) || file.size === 0) {
-    return null
-  }
-
-  if (!file.type.startsWith('image/')) {
-    return 'La foto de perfil debe ser una imagen'
-  }
-
-  if (file.size > MAX_AVATAR_BYTES) {
-    return 'La foto de perfil no puede superar los 3MB'
-  }
-
-  const ext = file.name.split('.').pop() || 'jpg'
-  const path = `${userId}/${Date.now()}.${ext}`
-
-  const { error: uploadError } = await supabase.storage
-    .from('avatars')
-    .upload(path, file, { contentType: file.type })
-
-  if (uploadError) {
-    return uploadError.message
-  }
-
+export async function saveAvatarUrl(url: string): Promise<string | null> {
+  const supabase = await createClient()
   const {
-    data: { publicUrl },
-  } = supabase.storage.from('avatars').getPublicUrl(path)
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  const { error: dbError } = await supabase
-    .from('profiles')
-    .update({ avatar_url: publicUrl })
-    .eq('id', userId)
+  if (!user) {
+    return 'Iniciá sesión de nuevo para guardar la foto'
+  }
 
-  return dbError?.message ?? null
+  const { error } = await supabase.from('profiles').update({ avatar_url: url }).eq('id', user.id)
+
+  return error?.message ?? null
 }
