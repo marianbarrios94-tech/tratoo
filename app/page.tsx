@@ -44,9 +44,16 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const { data: profile } = user
-    ? await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle()
-    : { data: null }
+  const [{ data: profile }, { data: categories }] = await Promise.all([
+    user
+      ? supabase.from('profiles').select('role').eq('id', user.id).maybeSingle()
+      : Promise.resolve({ data: null }),
+    supabase.from('categories').select('slug, name, vertical'),
+  ])
+
+  const categorySlugByName = new Map(
+    (categories ?? []).map((c) => [`${c.vertical}:${c.name}`, c.slug])
+  )
 
   const dashboardHref =
     profile?.role === 'professional' || profile?.role === 'admin' ? '/panel' : '/cuenta'
@@ -161,14 +168,23 @@ export default async function Home() {
               <h2 className="text-lg font-semibold">{v.label}</h2>
               <p className="mt-1 text-sm text-zinc-500">{v.tagline}</p>
               <ul className="mt-4 flex flex-wrap gap-2">
-                {CATEGORIES_BY_VERTICAL[v.slug].map((c) => (
-                  <li
-                    key={c}
-                    className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400"
-                  >
-                    {c}
-                  </li>
-                ))}
+                {CATEGORIES_BY_VERTICAL[v.slug].map((c) => {
+                  const categorySlug = categorySlugByName.get(`${v.slug}:${c}`)
+                  return (
+                    <li key={c}>
+                      <Link
+                        href={
+                          categorySlug
+                            ? `/profesionales?categoria=${categorySlug}`
+                            : `/profesionales?vertical=${v.slug}`
+                        }
+                        className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-600 transition-colors hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                      >
+                        {c}
+                      </Link>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           ))}
