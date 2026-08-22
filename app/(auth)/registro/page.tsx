@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { signup } from '../actions'
 import { BackButton } from '@/components/BackButton'
+import { PasswordInput } from '@/components/PasswordInput'
 
 export default async function RegistroPage({
   searchParams,
@@ -74,14 +75,18 @@ export default async function RegistroPage({
             <label htmlFor="password" className="block text-sm font-medium">
               Contraseña
             </label>
-            <input
+            <PasswordInput
               id="password"
               name="password"
-              type="password"
               required
-              minLength={6}
-              className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
+              minLength={8}
+              pattern="(?=.*[A-Za-z])(?=.*\d).{8,}"
+              title="Al menos 8 caracteres, con una letra y un número"
+              autoComplete="new-password"
             />
+            <p className="mt-1 text-xs text-zinc-500">
+              Mínimo 8 caracteres, con al menos una letra y un número.
+            </p>
           </div>
           <button
             type="submit"

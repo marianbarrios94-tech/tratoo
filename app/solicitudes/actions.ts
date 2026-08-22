@@ -64,11 +64,7 @@ async function transition(
 }
 
 export async function acceptRequest(formData: FormData) {
-  const quotedPriceRaw = formData.get('quoted_price') as string
-  const quotedPrice = quotedPriceRaw ? Number(quotedPriceRaw) : null
-  await transition(formData, ['pending'], 'accepted', 'professional', true, {
-    quoted_price: quotedPrice,
-  })
+  await transition(formData, ['pending'], 'accepted', 'professional', true)
 }
 
 export async function rejectRequest(formData: FormData) {

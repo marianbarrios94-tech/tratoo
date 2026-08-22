@@ -72,26 +72,12 @@ export default async function PanelSolicitudesPage({
               {r.message && (
                 <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">{r.message}</p>
               )}
-              {r.scheduled_at && (
-                <p className="mt-1 text-sm text-zinc-500">
-                  {new Date(r.scheduled_at).toLocaleString('es-AR')}
-                </p>
-              )}
-
               <div className="mt-4 flex gap-2">
                 {r.status === 'pending' && (
                   <>
                     <form action={acceptRequest} className="flex items-center gap-2">
                       <input type="hidden" name="request_id" value={r.id} />
                       <input type="hidden" name="redirect_to" value="/panel/solicitudes" />
-                      <input
-                        type="number"
-                        name="quoted_price"
-                        min={0}
-                        step="0.01"
-                        placeholder="Presupuesto (opcional)"
-                        className="w-40 rounded-md border border-zinc-300 px-2 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-                      />
                       <button
                         type="submit"
                         className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
@@ -124,6 +110,12 @@ export default async function PanelSolicitudesPage({
                   </form>
                 )}
               </div>
+              {r.status === 'pending' && (
+                <p className="mt-2 text-xs text-zinc-500">
+                  Al aceptar, se habilita el contacto directo por WhatsApp para coordinar precio y
+                  detalles con el cliente.
+                </p>
+              )}
             </div>
           )
         })}

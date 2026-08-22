@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { login } from '../actions'
 import { BackButton } from '@/components/BackButton'
+import { PasswordInput } from '@/components/PasswordInput'
 
 export default async function LoginPage({
   searchParams,
@@ -42,13 +43,7 @@ export default async function LoginPage({
             <label htmlFor="password" className="block text-sm font-medium">
               Contraseña
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-            />
+            <PasswordInput id="password" name="password" required autoComplete="current-password" />
           </div>
           <button
             type="submit"

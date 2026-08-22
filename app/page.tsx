@@ -42,7 +42,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+      <header className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-2 px-6 py-6">
         <span className="flex items-center gap-2 text-xl font-semibold tracking-tight">
           <LogoMark />
           Tratoo

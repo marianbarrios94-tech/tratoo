@@ -95,27 +95,18 @@ export default async function CuentaSolicitudesPage({
               {r.message && (
                 <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">{r.message}</p>
               )}
-              {r.scheduled_at && (
-                <p className="mt-1 text-sm text-zinc-500">
-                  {new Date(r.scheduled_at).toLocaleString('es-AR')}
-                </p>
-              )}
-              {r.quoted_price != null && (
-                <p className="mt-1 text-sm font-medium text-emerald-700 dark:text-emerald-400">
-                  Presupuesto: {Number(r.quoted_price).toLocaleString('es-AR', {
-                    maximumFractionDigits: 0,
-                  })}
-                </p>
-              )}
-
               {(r.status === 'accepted' || r.status === 'completed') &&
                 (() => {
                   const phone = phoneByProfessionalId.get(r.professional_id)
                   if (!phone) return null
+                  const context = category ? ` (${category.name})` : ''
                   return (
                     <WhatsAppContactLink
                       professionalId={r.professional_id}
-                      href={whatsAppLink(phone, `Hola! Te escribo por tu solicitud en Tratoo.`)}
+                      href={whatsAppLink(
+                        phone,
+                        `Hola! Te escribo por mi solicitud en Tratoo${context}.`
+                      )}
                     />
                   )
                 })()}

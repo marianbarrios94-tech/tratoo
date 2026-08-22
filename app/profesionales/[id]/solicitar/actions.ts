@@ -19,7 +19,6 @@ export async function createServiceRequest(formData: FormData) {
   const professionalId = formData.get('professional_id') as string
   const categoryId = formData.get('category_id') as string
   const message = formData.get('message') as string
-  const scheduledAt = formData.get('scheduled_at') as string
 
   const { data: professional } = await supabase
     .from('professional_profiles')
@@ -48,7 +47,6 @@ export async function createServiceRequest(formData: FormData) {
     professional_id: professionalId,
     category_id: categoryId || null,
     message: message || null,
-    scheduled_at: scheduledAt || null,
     status: 'pending',
   })
 

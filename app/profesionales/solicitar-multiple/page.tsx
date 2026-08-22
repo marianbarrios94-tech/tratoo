@@ -78,18 +78,6 @@ export default async function SolicitarMultiplePage({
           />
         </div>
 
-        <div>
-          <label htmlFor="scheduled_at" className="block text-sm font-medium">
-            Fecha y hora preferida (opcional)
-          </label>
-          <input
-            id="scheduled_at"
-            name="scheduled_at"
-            type="datetime-local"
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-          />
-        </div>
-
         <button
           type="submit"
           className="mt-2 self-start rounded-full bg-zinc-950 px-5 py-2.5 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"

@@ -18,7 +18,6 @@ export async function createMultipleServiceRequests(formData: FormData) {
 
   const professionalIds = (formData.get('professional_ids') as string).split(',').filter(Boolean)
   const message = formData.get('message') as string
-  const scheduledAt = formData.get('scheduled_at') as string
 
   const { data: professionals } = await supabase
     .from('professional_profiles')
@@ -50,7 +49,6 @@ export async function createMultipleServiceRequests(formData: FormData) {
       professional_id: professional.user_id,
       category_id: professional.category_id,
       message: message || null,
-      scheduled_at: scheduledAt || null,
       status: 'pending',
     })
 
