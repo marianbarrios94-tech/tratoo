@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { hasActiveSubscription, FREE_TIER_MONTHLY_REQUEST_LIMIT } from '@/lib/constants/subscriptions'
 import { formatPrice } from '@/lib/currency'
+import { ConfirmSubmitButton } from '@/components/ConfirmSubmitButton'
 import { startCheckout, cancelSubscription } from './actions'
 
 const STATUS_LABEL: Record<string, string> = {
@@ -135,12 +136,12 @@ export default async function SuscripcionPage({
 
       {professional?.mp_preapproval_id && isSubscribed && (
         <form action={cancelSubscription}>
-          <button
-            type="submit"
+          <ConfirmSubmitButton
+            confirmMessage="¿Querés cancelar tu suscripción? Vas a perder los beneficios del plan pago al final del período ya pagado."
             className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
           >
             Cancelar suscripción
-          </button>
+          </ConfirmSubmitButton>
         </form>
       )}
     </div>
