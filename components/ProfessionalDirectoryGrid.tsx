@@ -110,7 +110,7 @@ export function ProfessionalDirectoryGrid({
               }
               className="rounded-full bg-zinc-950 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
             >
-              Pedir presupuesto a los seleccionados
+              Enviar solicitud a los seleccionados
             </button>
           </div>
         </div>

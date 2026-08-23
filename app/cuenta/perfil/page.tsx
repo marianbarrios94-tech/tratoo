@@ -33,9 +33,11 @@ export default async function PerfilClientePage({
       )}
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
-      <form action={saveClientProfile} className="flex max-w-lg flex-col gap-4">
+      <div className="max-w-lg">
         <AvatarUpload avatarUrl={profile?.avatar_url ?? null} name={profile?.full_name ?? ''} />
+      </div>
 
+      <form action={saveClientProfile} className="flex max-w-lg flex-col gap-4">
         <div>
           <label htmlFor="full_name" className="block text-sm font-medium">
             Nombre completo

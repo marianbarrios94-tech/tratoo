@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { PROVINCES } from '@/lib/constants/provinces'
@@ -41,6 +42,14 @@ export default async function PerfilProfesionalPage({
         <p className="mt-1 text-zinc-500">
           Completalo para aparecer en el directorio público de Tratoo.
         </p>
+        {profile?.business_name && user && (
+          <Link
+            href={`/profesionales/${user.id}`}
+            className="mt-2 inline-block text-sm font-medium text-emerald-600 underline hover:text-emerald-700 dark:text-emerald-400"
+          >
+            Ver tu perfil público y tus reseñas →
+          </Link>
+        )}
       </div>
 
       {message && (
@@ -48,12 +57,14 @@ export default async function PerfilProfesionalPage({
       )}
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
-      <form action={saveProfessionalProfile} className="flex max-w-lg flex-col gap-4">
+      <div className="max-w-lg">
         <AvatarUpload
           avatarUrl={baseProfile?.avatar_url ?? null}
           name={profile?.business_name || baseProfile?.full_name || ''}
         />
+      </div>
 
+      <form action={saveProfessionalProfile} className="flex max-w-lg flex-col gap-4">
         <div>
           <label htmlFor="business_name" className="block text-sm font-medium">
             Nombre o marca

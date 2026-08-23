@@ -41,7 +41,7 @@ export default async function SolicitarMultiplePage({
   return (
     <div className="mx-auto w-full max-w-lg px-6 py-10">
       <BackButton fallbackHref="/profesionales" />
-      <h1 className="mt-4 text-2xl font-semibold">Pedir presupuesto a varios profesionales</h1>
+      <h1 className="mt-4 text-2xl font-semibold">Enviar solicitud a varios profesionales</h1>
       <p className="mt-1 text-sm text-zinc-500">
         Le mandamos el mismo pedido a cada uno. Vas a poder comparar sus respuestas en{' '}
         <Link href="/cuenta/solicitudes" className="underline">

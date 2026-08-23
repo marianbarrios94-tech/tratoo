@@ -4,6 +4,7 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import type { UserRole } from '@/lib/types/database'
+import { translateAuthError } from '@/lib/authErrors'
 
 async function currentOrigin() {
   const headersList = await headers()
@@ -17,7 +18,7 @@ export async function login(formData: FormData) {
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) {
-    redirect(`/login?error=${encodeURIComponent(error.message)}`)
+    redirect(`/login?error=${encodeURIComponent(translateAuthError(error.message))}`)
   }
 
   const { data: profile } = await supabase
@@ -45,7 +46,7 @@ export async function signup(formData: FormData) {
     },
   })
   if (error) {
-    redirect(`/registro?error=${encodeURIComponent(error.message)}`)
+    redirect(`/registro?error=${encodeURIComponent(translateAuthError(error.message))}`)
   }
   if (data.session) {
     redirect(role === 'professional' ? '/panel' : '/cuenta')
@@ -80,7 +81,7 @@ export async function updatePassword(formData: FormData) {
 
   const { error } = await supabase.auth.updateUser({ password })
   if (error) {
-    redirect(`/actualizar-contrasena?error=${encodeURIComponent(error.message)}`)
+    redirect(`/actualizar-contrasena?error=${encodeURIComponent(translateAuthError(error.message))}`)
   }
 
   redirect(`/login?message=${encodeURIComponent('Contraseña actualizada, iniciá sesión')}`)

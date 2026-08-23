@@ -170,6 +170,28 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['reviews']['Insert']>
         Relationships: []
       }
+      webhook_logs: {
+        Row: {
+          id: string
+          source: string
+          headers: Record<string, unknown> | null
+          query: Record<string, unknown> | null
+          body: Record<string, unknown> | null
+          note: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          source: string
+          headers?: Record<string, unknown> | null
+          query?: Record<string, unknown> | null
+          body?: Record<string, unknown> | null
+          note?: string | null
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['webhook_logs']['Insert']>
+        Relationships: []
+      }
       profile_events: {
         Row: {
           id: string
