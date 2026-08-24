@@ -31,9 +31,10 @@ export default function TerminosPage() {
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">2. Cuentas</h2>
           <p className="mt-2">
-            Para usar Tratoo hace falta crear una cuenta con un email válido. Sos responsable de
-            mantener la confidencialidad de tu contraseña y de toda actividad realizada desde tu
-            cuenta. Una misma cuenta puede actuar como cliente y como profesional a la vez.
+            Tratoo es para mayores de 18 años. Para usarlo hace falta crear una cuenta con un email
+            válido. Sos responsable de mantener la confidencialidad de tu contraseña y de toda
+            actividad realizada desde tu cuenta. Una misma cuenta puede actuar como cliente y como
+            profesional a la vez.
           </p>
         </section>
 

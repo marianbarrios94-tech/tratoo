@@ -18,11 +18,8 @@ export default function PrivacidadPage() {
 
       <p className="mt-6 text-sm text-zinc-700 dark:text-zinc-300">
         A los fines de la Ley 25.326 de Protección de Datos Personales, el responsable de la base
-        de datos es{' '}
-        <span className="rounded bg-amber-50 px-1 text-amber-700 dark:bg-amber-950 dark:text-amber-400">
-          [TU NOMBRE COMPLETO], con domicilio en [TU DOMICILIO]
-        </span>
-        . Cualquier consulta sobre tus datos podés dirigirla a{' '}
+        de datos es el operador de Tratoo, con domicilio en la República Argentina. Cualquier
+        consulta sobre tus datos podés dirigirla a{' '}
         <a href="mailto:tratoo.contacto@gmail.com" className="underline">
           tratoo.contacto@gmail.com
         </a>
