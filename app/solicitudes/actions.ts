@@ -71,10 +71,6 @@ export async function rejectRequest(formData: FormData) {
   await transition(formData, ['pending'], 'cancelled', 'professional', true)
 }
 
-export async function completeRequest(formData: FormData) {
-  await transition(formData, ['accepted'], 'completed', 'professional', true)
-}
-
 export async function cancelRequest(formData: FormData) {
   await transition(formData, ['pending'], 'cancelled', 'client')
 }
@@ -99,8 +95,17 @@ export async function leaveReview(formData: FormData) {
     .eq('id', requestId)
     .maybeSingle()
 
-  if (!request || request.client_id !== user.id || request.status !== 'completed') {
+  if (!request || request.client_id !== user.id || request.status !== 'accepted') {
     redirect(`/cuenta/solicitudes?error=${encodeURIComponent('No se pudo dejar la reseña')}`)
+  }
+
+  const { error: statusError } = await supabase
+    .from('service_requests')
+    .update({ status: 'completed' })
+    .eq('id', requestId)
+
+  if (statusError) {
+    redirect(`/cuenta/solicitudes?error=${encodeURIComponent(statusError.message)}`)
   }
 
   const { error } = await supabase.from('reviews').insert({
@@ -114,5 +119,5 @@ export async function leaveReview(formData: FormData) {
     redirect(`/cuenta/solicitudes?error=${encodeURIComponent(error.message)}`)
   }
 
-  redirect(`/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña!')}`)
+  redirect(`/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña! Marcamos el pedido como resuelto.')}`)
 }

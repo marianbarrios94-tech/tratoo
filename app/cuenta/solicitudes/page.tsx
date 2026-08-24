@@ -124,7 +124,7 @@ export default async function CuentaSolicitudesPage({
                 </form>
               )}
 
-              {r.status === 'completed' &&
+              {(r.status === 'accepted' || r.status === 'completed') &&
                 (() => {
                   const review = reviewByRequestId.get(r.id)
                   if (review) {
@@ -139,11 +139,14 @@ export default async function CuentaSolicitudesPage({
                       </div>
                     )
                   }
+                  if (r.status !== 'accepted') return null
                   return (
                     <form action={leaveReview} className="mt-4 flex flex-col gap-2">
                       <input type="hidden" name="request_id" value={r.id} />
                       <fieldset className="flex gap-3">
-                        <legend className="mb-1 text-sm font-medium">Calificá el servicio</legend>
+                        <legend className="mb-1 text-sm font-medium">
+                          ¿Ya se resolvió? Calificá el servicio
+                        </legend>
                         {[1, 2, 3, 4, 5].map((n) => (
                           <label key={n} className="flex items-center gap-1 text-sm">
                             <input type="radio" name="rating" value={n} defaultChecked={n === 5} />

@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { acceptRequest, rejectRequest, completeRequest } from '@/app/solicitudes/actions'
+import { acceptRequest, rejectRequest } from '@/app/solicitudes/actions'
 import { REQUEST_STATUS_LABEL } from '@/lib/constants/requests'
 
 export default async function PanelSolicitudesPage({
@@ -97,23 +97,16 @@ export default async function PanelSolicitudesPage({
                     </form>
                   </>
                 )}
-                {r.status === 'accepted' && (
-                  <form action={completeRequest}>
-                    <input type="hidden" name="request_id" value={r.id} />
-                    <input type="hidden" name="redirect_to" value="/panel/solicitudes" />
-                    <button
-                      type="submit"
-                      className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
-                    >
-                      Cerrar el trato
-                    </button>
-                  </form>
-                )}
               </div>
               {r.status === 'pending' && (
                 <p className="mt-2 text-xs text-zinc-500">
                   Al aceptar, se habilita el contacto directo por WhatsApp para coordinar precio y
                   detalles con el cliente.
+                </p>
+              )}
+              {r.status === 'accepted' && (
+                <p className="mt-2 text-xs text-zinc-500">
+                  El cliente marca el pedido como resuelto cuando deja su reseña.
                 </p>
               )}
             </div>
