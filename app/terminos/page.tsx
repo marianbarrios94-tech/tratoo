@@ -101,8 +101,8 @@ export default function TerminosPage() {
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">8. Contacto</h2>
           <p className="mt-2">
             Ante cualquier consulta sobre estos términos, escribinos a{' '}
-            <a href="mailto:hola@tratoo.com" className="underline">
-              hola@tratoo.com
+            <a href="mailto:tratoo.contacto@gmail.com" className="underline">
+              tratoo.contacto@gmail.com
             </a>
             .
           </p>

@@ -26,8 +26,8 @@ export default function ReembolsosPage() {
             contrataste tu suscripción a través de internet tenés derecho a revocar la compra
             dentro de los 10 días corridos desde la contratación, sin necesidad de justificar el
             motivo y sin cargo alguno. Para ejercer este derecho, escribinos a{' '}
-            <a href="mailto:hola@tratoo.com" className="underline">
-              hola@tratoo.com
+            <a href="mailto:tratoo.contacto@gmail.com" className="underline">
+              tratoo.contacto@gmail.com
             </a>{' '}
             dentro de ese plazo y te reembolsamos el monto pagado en su totalidad.
           </p>
@@ -74,8 +74,8 @@ export default function ReembolsosPage() {
           <p className="mt-2">
             Para solicitar un reembolso o resolver cualquier duda sobre tu suscripción, escribinos
             a{' '}
-            <a href="mailto:hola@tratoo.com" className="underline">
-              hola@tratoo.com
+            <a href="mailto:tratoo.contacto@gmail.com" className="underline">
+              tratoo.contacto@gmail.com
             </a>
             .
           </p>
