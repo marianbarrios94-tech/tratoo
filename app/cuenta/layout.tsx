@@ -10,7 +10,7 @@ export default function CuentaLayout({ children }: { children: React.ReactNode }
         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
           <LogoMark className="h-7 w-7" />
           Tratoo
-          <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400">
+          <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900 dark:text-blue-300">
             Cliente
           </span>
         </Link>
