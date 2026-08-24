@@ -51,7 +51,32 @@ export default function TerminosPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            4. Suscripciones de profesionales
+            4. Verificación de profesionales
+          </h2>
+          <p className="mt-2">
+            Algunos perfiles muestran una insignia de &quot;Verificado&quot;. Esa verificación confirma
+            datos básicos del perfil, pero no es una garantía de idoneidad profesional, matrícula
+            habilitante ni de la conducta del profesional durante la prestación del servicio. Usá tu
+            criterio al contratar, más allá de la insignia.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+            5. Contenido que publicás
+          </h2>
+          <p className="mt-2">
+            Lo que publiques en Tratoo (perfil, descripción, fotos, reseñas) sigue siendo tuyo. Al
+            publicarlo, le das a Tratoo una licencia no exclusiva para mostrarlo dentro de la
+            plataforma con el fin de operar el directorio. Las reseñas deben reflejar experiencias
+            reales; podemos ocultar o eliminar contenido falso, ofensivo o que incumpla estos
+            términos.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+            6. Suscripciones de profesionales
           </h2>
           <p className="mt-2">
             Los profesionales pueden suscribirse a un plan pago para aparecer en el directorio
@@ -67,7 +92,7 @@ export default function TerminosPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            5. Conducta prohibida
+            7. Conducta prohibida
           </h2>
           <p className="mt-2">
             No está permitido usar Tratoo para publicar información falsa, suplantar identidad,
@@ -78,7 +103,18 @@ export default function TerminosPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            6. Limitación de responsabilidad
+            8. Cierre y suspensión de cuenta
+          </h2>
+          <p className="mt-2">
+            Podés cerrar tu cuenta cuando quieras escribiéndonos a nuestro contacto. Tratoo puede
+            suspender o dar de baja cuentas que incumplan estos términos, generen riesgo para otros
+            usuarios o hagan un uso fraudulento de la plataforma.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+            9. Limitación de responsabilidad
           </h2>
           <p className="mt-2">
             En la medida permitida por la ley aplicable, Tratoo no es responsable por daños
@@ -89,16 +125,19 @@ export default function TerminosPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            7. Ley aplicable
+            10. Ley aplicable y jurisdicción
           </h2>
           <p className="mt-2">
             Estos términos se rigen por las leyes de la República Argentina, incluyendo la Ley de
-            Defensa del Consumidor (Ley 24.240) para las relaciones con usuarios consumidores.
+            Defensa del Consumidor (Ley 24.240) para las relaciones con usuarios consumidores. Como
+            consumidor, ante cualquier controversia podés iniciar el reclamo ante los tribunales de
+            tu propio domicilio, conforme al artículo 36 de la Ley 24.240 (que no permite pactar de
+            antemano un tribunal distinto en tu perjuicio).
           </p>
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">8. Contacto</h2>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">11. Contacto</h2>
           <p className="mt-2">
             Ante cualquier consulta sobre estos términos, escribinos a{' '}
             <a href="mailto:tratoo.contacto@gmail.com" className="underline">

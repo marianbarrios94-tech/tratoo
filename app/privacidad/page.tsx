@@ -16,6 +16,19 @@ export default function PrivacidadPage() {
         su publicación definitiva.
       </p>
 
+      <p className="mt-6 text-sm text-zinc-700 dark:text-zinc-300">
+        A los fines de la Ley 25.326 de Protección de Datos Personales, el responsable de la base
+        de datos es{' '}
+        <span className="rounded bg-amber-50 px-1 text-amber-700 dark:bg-amber-950 dark:text-amber-400">
+          [TU NOMBRE COMPLETO], con domicilio en [TU DOMICILIO]
+        </span>
+        . Cualquier consulta sobre tus datos podés dirigirla a{' '}
+        <a href="mailto:tratoo.contacto@gmail.com" className="underline">
+          tratoo.contacto@gmail.com
+        </a>
+        .
+      </p>
+
       <div className="mt-8 flex flex-col gap-6 text-sm text-zinc-700 dark:text-zinc-300">
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
@@ -40,7 +53,21 @@ export default function PrivacidadPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            2. Para qué usamos tus datos
+            2. Tu perfil es público
+          </h2>
+          <p className="mt-2">
+            Si te registrás como profesional, tu perfil —nombre o marca, categoría, ciudad, foto,
+            descripción, calificación y reseñas— es público: cualquier visitante puede verlo en el
+            directorio, sin necesidad de tener cuenta. Tu número de teléfono se expone recién
+            cuando aceptás una solicitud, a través del botón de contacto por WhatsApp, para que ese
+            cliente puntual te escriba directamente. Si no querés que tu perfil sea visible, podés
+            despublicarlo desde tu cuenta en cualquier momento.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+            3. Para qué usamos tus datos
           </h2>
           <p className="mt-2">
             Usamos tus datos para operar la plataforma: mostrar tu perfil en el directorio (si sos
@@ -51,7 +78,7 @@ export default function PrivacidadPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            3. Con quién compartimos datos
+            4. Con quién compartimos datos
           </h2>
           <p className="mt-2">
             Compartimos datos únicamente con los proveedores que necesitamos para funcionar:
@@ -63,7 +90,7 @@ export default function PrivacidadPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            4. Tus derechos
+            5. Tus derechos
           </h2>
           <p className="mt-2">
             De acuerdo con la Ley de Protección de Datos Personales (Ley 25.326), podés acceder,
@@ -77,7 +104,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">5. Cookies</h2>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">6. Cookies</h2>
           <p className="mt-2">
             Usamos únicamente cookies necesarias para mantener tu sesión iniciada. No usamos
             cookies de rastreo publicitario.
@@ -85,7 +112,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">6. Contacto</h2>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">7. Contacto</h2>
           <p className="mt-2">
             Ante cualquier consulta sobre privacidad, escribinos a{' '}
             <a href="mailto:tratoo.contacto@gmail.com" className="underline">
