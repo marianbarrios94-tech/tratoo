@@ -55,7 +55,7 @@ export function ProfessionalDirectoryGrid({
                 checked={selected.has(p.user_id)}
                 onChange={() => toggle(p.user_id)}
               />
-              Seleccionar para pedir a varios
+              Seleccionar
             </label>
             <Link href={`/profesionales/${p.user_id}`} className="flex gap-3 pr-16">
               {p.avatarUrl ? (
