@@ -1,6 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
 export async function saveClientProfile(formData: FormData) {
@@ -30,5 +31,7 @@ export async function saveClientProfile(formData: FormData) {
     redirect(`/cuenta/perfil?error=${encodeURIComponent(error.message)}`)
   }
 
+  revalidatePath('/cuenta')
+  revalidatePath('/cuenta/perfil')
   redirect('/cuenta/perfil?message=Perfil guardado')
 }

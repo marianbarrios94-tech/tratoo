@@ -50,7 +50,7 @@ export default async function ProfesionalDetallePage({
 
   const { data: reviews } = await supabase
     .from('reviews')
-    .select('rating, comment, created_at')
+    .select('rating, comment, client_name, created_at')
     .eq('professional_id', id)
     .order('created_at', { ascending: false })
 
@@ -148,7 +148,10 @@ export default async function ProfesionalDetallePage({
           <ul className="mt-4 flex flex-col gap-4">
             {(reviews ?? []).map((r, i) => (
               <li key={i} className="rounded-xl bg-zinc-50 p-4 dark:bg-zinc-900">
-                <p className="text-sm">{starString(r.rating)}</p>
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-sm">{starString(r.rating)}</p>
+                  <span className="text-xs text-zinc-500">{r.client_name ?? 'Cliente de Tratoo'}</span>
+                </div>
                 {r.comment && (
                   <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{r.comment}</p>
                 )}

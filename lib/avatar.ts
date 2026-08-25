@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
 /**
@@ -21,6 +22,11 @@ export async function saveAvatarUrl(url: string): Promise<string | null> {
   }
 
   const { error } = await supabase.from('profiles').update({ avatar_url: url }).eq('id', user.id)
+
+  if (!error) {
+    revalidatePath('/profesionales')
+    revalidatePath(`/profesionales/${user.id}`)
+  }
 
   return error?.message ?? null
 }

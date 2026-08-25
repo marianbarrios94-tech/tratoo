@@ -245,6 +245,12 @@ export default async function Home() {
           <Link href="/reembolsos" className="hover:text-zinc-950 dark:hover:text-white">
             Reembolsos y cancelación
           </Link>
+          <a
+            href="mailto:tratoo.contacto@gmail.com"
+            className="hover:text-zinc-950 dark:hover:text-white"
+          >
+            Contacto
+          </a>
         </nav>
       </footer>
     </div>

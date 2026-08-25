@@ -1,9 +1,17 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import type { RequestStatus } from '@/lib/types/database'
 import { notifyRequestStatusChange } from '@/lib/email/notify'
+
+function revalidateRequestPages() {
+  revalidatePath('/panel')
+  revalidatePath('/panel/solicitudes')
+  revalidatePath('/cuenta')
+  revalidatePath('/cuenta/solicitudes')
+}
 
 async function transition(
   formData: FormData,
@@ -60,6 +68,7 @@ async function transition(
     })
   }
 
+  revalidateRequestPages()
   redirect(redirectTo)
 }
 
@@ -108,9 +117,16 @@ export async function leaveReview(formData: FormData) {
     redirect(`/cuenta/solicitudes?error=${encodeURIComponent(statusError.message)}`)
   }
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', user.id)
+    .maybeSingle()
+
   const { error } = await supabase.from('reviews').insert({
     request_id: requestId,
     professional_id: request.professional_id,
+    client_name: profile?.full_name ?? null,
     rating,
     comment: comment || null,
   })
@@ -119,5 +135,7 @@ export async function leaveReview(formData: FormData) {
     redirect(`/cuenta/solicitudes?error=${encodeURIComponent(error.message)}`)
   }
 
+  revalidateRequestPages()
+  revalidatePath(`/profesionales/${request.professional_id}`)
   redirect(`/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña! Marcamos el pedido como resuelto.')}`)
 }

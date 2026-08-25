@@ -155,6 +155,7 @@ export interface Database {
           id: string
           request_id: string
           professional_id: string | null
+          client_name: string | null
           rating: number
           comment: string | null
           created_at: string
@@ -163,6 +164,7 @@ export interface Database {
           id?: string
           request_id: string
           professional_id?: string | null
+          client_name?: string | null
           rating: number
           comment?: string | null
           created_at?: string

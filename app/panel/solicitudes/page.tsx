@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { acceptRequest, rejectRequest } from '@/app/solicitudes/actions'
-import { REQUEST_STATUS_LABEL } from '@/lib/constants/requests'
+import { REQUEST_STATUS_LABEL, REQUEST_STATUS_BADGE_CLASS } from '@/lib/constants/requests'
 
 export default async function PanelSolicitudesPage({
   searchParams,
@@ -65,7 +65,9 @@ export default async function PanelSolicitudesPage({
                   <h2 className="font-medium">{client?.full_name ?? 'Cliente'}</h2>
                   {category && <p className="text-sm text-zinc-500">{category.name}</p>}
                 </div>
-                <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs font-medium ${REQUEST_STATUS_BADGE_CLASS[r.status]}`}
+                >
                   {REQUEST_STATUS_LABEL[r.status]}
                 </span>
               </div>
@@ -106,7 +108,7 @@ export default async function PanelSolicitudesPage({
               )}
               {r.status === 'accepted' && (
                 <p className="mt-2 text-xs text-zinc-500">
-                  El cliente marca el pedido como resuelto cuando deja su reseña.
+                  El cliente ya puede escribirte por WhatsApp para coordinar los detalles.
                 </p>
               )}
             </div>

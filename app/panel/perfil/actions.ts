@@ -1,6 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
 export async function saveProfessionalProfile(formData: FormData) {
@@ -57,5 +58,9 @@ export async function saveProfessionalProfile(formData: FormData) {
     redirect(`/panel/perfil?error=${encodeURIComponent(contactError.message)}`)
   }
 
+  revalidatePath('/panel')
+  revalidatePath('/panel/perfil')
+  revalidatePath('/profesionales')
+  revalidatePath(`/profesionales/${user.id}`)
   redirect('/panel/perfil?message=Perfil guardado')
 }
