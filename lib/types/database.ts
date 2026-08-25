@@ -210,6 +210,24 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['profile_events']['Insert']>
         Relationships: []
       }
+      contact_messages: {
+        Row: {
+          id: string
+          name: string | null
+          email: string
+          message: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name?: string | null
+          email: string
+          message: string
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['contact_messages']['Insert']>
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>

@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { PROVINCES } from '@/lib/constants/provinces'
 import { AvatarUpload } from '@/components/AvatarUpload'
+import { ScrollToTop } from '@/components/ScrollToTop'
 import { saveProfessionalProfile } from './actions'
 
 export default async function PerfilProfesionalPage({
@@ -37,6 +38,7 @@ export default async function PerfilProfesionalPage({
 
   return (
     <div className="flex flex-col gap-8">
+      <ScrollToTop when={message ?? error} />
       <div>
         <h1 className="text-2xl font-semibold">Tu perfil profesional</h1>
         <p className="mt-1 text-zinc-500">

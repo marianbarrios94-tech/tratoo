@@ -42,10 +42,10 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
       </div>
       <main className="mx-auto w-full max-w-4xl flex-1 px-6 pb-10">{children}</main>
       <footer className="border-t border-zinc-200 py-6 text-center text-sm text-zinc-500 dark:border-zinc-800">
-        ¿Necesitás ayuda? Escribinos a{' '}
-        <a href="mailto:tratoo.contacto@gmail.com" className="underline">
-          tratoo.contacto@gmail.com
-        </a>
+        ¿Necesitás ayuda?{' '}
+        <Link href="/contacto" className="underline">
+          Escribinos
+        </Link>
       </footer>
     </div>
   )

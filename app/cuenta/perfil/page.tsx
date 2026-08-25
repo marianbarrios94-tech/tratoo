@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { AvatarUpload } from '@/components/AvatarUpload'
+import { ScrollToTop } from '@/components/ScrollToTop'
 import { saveClientProfile } from './actions'
 
 export default async function PerfilClientePage({
@@ -23,6 +24,7 @@ export default async function PerfilClientePage({
 
   return (
     <div className="flex flex-col gap-8">
+      <ScrollToTop when={message ?? error} />
       <div>
         <h1 className="text-2xl font-semibold">Tu perfil</h1>
         <p className="mt-1 text-zinc-500">Mantené tus datos de contacto al día.</p>
