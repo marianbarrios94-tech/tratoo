@@ -137,5 +137,5 @@ export async function leaveReview(formData: FormData) {
 
   revalidateRequestPages()
   revalidatePath(`/profesionales/${request.professional_id}`)
-  redirect(`/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña! Marcamos el pedido como resuelto.')}`)
+  redirect(`/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña! Marcamos tu solicitud como resuelta.')}`)
 }

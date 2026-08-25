@@ -68,6 +68,16 @@ export default async function Home() {
         <span className="flex items-center gap-2 text-xl font-semibold tracking-tight">
           <LogoMark />
           Tratoo
+          {user && dashboardHref === '/panel' && (
+            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+              Profesional
+            </span>
+          )}
+          {user && dashboardHref === '/cuenta' && (
+            <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+              Cliente
+            </span>
+          )}
         </span>
         <nav className="flex items-center gap-4 text-sm font-medium">
           <Link

@@ -73,7 +73,7 @@ export default async function CuentaPage() {
             }
           >
             {pendingReviewCount
-              ? `Tenés ${pendingReviewCount} solicitud${pendingReviewCount === 1 ? '' : 'es'} para dejar reseña.`
+              ? `Tenés ${pendingReviewCount} solicitud${pendingReviewCount === 1 ? '' : 'es'} aceptada${pendingReviewCount === 1 ? '' : 's'} para contactar y calificar.`
               : 'Seguí el estado de tus pedidos de servicio.'}
           </p>
         </Link>
