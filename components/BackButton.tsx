@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 export function BackButton({
   label = '← Volver',
@@ -10,15 +10,20 @@ export function BackButton({
   fallbackHref?: string
 }) {
   const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <button
       type="button"
       onClick={() => {
         if (fallbackHref) {
+          // Si el destino es la página en la que ya estás (ej: el layout de
+          // /cuenta le pasa fallbackHref="/cuenta" incluso en /cuenta mismo),
+          // ir ahí es un no-op — mandar a la principal en su lugar.
+          const target = fallbackHref === pathname ? '/' : fallbackHref
           // replace, no push: evita apilar entradas duplicadas cuando se
           // entra y sale de varias páginas seguidas con este botón.
-          router.replace(fallbackHref)
+          router.replace(target)
         } else {
           router.back()
         }
