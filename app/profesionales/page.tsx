@@ -9,9 +9,15 @@ import { ProfesionalesFilters } from '@/components/ProfesionalesFilters'
 export default async function ProfesionalesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ vertical?: string; categoria?: string; ciudad?: string; provincia?: string }>
+  searchParams: Promise<{
+    vertical?: string
+    categoria?: string
+    ciudad?: string
+    provincia?: string
+    q?: string
+  }>
 }) {
-  const { vertical, categoria, ciudad, provincia } = await searchParams
+  const { vertical, categoria, ciudad, provincia, q } = await searchParams
   const supabase = await createClient()
 
   const { data: categories } = await supabase
@@ -39,6 +45,15 @@ export default async function ProfesionalesPage({
 
   if (categoryIds) {
     query = query.in('category_id', categoryIds)
+  }
+  if (q) {
+    // Cubre a quienes cargaron su profesión como texto libre (no está en
+    // la lista de categorías) y por eso no aparecían con los filtros de
+    // rubro/categoría.
+    const safeQ = q.replace(/[,()%]/g, ' ').trim()
+    if (safeQ) {
+      query = query.or(`business_name.ilike.%${safeQ}%,custom_profession.ilike.%${safeQ}%`)
+    }
   }
   if (ciudad) {
     query = query.ilike('city_unaccent', `%${stripAccents(ciudad)}%`)
@@ -71,6 +86,7 @@ export default async function ProfesionalesPage({
         defaultCategoria={categoria ?? ''}
         defaultCiudad={ciudad ?? ''}
         defaultProvincia={provincia ?? ''}
+        defaultQ={q ?? ''}
       />
 
       <ProfessionalDirectoryGrid

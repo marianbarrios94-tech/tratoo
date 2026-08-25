@@ -13,6 +13,7 @@ export function ProfesionalesFilters({
   defaultCategoria,
   defaultCiudad,
   defaultProvincia,
+  defaultQ,
 }: {
   verticals: readonly Vertical[]
   categories: Category[]
@@ -21,6 +22,7 @@ export function ProfesionalesFilters({
   defaultCategoria: string
   defaultCiudad: string
   defaultProvincia: string
+  defaultQ: string
 }) {
   const [vertical, setVertical] = useState(defaultVertical)
   const [categoria, setCategoria] = useState(defaultCategoria)
@@ -36,6 +38,14 @@ export function ProfesionalesFilters({
 
   return (
     <form method="get" className="mt-6 flex flex-wrap gap-3">
+      <input
+        name="q"
+        type="text"
+        placeholder="Buscar por nombre o profesión"
+        defaultValue={defaultQ}
+        className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+      />
+
       <select
         name="vertical"
         value={vertical}
