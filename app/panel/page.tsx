@@ -68,10 +68,22 @@ export default async function PanelPage() {
         </Link>
         <Link
           href="/panel/solicitudes"
-          className="rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+          className={
+            pendingCount
+              ? 'rounded-2xl border border-amber-300 bg-amber-50 p-6 transition-colors hover:border-amber-500 dark:border-amber-800 dark:bg-amber-950'
+              : 'rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600'
+          }
         >
-          <h2 className="font-medium">Tus solicitudes</h2>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h2 className={pendingCount ? 'font-semibold text-amber-800 dark:text-amber-300' : 'font-medium'}>
+            Tus solicitudes
+          </h2>
+          <p
+            className={
+              pendingCount
+                ? 'mt-1 text-sm font-medium text-amber-700 dark:text-amber-400'
+                : 'mt-1 text-sm text-zinc-500'
+            }
+          >
             {pendingCount
               ? `Tenés ${pendingCount} solicitud${pendingCount === 1 ? '' : 'es'} pendiente${pendingCount === 1 ? '' : 's'}.`
               : 'Todavía no recibiste solicitudes.'}

@@ -56,7 +56,7 @@ export default async function ProfesionalesPage({
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-10">
-      <BackButton />
+      <BackButton fallbackHref="/" />
       <div className="mt-4">
         <h1 className="text-2xl font-semibold">Directorio de profesionales</h1>
         <p className="mt-1 text-zinc-500">Encontrá al profesional que resuelve.</p>

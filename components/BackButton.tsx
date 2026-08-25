@@ -16,7 +16,9 @@ export function BackButton({
       type="button"
       onClick={() => {
         if (fallbackHref) {
-          router.push(fallbackHref)
+          // replace, no push: evita apilar entradas duplicadas cuando se
+          // entra y sale de varias páginas seguidas con este botón.
+          router.replace(fallbackHref)
         } else {
           router.back()
         }
