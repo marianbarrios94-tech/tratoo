@@ -13,22 +13,27 @@ export default async function ProfesionalDetallePage({
   const { id } = await params
   const supabase = await createClient()
 
-  const { data: professional } = await supabase
-    .from('professional_profiles')
-    .select('*')
-    .eq('user_id', id)
-    .not('business_name', 'is', null)
-    .maybeSingle()
-
-  if (!professional) {
-    notFound()
-  }
-
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
   const isOwnProfile = user?.id === id
+
+  let professionalQuery = supabase
+    .from('professional_profiles')
+    .select('*')
+    .eq('user_id', id)
+    .not('business_name', 'is', null)
+
+  if (!isOwnProfile) {
+    professionalQuery = professionalQuery.eq('hidden', false)
+  }
+
+  const { data: professional } = await professionalQuery.maybeSingle()
+
+  if (!professional) {
+    notFound()
+  }
 
   if (!isOwnProfile) {
     // Best-effort: no debe romper el render del perfil si falla.
@@ -114,7 +119,14 @@ export default async function ProfesionalDetallePage({
 
       {isOwnProfile ? (
         <div className="mt-8">
-          <p className="text-sm text-zinc-500">Este es tu perfil público.</p>
+          {professional.hidden ? (
+            <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
+              Tu perfil está oculto: solo vos podés verlo. Los clientes no te encuentran en el
+              directorio.
+            </p>
+          ) : (
+            <p className="text-sm text-zinc-500">Este es tu perfil público.</p>
+          )}
           {!hasActiveSubscription(professional.subscription_status) && (
             <p className="mt-2 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
               Estás en el plan gratuito: tu perfil es visible y podés recibir

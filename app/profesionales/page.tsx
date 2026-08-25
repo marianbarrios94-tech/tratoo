@@ -33,6 +33,7 @@ export default async function ProfesionalesPage({
     .from('professional_profiles')
     .select('*')
     .not('business_name', 'is', null)
+    .eq('hidden', false)
     .order('verified', { ascending: false })
     .order('avg_rating', { ascending: false })
 

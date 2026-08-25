@@ -64,3 +64,35 @@ export async function saveProfessionalProfile(formData: FormData) {
   revalidatePath(`/profesionales/${user.id}`)
   redirect('/panel/perfil?message=Perfil guardado')
 }
+
+export async function toggleProfileVisibility(formData: FormData) {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/login')
+  }
+
+  const hidden = formData.get('hidden') === 'true'
+
+  const { error } = await supabase
+    .from('professional_profiles')
+    .update({ hidden })
+    .eq('user_id', user.id)
+
+  if (error) {
+    redirect(`/panel/perfil?error=${encodeURIComponent(error.message)}`)
+  }
+
+  revalidatePath('/panel')
+  revalidatePath('/panel/perfil')
+  revalidatePath('/profesionales')
+  revalidatePath(`/profesionales/${user.id}`)
+  redirect(
+    `/panel/perfil?message=${encodeURIComponent(
+      hidden ? 'Perfil oculto: ya no aparece en el directorio' : 'Perfil publicado de nuevo'
+    )}`
+  )
+}

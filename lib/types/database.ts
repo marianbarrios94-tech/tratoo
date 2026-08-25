@@ -90,6 +90,7 @@ export interface Database {
           subscription_status: SubscriptionStatus
           mp_preapproval_id: string | null
           avg_rating: number
+          hidden: boolean
           created_at: string
         }
         Insert: {
@@ -107,6 +108,7 @@ export interface Database {
           subscription_status?: SubscriptionStatus
           mp_preapproval_id?: string | null
           avg_rating?: number
+          hidden?: boolean
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['professional_profiles']['Insert']>

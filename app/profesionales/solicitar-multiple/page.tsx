@@ -33,6 +33,7 @@ export default async function SolicitarMultiplePage({
     .select('user_id, business_name')
     .in('user_id', ids)
     .not('business_name', 'is', null)
+    .eq('hidden', false)
 
   if (!professionals || professionals.length === 0) {
     redirect('/profesionales')

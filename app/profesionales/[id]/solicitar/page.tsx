@@ -34,6 +34,7 @@ export default async function SolicitarPage({
     .select('business_name, category_id, subscription_status')
     .eq('user_id', id)
     .not('business_name', 'is', null)
+    .eq('hidden', false)
     .maybeSingle()
 
   if (!professional) {

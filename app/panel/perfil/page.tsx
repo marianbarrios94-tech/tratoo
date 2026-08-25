@@ -2,9 +2,11 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { PROVINCES } from '@/lib/constants/provinces'
+import { hasActiveSubscription } from '@/lib/constants/subscriptions'
 import { AvatarUpload } from '@/components/AvatarUpload'
 import { ScrollToTop } from '@/components/ScrollToTop'
-import { saveProfessionalProfile } from './actions'
+import { ConfirmSubmitButton } from '@/components/ConfirmSubmitButton'
+import { saveProfessionalProfile, toggleProfileVisibility } from './actions'
 
 export default async function PerfilProfesionalPage({
   searchParams,
@@ -226,6 +228,26 @@ export default async function PerfilProfesionalPage({
           Guardar perfil
         </button>
       </form>
+
+      {profile?.business_name && (
+        <form action={toggleProfileVisibility} className="max-w-lg border-t border-zinc-200 pt-6 dark:border-zinc-800">
+          <input type="hidden" name="hidden" value={profile.hidden ? 'false' : 'true'} />
+          <ConfirmSubmitButton
+            confirmMessage={
+              profile.hidden
+                ? '¿Volver a publicar tu perfil? Vas a aparecer de nuevo en el directorio.'
+                : `¿Seguro que querés ocultar tu perfil? No vas a aparecer en el directorio, pero podés volver a publicarlo tocando este mismo botón cuando quieras.${
+                    hasActiveSubscription(profile.subscription_status)
+                      ? ' Tu suscripción paga sigue activa y se te va a seguir cobrando.'
+                      : ''
+                  }`
+            }
+            className="text-sm font-medium text-zinc-500 underline hover:text-zinc-700 dark:hover:text-zinc-300"
+          >
+            {profile.hidden ? 'Publicar perfil' : 'Ocultar perfil'}
+          </ConfirmSubmitButton>
+        </form>
+      )}
     </div>
   )
 }

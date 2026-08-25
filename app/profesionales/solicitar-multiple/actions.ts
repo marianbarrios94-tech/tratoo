@@ -23,6 +23,8 @@ export async function createMultipleServiceRequests(formData: FormData) {
     .from('professional_profiles')
     .select('user_id, business_name, category_id, subscription_status')
     .in('user_id', professionalIds)
+    .not('business_name', 'is', null)
+    .eq('hidden', false)
 
   const { data: profile } = await supabase
     .from('profiles')
