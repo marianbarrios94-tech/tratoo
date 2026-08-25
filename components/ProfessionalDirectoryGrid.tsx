@@ -49,14 +49,21 @@ export function ProfessionalDirectoryGrid({
                 : 'border-zinc-200 hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600'
             }`}
           >
-            <label className="absolute right-4 top-4 z-10 flex items-center gap-1 text-xs text-zinc-500">
-              <input
-                type="checkbox"
-                checked={selected.has(p.user_id)}
-                onChange={() => toggle(p.user_id)}
-              />
-              Seleccionar
-            </label>
+            <div className="absolute right-4 top-4 z-10 flex flex-col items-end gap-1">
+              {p.verified && (
+                <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                  Verificado
+                </span>
+              )}
+              <label className="flex items-center gap-1 text-xs text-zinc-500">
+                <input
+                  type="checkbox"
+                  checked={selected.has(p.user_id)}
+                  onChange={() => toggle(p.user_id)}
+                />
+                Seleccionar
+              </label>
+            </div>
             <Link href={`/profesionales/${p.user_id}`} className="flex gap-3 pr-16">
               {p.avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element -- URL externa de Supabase Storage
@@ -71,14 +78,7 @@ export function ProfessionalDirectoryGrid({
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <div className="flex items-start justify-between gap-2">
-                  <h2 className="font-semibold">{p.business_name}</h2>
-                  {p.verified && (
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-                      Verificado
-                    </span>
-                  )}
-                </div>
+                <h2 className="font-semibold">{p.business_name}</h2>
                 {p.categoryLabel && (
                   <p className="mt-1 text-sm text-zinc-500">{p.categoryLabel}</p>
                 )}
