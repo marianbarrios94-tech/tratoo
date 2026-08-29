@@ -38,6 +38,20 @@ export default async function PerfilProfesionalPage({
     categoriesByVertical.get(category.vertical)?.push(category)
   }
 
+  const completenessFields: [boolean, string][] = [
+    [Boolean(profile?.business_name), 'el nombre o marca'],
+    [Boolean(profile?.category_id || profile?.custom_profession), 'la categoría'],
+    [Boolean(profile?.province), 'la provincia'],
+    [Boolean(profile?.city), 'la ciudad'],
+    [Boolean(contact?.phone), 'el teléfono'],
+    [Boolean(profile?.years_experience), 'los años de experiencia'],
+    [Boolean(profile?.bio), 'una descripción'],
+    [Boolean(baseProfile?.avatar_url), 'una foto de perfil'],
+  ]
+  const completenessCount = completenessFields.filter(([done]) => done).length
+  const completenessPercent = Math.round((completenessCount / completenessFields.length) * 100)
+  const missingFields = completenessFields.filter(([done]) => !done).map(([, label]) => label)
+
   return (
     <div className="flex flex-col gap-8">
       <ScrollToTop when={message ?? error} />
@@ -55,6 +69,26 @@ export default async function PerfilProfesionalPage({
           </Link>
         )}
       </div>
+
+      {completenessPercent < 100 && (
+        <div className="max-w-lg">
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-medium">Tu perfil está {completenessPercent}% completo</span>
+          </div>
+          <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+            <div
+              className="h-full rounded-full bg-emerald-500 transition-all"
+              style={{ width: `${completenessPercent}%` }}
+            />
+          </div>
+          {missingFields.length > 0 && (
+            <p className="mt-1.5 text-sm text-zinc-500">
+              Agregá {missingFields.slice(0, 2).join(' y ')}
+              {missingFields.length > 2 ? ', entre otras cosas,' : ''} para mejorar tu perfil.
+            </p>
+          )}
+        </div>
+      )}
 
       {message && (
         <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{message}</p>

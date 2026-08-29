@@ -51,7 +51,7 @@ export default async function SolicitarPage({
   return (
     <div className="mx-auto w-full max-w-lg px-6 py-10">
       <BackButton fallbackHref={`/profesionales/${id}`} />
-      <h1 className="mt-4 text-2xl font-semibold">Solicitar a {professional.business_name}</h1>
+      <h1 className="mt-4 text-2xl font-semibold">Contactar a {professional.business_name}</h1>
 
       {error && (
         <p className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>

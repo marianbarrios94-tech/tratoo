@@ -148,7 +148,7 @@ export default async function ProfesionalDetallePage({
           }
           className="mt-8 inline-block rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
         >
-          Solicitar
+          Contactar
         </Link>
       )}
 
@@ -161,7 +161,12 @@ export default async function ProfesionalDetallePage({
             {(reviews ?? []).map((r, i) => (
               <li key={i} className="rounded-xl bg-zinc-50 p-4 dark:bg-zinc-900">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-sm">{starString(r.rating)}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm">{starString(r.rating)}</p>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+                      Reseña verificada
+                    </span>
+                  </div>
                   <span className="text-xs text-zinc-500">{r.client_name ?? 'Cliente de Tratoo'}</span>
                 </div>
                 {r.comment && (
