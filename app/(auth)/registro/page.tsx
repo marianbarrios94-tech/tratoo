@@ -6,9 +6,9 @@ import { PasswordInput } from '@/components/PasswordInput'
 export default async function RegistroPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; role?: string }>
+  searchParams: Promise<{ error?: string; role?: string; promo?: string }>
 }) {
-  const { error, role } = await searchParams
+  const { error, role, promo } = await searchParams
   const defaultRole = role === 'professional' ? 'professional' : 'client'
 
   return (
@@ -22,6 +22,7 @@ export default async function RegistroPage({
         )}
 
         <form action={signup} className="mt-6 flex flex-col gap-4">
+          {promo && <input type="hidden" name="promo" value={promo} />}
           <fieldset>
             <legend className="mb-2 block text-sm font-medium">Quiero...</legend>
             <div className="flex gap-3">

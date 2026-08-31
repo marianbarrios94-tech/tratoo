@@ -84,6 +84,8 @@ export interface Database {
           city: string | null
           city_unaccent: string | null
           province: string | null
+          lat: number | null
+          lng: number | null
           years_experience: number | null
           verified: boolean
           subscription_plan_id: string | null
@@ -91,6 +93,7 @@ export interface Database {
           mp_preapproval_id: string | null
           avg_rating: number
           hidden: boolean
+          promo_pro_until: string | null
           created_at: string
         }
         Insert: {
@@ -102,6 +105,8 @@ export interface Database {
           bio?: string | null
           city?: string | null
           province?: string | null
+          lat?: number | null
+          lng?: number | null
           years_experience?: number | null
           verified?: boolean
           subscription_plan_id?: string | null
@@ -109,6 +114,7 @@ export interface Database {
           mp_preapproval_id?: string | null
           avg_rating?: number
           hidden?: boolean
+          promo_pro_until?: string | null
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['professional_profiles']['Insert']>
