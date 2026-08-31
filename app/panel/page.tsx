@@ -69,7 +69,7 @@ export default async function PanelPage() {
       {promoActive && (
         <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-6 dark:border-emerald-800 dark:bg-emerald-950">
           <h2 className="font-semibold text-emerald-800 dark:text-emerald-300">
-            Sos profesional fundador de Tratoo
+            Sos de los primeros profesionales en sumarte a Tratoo
           </h2>
           <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-400">
             Por ser de los primeros en sumarte, tenés el plan Pro gratis
