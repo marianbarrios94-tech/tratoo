@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { PROVINCES } from '@/lib/constants/provinces'
 import { stripAccents } from '@/lib/text'
+import { haversineDistanceKm } from '@/lib/geo'
 import { BackButton } from '@/components/BackButton'
 import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGrid'
 import { ProfesionalesFilters } from '@/components/ProfesionalesFilters'
@@ -15,9 +16,13 @@ export default async function ProfesionalesPage({
     ciudad?: string
     provincia?: string
     q?: string
+    lat?: string
+    lng?: string
   }>
 }) {
-  const { vertical, categoria, ciudad, provincia, q } = await searchParams
+  const { vertical, categoria, ciudad, provincia, q, lat, lng } = await searchParams
+  const latNum = lat !== undefined && Number.isFinite(Number(lat)) ? Number(lat) : null
+  const lngNum = lng !== undefined && Number.isFinite(Number(lng)) ? Number(lng) : null
   const supabase = await createClient()
 
   const { data: categories } = await supabase
@@ -64,7 +69,24 @@ export default async function ProfesionalesPage({
 
   const { data: professionals } = await query
 
-  const userIds = (professionals ?? []).map((p) => p.user_id)
+  const withDistance = (professionals ?? []).map((p) => ({
+    ...p,
+    distanceKm:
+      latNum != null && lngNum != null && p.lat != null && p.lng != null
+        ? haversineDistanceKm(latNum, lngNum, p.lat, p.lng)
+        : null,
+  }))
+  const sortedProfessionals =
+    latNum != null && lngNum != null
+      ? [...withDistance].sort((a, b) => {
+          if (a.distanceKm == null && b.distanceKm == null) return 0
+          if (a.distanceKm == null) return 1
+          if (b.distanceKm == null) return -1
+          return a.distanceKm - b.distanceKm
+        })
+      : withDistance
+
+  const userIds = sortedProfessionals.map((p) => p.user_id)
   const { data: avatarRows } = userIds.length
     ? await supabase.from('profiles').select('id, avatar_url').in('id', userIds)
     : { data: [] }
@@ -87,10 +109,12 @@ export default async function ProfesionalesPage({
         defaultCiudad={ciudad ?? ''}
         defaultProvincia={provincia ?? ''}
         defaultQ={q ?? ''}
+        defaultLat={lat ?? ''}
+        defaultLng={lng ?? ''}
       />
 
       <ProfessionalDirectoryGrid
-        professionals={(professionals ?? []).map((p) => {
+        professionals={sortedProfessionals.map((p) => {
           const category = p.category_id ? categoryById.get(p.category_id) : null
           return {
             user_id: p.user_id,
@@ -101,6 +125,7 @@ export default async function ProfesionalesPage({
             avg_rating: p.avg_rating,
             categoryLabel: category?.name ?? p.custom_profession ?? null,
             avatarUrl: avatarByUserId.get(p.user_id) ?? null,
+            distanceKm: p.distanceKm,
           }
         })}
       />

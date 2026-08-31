@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { VERTICALS, CATEGORIES_BY_VERTICAL } from '@/lib/constants/categories'
+import { HOME_QUICK_CATEGORY_SLUGS } from '@/lib/constants/homeQuickCategories'
 import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/(auth)/actions'
 import { formatPrice } from '@/lib/currency'
 import { LogoMark } from '@/components/Logo'
 import { InstallPrompt } from '@/components/InstallPrompt'
+import { HomeHeroSearch } from '@/components/HomeHeroSearch'
 
 const PLANS = [
   {
@@ -54,6 +56,11 @@ export default async function Home() {
 
   const categorySlugByName = new Map(
     (categories ?? []).map((c) => [`${c.vertical}:${c.name}`, c.slug])
+  )
+
+  const categoryBySlug = new Map((categories ?? []).map((c) => [c.slug, c]))
+  const quickCategories = HOME_QUICK_CATEGORY_SLUGS.map((slug) => categoryBySlug.get(slug)).filter(
+    (c): c is NonNullable<typeof c> => Boolean(c)
   )
 
   const dashboardHref =
@@ -134,19 +141,35 @@ export default async function Home() {
           <p className="max-w-xl text-sm font-medium text-zinc-500 dark:text-zinc-400">
             Hecho para el NEA: Misiones, Corrientes, Chaco y Formosa.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <HomeHeroSearch />
+
+          {quickCategories.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {quickCategories.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/profesionales?categoria=${c.slug}`}
+                  className="rounded-full bg-white px-3 py-1.5 text-sm text-zinc-600 shadow-sm transition-colors hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                >
+                  {c.name}
+                </Link>
+              ))}
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2 text-sm sm:flex-row">
             {user ? (
               <>
                 <Link
                   href={dashboardHref}
-                  className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+                  className="font-medium text-zinc-600 underline hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
                 >
                   Ir a mi cuenta
                 </Link>
                 {dashboardHref !== '/panel' && (
                   <Link
                     href="/panel"
-                    className="rounded-full border border-zinc-300 px-6 py-3 font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
+                    className="font-medium text-zinc-600 underline hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
                   >
                     Ofrecer mis servicios
                   </Link>
@@ -156,13 +179,13 @@ export default async function Home() {
               <>
                 <Link
                   href="/registro?role=client"
-                  className="rounded-full bg-zinc-950 px-6 py-3 font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+                  className="font-medium text-zinc-600 underline hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
                 >
-                  Buscar un profesional
+                  Registrarme como cliente
                 </Link>
                 <Link
                   href="/registro?role=professional"
-                  className="rounded-full border border-zinc-300 px-6 py-3 font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
+                  className="font-medium text-zinc-600 underline hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
                 >
                   Ofrecer mis servicios
                 </Link>

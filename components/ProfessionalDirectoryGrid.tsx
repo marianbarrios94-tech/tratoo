@@ -14,6 +14,7 @@ type ProfessionalCard = {
   avg_rating: number
   categoryLabel: string | null
   avatarUrl: string | null
+  distanceKm: number | null
 }
 
 export function ProfessionalDirectoryGrid({
@@ -82,9 +83,15 @@ export function ProfessionalDirectoryGrid({
                 {p.categoryLabel && (
                   <p className="mt-1 text-sm text-zinc-500">{p.categoryLabel}</p>
                 )}
-                {(p.city || p.province) && (
+                {(p.city || p.province || p.distanceKm != null) && (
                   <p className="text-sm text-zinc-500">
                     {[p.city, p.province].filter(Boolean).join(', ')}
+                    {p.distanceKm != null &&
+                      ` · ${
+                        p.distanceKm < 1
+                          ? `${Math.round(p.distanceKm * 1000)} m`
+                          : `${p.distanceKm.toFixed(1)} km`
+                      }`}
                   </p>
                 )}
                 <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">

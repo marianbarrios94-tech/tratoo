@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { lookupCityCoordinates } from '@/lib/geo'
 
 export async function saveProfessionalProfile(formData: FormData) {
   const supabase = await createClient()
@@ -34,6 +35,8 @@ export async function saveProfessionalProfile(formData: FormData) {
     redirect(`/panel/perfil?error=${encodeURIComponent('Elegí tu provincia')}`)
   }
 
+  const coords = lookupCityCoordinates(city)
+
   const { error } = await supabase.from('professional_profiles').upsert({
     user_id: user.id,
     business_name: businessName,
@@ -42,6 +45,8 @@ export async function saveProfessionalProfile(formData: FormData) {
     license_number: licenseNumber || null,
     city: city || null,
     province,
+    lat: coords?.lat ?? null,
+    lng: coords?.lng ?? null,
     years_experience: yearsExperience ? Number(yearsExperience) : null,
     bio: bio || null,
   })
