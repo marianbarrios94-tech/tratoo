@@ -3,35 +3,13 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { createAdminClient } from '@/lib/supabase/admin'
 import type { UserRole } from '@/lib/types/database'
 import { translateAuthError } from '@/lib/authErrors'
+import { FOUNDING_PROMO_CODE, grantFoundingPromo } from '@/lib/foundingPromo'
 
 async function currentOrigin() {
   const headersList = await headers()
   return headersList.get('origin') ?? `http://${headersList.get('host')}`
-}
-
-// Código de invitación para el lanzamiento en Posadas: quien se registra como
-// profesional con ?promo=fundador en el link recibe el plan Pro gratis por
-// FOUNDING_PRO_MONTHS meses, sin pasar por Mercado Pago. No hay expiración
-// automática — promo_pro_until queda como referencia para revisar manualmente.
-const FOUNDING_PROMO_CODE = 'fundador'
-const FOUNDING_PRO_MONTHS = 3
-const PRO_PLAN_ID = '492798df-d5c2-4634-bdaa-9c5cc9df396f'
-
-async function grantFoundingPromo(userId: string) {
-  const until = new Date()
-  until.setMonth(until.getMonth() + FOUNDING_PRO_MONTHS)
-
-  const admin = createAdminClient()
-  await admin.from('professional_profiles').upsert({
-    user_id: userId,
-    subscription_status: 'active',
-    subscription_plan_id: PRO_PLAN_ID,
-    verified: true,
-    promo_pro_until: until.toISOString(),
-  })
 }
 
 export async function login(formData: FormData) {

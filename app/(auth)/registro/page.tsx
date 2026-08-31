@@ -2,6 +2,11 @@ import Link from 'next/link'
 import { signup } from '../actions'
 import { BackButton } from '@/components/BackButton'
 import { PasswordInput } from '@/components/PasswordInput'
+import {
+  FOUNDING_PROMO_CAP,
+  FOUNDING_PROMO_CODE,
+  getFoundingPromoGrantedCount,
+} from '@/lib/foundingPromo'
 
 export default async function RegistroPage({
   searchParams,
@@ -10,6 +15,8 @@ export default async function RegistroPage({
 }) {
   const { error, role, promo } = await searchParams
   const defaultRole = role === 'professional' ? 'professional' : 'client'
+  const promoFull =
+    promo === FOUNDING_PROMO_CODE && (await getFoundingPromoGrantedCount()) >= FOUNDING_PROMO_CAP
 
   return (
     <div className="flex flex-1 items-center justify-center px-4 py-16">
@@ -19,6 +26,13 @@ export default async function RegistroPage({
 
         {error && (
           <p className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
+        )}
+
+        {promoFull && (
+          <p className="mt-4 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
+            La promo de profesionales fundadores ya alcanzó su cupo. Podés crear tu cuenta igual,
+            en el plan gratis.
+          </p>
         )}
 
         <form action={signup} className="mt-6 flex flex-col gap-4">
