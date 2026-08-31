@@ -15,7 +15,7 @@ export default async function PanelPage() {
       user
         ? supabase
             .from('professional_profiles')
-            .select('business_name, subscription_status, subscription_plan_id')
+            .select('business_name, subscription_status, subscription_plan_id, promo_pro_until')
             .eq('user_id', user.id)
             .maybeSingle()
         : Promise.resolve({ data: null }),
@@ -29,6 +29,18 @@ export default async function PanelPage() {
     ])
 
   const profileComplete = Boolean(professionalProfile?.business_name)
+
+  const promoActive = Boolean(
+    professionalProfile?.promo_pro_until &&
+      new Date(professionalProfile.promo_pro_until) > new Date()
+  )
+  const promoUntilLabel = professionalProfile?.promo_pro_until
+    ? new Date(professionalProfile.promo_pro_until).toLocaleDateString('es-AR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+    : null
 
   const { data: currentPlan } = professionalProfile?.subscription_plan_id
     ? await supabase
@@ -53,6 +65,19 @@ export default async function PanelPage() {
         </h1>
         <p className="mt-1 text-zinc-500">Este es tu espacio como profesional en Tratoo.</p>
       </div>
+
+      {promoActive && (
+        <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-6 dark:border-emerald-800 dark:bg-emerald-950">
+          <h2 className="font-semibold text-emerald-800 dark:text-emerald-300">
+            Sos profesional fundador de Tratoo
+          </h2>
+          <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-400">
+            Por ser de los primeros en sumarte, tenés el plan Pro gratis
+            {promoUntilLabel ? ` hasta el ${promoUntilLabel}` : ''}: solicitudes ilimitadas e
+            insignia de verificado, sin costo.
+          </p>
+        </div>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Link
