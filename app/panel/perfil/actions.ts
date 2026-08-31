@@ -35,6 +35,12 @@ export async function saveProfessionalProfile(formData: FormData) {
     redirect(`/panel/perfil?error=${encodeURIComponent('Elegí tu provincia')}`)
   }
 
+  if (!phone) {
+    redirect(
+      `/panel/perfil?error=${encodeURIComponent('Agregá un teléfono de WhatsApp para que los clientes puedan contactarte')}`
+    )
+  }
+
   const coords = lookupCityCoordinates(city)
 
   const { error } = await supabase.from('professional_profiles').upsert({

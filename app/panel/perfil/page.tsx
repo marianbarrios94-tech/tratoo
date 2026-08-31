@@ -6,6 +6,7 @@ import { hasActiveSubscription } from '@/lib/constants/subscriptions'
 import { AvatarUpload } from '@/components/AvatarUpload'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { ConfirmSubmitButton } from '@/components/ConfirmSubmitButton'
+import { ProfileOnboardingWizard } from '@/components/ProfileOnboardingWizard'
 import { saveProfessionalProfile, toggleProfileVisibility } from './actions'
 
 export default async function PerfilProfesionalPage({
@@ -37,6 +38,13 @@ export default async function PerfilProfesionalPage({
   for (const category of categories ?? []) {
     categoriesByVertical.get(category.vertical)?.push(category)
   }
+
+  const isOnboarded = Boolean(
+    profile?.business_name &&
+      (profile?.category_id || profile?.custom_profession) &&
+      profile?.province &&
+      contact?.phone
+  )
 
   const completenessFields: [boolean, string][] = [
     [Boolean(profile?.business_name), 'el nombre o marca'],
@@ -70,7 +78,7 @@ export default async function PerfilProfesionalPage({
         )}
       </div>
 
-      {completenessPercent < 100 && (
+      {isOnboarded && completenessPercent < 100 && (
         <div className="max-w-lg">
           <div className="flex items-center justify-between text-sm">
             <span className="font-medium">Tu perfil está {completenessPercent}% completo</span>
@@ -95,13 +103,33 @@ export default async function PerfilProfesionalPage({
       )}
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
+      {!isOnboarded && (
+        <ProfileOnboardingWizard
+          action={saveProfessionalProfile}
+          verticals={VERTICALS}
+          categoriesByVertical={categoriesByVertical as Map<string, NonNullable<typeof categories>>}
+          provinces={PROVINCES}
+          defaults={{
+            businessName: profile?.business_name ?? '',
+            categoryId: profile?.category_id ?? '',
+            customProfession: profile?.custom_profession ?? '',
+            city: profile?.city ?? '',
+            province: profile?.province ?? '',
+            phone: contact?.phone ?? '',
+          }}
+        />
+      )}
+
+      {isOnboarded && (
       <div className="max-w-lg">
         <AvatarUpload
           avatarUrl={baseProfile?.avatar_url ?? null}
           name={profile?.business_name || baseProfile?.full_name || ''}
         />
       </div>
+      )}
 
+      {isOnboarded && (
       <form action={saveProfessionalProfile} className="flex max-w-lg flex-col gap-4">
         <div>
           <label htmlFor="business_name" className="block text-sm font-medium">
@@ -262,6 +290,7 @@ export default async function PerfilProfesionalPage({
           Guardar perfil
         </button>
       </form>
+      )}
 
       {profile?.business_name && (
         <form action={toggleProfileVisibility} className="max-w-lg border-t border-zinc-200 pt-6 dark:border-zinc-800">
