@@ -54,10 +54,19 @@ export default async function ProfesionalesPage({
   if (q) {
     // Cubre a quienes cargaron su profesión como texto libre (no está en
     // la lista de categorías) y por eso no aparecían con los filtros de
-    // rubro/categoría.
+    // rubro/categoría, además de a quienes buscan escribiendo directamente
+    // el nombre de una categoría (ej. "Abogacía") sin usar el filtro.
     const safeQ = q.replace(/[,()%]/g, ' ').trim()
     if (safeQ) {
-      query = query.or(`business_name.ilike.%${safeQ}%,custom_profession.ilike.%${safeQ}%`)
+      const normalizedQ = stripAccents(safeQ).toLowerCase()
+      const matchingCategoryIds = (categories ?? [])
+        .filter((c) => stripAccents(c.name).toLowerCase().includes(normalizedQ))
+        .map((c) => c.id)
+      const orParts = [`business_name.ilike.%${safeQ}%`, `custom_profession.ilike.%${safeQ}%`]
+      if (matchingCategoryIds.length > 0) {
+        orParts.push(`category_id.in.(${matchingCategoryIds.join(',')})`)
+      }
+      query = query.or(orParts.join(','))
     }
   }
   if (ciudad) {
