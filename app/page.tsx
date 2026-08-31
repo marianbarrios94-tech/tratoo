@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { VERTICALS, CATEGORIES_BY_VERTICAL } from '@/lib/constants/categories'
-import { HOME_QUICK_CATEGORY_SLUGS } from '@/lib/constants/homeQuickCategories'
 import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/(auth)/actions'
 import { formatPrice } from '@/lib/currency'
@@ -56,11 +55,6 @@ export default async function Home() {
 
   const categorySlugByName = new Map(
     (categories ?? []).map((c) => [`${c.vertical}:${c.name}`, c.slug])
-  )
-
-  const categoryBySlug = new Map((categories ?? []).map((c) => [c.slug, c]))
-  const quickCategories = HOME_QUICK_CATEGORY_SLUGS.map((slug) => categoryBySlug.get(slug)).filter(
-    (c): c is NonNullable<typeof c> => Boolean(c)
   )
 
   const dashboardHref =
@@ -142,20 +136,6 @@ export default async function Home() {
             Hecho para el NEA: Misiones, Corrientes, Chaco y Formosa.
           </p>
           <HomeHeroSearch />
-
-          {quickCategories.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {quickCategories.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/profesionales?categoria=${c.slug}`}
-                  className="rounded-full bg-white px-3 py-1.5 text-sm text-zinc-600 shadow-sm transition-colors hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                >
-                  {c.name}
-                </Link>
-              ))}
-            </div>
-          )}
 
           <div className="flex flex-col gap-2 text-sm sm:flex-row">
             {user ? (
