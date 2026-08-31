@@ -43,6 +43,9 @@ export async function saveProfessionalProfile(formData: FormData) {
 
   const coords = lookupCityCoordinates(city)
 
+  // "Verificado" no confirma identidad — significa "perfil real y
+  // contactable": llegar acá ya exige teléfono, así que cualquier perfil que
+  // se guarda con éxito lo cumple.
   const { error } = await supabase.from('professional_profiles').upsert({
     user_id: user.id,
     business_name: businessName,
@@ -55,6 +58,7 @@ export async function saveProfessionalProfile(formData: FormData) {
     lng: coords?.lng ?? null,
     years_experience: yearsExperience ? Number(yearsExperience) : null,
     bio: bio || null,
+    verified: true,
   })
 
   if (error) {

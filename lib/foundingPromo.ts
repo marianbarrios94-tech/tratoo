@@ -30,12 +30,13 @@ export async function grantFoundingPromo(userId: string) {
   const until = new Date()
   until.setMonth(until.getMonth() + FOUNDING_PRO_MONTHS)
 
+  // No incluye `verified`: eso ahora se decide solo por tener teléfono
+  // cargado (ver saveProfessionalProfile), nunca por haber usado este link.
   const admin = createAdminClient()
   await admin.from('professional_profiles').upsert({
     user_id: userId,
     subscription_status: 'active',
     subscription_plan_id: PRO_PLAN_ID,
-    verified: true,
     promo_pro_until: until.toISOString(),
   })
   return true
