@@ -1,7 +1,12 @@
 import { createResendClient } from '@/lib/resend/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-const FROM = 'Tratoo <onboarding@resend.dev>'
+// Hasta que tratoo.ar esté verificado en Resend, esto sigue apuntando a la
+// dirección de pruebas compartida (onboarding@resend.dev), que solo entrega
+// a la propia casilla verificada en Resend — no a usuarios reales. Una vez
+// verificado el dominio, definir RESEND_FROM_EMAIL en Vercel (ej. "Tratoo
+// <notificaciones@tratoo.ar>") y volver a desplegar.
+const FROM = process.env.RESEND_FROM_EMAIL || 'Tratoo <onboarding@resend.dev>'
 
 async function getProfileEmail(userId: string) {
   const admin = createAdminClient()

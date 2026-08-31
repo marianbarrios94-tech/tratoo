@@ -4,7 +4,8 @@ import { redirect } from 'next/navigation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createResendClient } from '@/lib/resend/server'
 
-const FROM = 'Tratoo <onboarding@resend.dev>'
+// Ver la nota equivalente en lib/email/notify.ts sobre RESEND_FROM_EMAIL.
+const FROM = process.env.RESEND_FROM_EMAIL || 'Tratoo <onboarding@resend.dev>'
 
 // Resend solo puede mandar a la propia dirección verificada de la cuenta
 // hasta que se verifique un dominio propio (ver reference-tratoo-infra en
