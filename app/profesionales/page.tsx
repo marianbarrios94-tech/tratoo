@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { VERTICALS } from '@/lib/constants/categories'
 import { PROVINCES } from '@/lib/constants/provinces'
 import { stripAccents } from '@/lib/text'
+import { CATEGORY_SYNONYMS } from '@/lib/constants/categorySynonyms'
 import { haversineDistanceKm } from '@/lib/geo'
 import { BackButton } from '@/components/BackButton'
 import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGrid'
@@ -55,12 +56,17 @@ export default async function ProfesionalesPage({
     // Cubre a quienes cargaron su profesión como texto libre (no está en
     // la lista de categorías) y por eso no aparecían con los filtros de
     // rubro/categoría, además de a quienes buscan escribiendo directamente
-    // el nombre de una categoría (ej. "Abogacía") sin usar el filtro.
+    // el nombre de una categoría (ej. "Abogacía") o el nombre de la
+    // profesión (ej. "Abogado") sin usar el filtro.
     const safeQ = q.replace(/[,()%]/g, ' ').trim()
     if (safeQ) {
       const normalizedQ = stripAccents(safeQ).toLowerCase()
       const matchingCategoryIds = (categories ?? [])
-        .filter((c) => stripAccents(c.name).toLowerCase().includes(normalizedQ))
+        .filter((c) => {
+          if (stripAccents(c.name).toLowerCase().includes(normalizedQ)) return true
+          const synonyms = CATEGORY_SYNONYMS[c.slug] ?? []
+          return synonyms.some((s) => stripAccents(s).toLowerCase().includes(normalizedQ))
+        })
         .map((c) => c.id)
       const orParts = [`business_name.ilike.%${safeQ}%`, `custom_profession.ilike.%${safeQ}%`]
       if (matchingCategoryIds.length > 0) {
