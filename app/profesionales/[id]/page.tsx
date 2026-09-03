@@ -61,7 +61,11 @@ export default async function ProfesionalDetallePage({
 
   return (
     <div className="mx-auto w-full max-w-2xl px-6 py-10">
-      <BackButton label="← Volver al directorio" fallbackHref="/profesionales" />
+      {isOwnProfile ? (
+        <BackButton label="← Volver" fallbackHref="/panel/perfil" />
+      ) : (
+        <BackButton label="← Volver al directorio" fallbackHref="/profesionales" />
+      )}
 
       <div className="mt-4 flex items-start gap-4">
         {profile?.avatar_url ? (
