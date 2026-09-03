@@ -1,26 +1,5 @@
-export const PROVINCES = [
-  'Buenos Aires',
-  'Catamarca',
-  'Chaco',
-  'Chubut',
-  'Ciudad Autónoma de Buenos Aires',
-  'Córdoba',
-  'Corrientes',
-  'Entre Ríos',
-  'Formosa',
-  'Jujuy',
-  'La Pampa',
-  'La Rioja',
-  'Mendoza',
-  'Misiones',
-  'Neuquén',
-  'Río Negro',
-  'Salta',
-  'San Juan',
-  'San Luis',
-  'Santa Cruz',
-  'Santa Fe',
-  'Santiago del Estero',
-  'Tierra del Fuego',
-  'Tucumán',
-] as const
+// Tratoo arranca acotado al NEA a propósito (ver la estrategia de
+// lanzamiento) — dejar elegir cualquier provincia del país contradice el
+// "Hecho para el NEA" de la home y desparramaría la oferta/demanda inicial
+// en vez de concentrarla.
+export const PROVINCES = ['Misiones', 'Corrientes', 'Chaco', 'Formosa'] as const
