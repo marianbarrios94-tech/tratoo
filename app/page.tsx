@@ -126,7 +126,7 @@ export default async function Home() {
       <main className="mx-auto w-full max-w-6xl flex-1 px-6">
         <section className="flex flex-col items-center gap-6 py-20 text-center">
           <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
-            Encontrá al profesional que resuelve
+            El profesional que necesitás, a un trato de distancia
           </h1>
           <p className="max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
             Tratoo conecta clientes con profesionales verificados de hogar, consultoría y salud,

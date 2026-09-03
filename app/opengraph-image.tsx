@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Tratoo — Encontrá al profesional que resuelve'
+export const alt = 'Tratoo — El profesional que necesitás, a un trato de distancia'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -41,8 +41,16 @@ export default function OpengraphImage() {
         <div style={{ display: 'flex', fontSize: 72, fontWeight: 700, color: '#ffffff' }}>
           Tratoo
         </div>
-        <div style={{ display: 'flex', fontSize: 30, color: '#a1a1aa' }}>
-          Encontrá al profesional que resuelve
+        <div
+          style={{
+            display: 'flex',
+            fontSize: 30,
+            color: '#a1a1aa',
+            maxWidth: 860,
+            textAlign: 'center',
+          }}
+        >
+          El profesional que necesitás, a un trato de distancia
         </div>
       </div>
     ),

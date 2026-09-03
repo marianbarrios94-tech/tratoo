@@ -15,7 +15,7 @@ export default async function LoginPage({
       <div className="w-full max-w-sm">
         <BackButton />
         <h1 className="mt-4 text-2xl font-semibold">Iniciá sesión en Tratoo</h1>
-        <p className="mt-1 text-sm text-zinc-500">Encontrá al profesional que resuelve.</p>
+        <p className="mt-1 text-sm text-zinc-500">El profesional que necesitás, a un trato de distancia.</p>
 
         {message && (
           <p className="mt-4 rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tratoo — Encontrá al profesional que resuelve",
+  title: "Tratoo — El profesional que necesitás, a un trato de distancia",
   description:
     "Tratoo conecta clientes con profesionales verificados de hogar, consultoría y salud.",
   appleWebApp: {

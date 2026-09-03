@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Tratoo — Encontrá al profesional que resuelve',
+    name: 'Tratoo — El profesional que necesitás, a un trato de distancia',
     short_name: 'Tratoo',
     description:
       'Tratoo conecta clientes con profesionales verificados de hogar, consultoría y salud.',
