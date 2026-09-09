@@ -49,9 +49,15 @@ export function AvatarUpload({
     const ext = file.name.split('.').pop() || 'jpg'
     const path = `${user.id}/${Date.now()}.${ext}`
 
+    // Pasar el File directamente hace que storage-js lo empaquete en un
+    // FormData con un campo sin nombre (ver su código fuente) — en Safari de
+    // iOS eso llega al servidor como "No content provided". Un ArrayBuffer
+    // evita ese camino: se manda como body crudo con Content-Type explícito.
+    const arrayBuffer = await file.arrayBuffer()
+
     const { error: uploadError } = await supabase.storage
       .from('avatars')
-      .upload(path, file, { contentType: file.type })
+      .upload(path, arrayBuffer, { contentType: file.type })
 
     if (uploadError) {
       setError(uploadError.message)
