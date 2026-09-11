@@ -7,10 +7,8 @@ import { createResendClient } from '@/lib/resend/server'
 // Ver la nota equivalente en lib/email/notify.ts sobre RESEND_FROM_EMAIL.
 const FROM = process.env.RESEND_FROM_EMAIL || 'Tratoo <onboarding@resend.dev>'
 
-// Resend solo puede mandar a la propia dirección verificada de la cuenta
-// hasta que se verifique un dominio propio (ver reference-tratoo-infra en
-// memoria) — tratoo.contacto@gmail.com todavía no es entregable. Cambiar
-// esto a tratoo.contacto@gmail.com apenas el dominio esté configurado.
+// tratoo.ar ya está verificado en Resend — cambiar a tratoo.contacto@gmail.com
+// cuando se quiera que los mensajes de contacto lleguen ahí en vez de acá.
 const NOTIFY_EMAIL = 'marianbarrios94@gmail.com'
 
 export async function sendContactMessage(formData: FormData) {
@@ -33,13 +31,21 @@ export async function sendContactMessage(formData: FormData) {
 
   try {
     const resend = createResendClient()
-    await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: FROM,
       to: NOTIFY_EMAIL,
       replyTo: email,
       subject: `Nuevo mensaje de contacto${name ? ` de ${name}` : ''}`,
       text: `De: ${name ?? 'Sin nombre'} <${email}>\n\n${message}`,
     })
+    // Resend no siempre tira una excepción ante un error de la API (ej.
+    // remitente sin verificar) — lo devuelve en `error` sin lanzar nada.
+    if (sendError) {
+      const admin = createAdminClient()
+      await admin
+        .from('email_errors')
+        .insert({ context: 'sendContactMessage', error_message: sendError.message })
+    }
   } catch {
     // best-effort: el mensaje ya quedó guardado en la base
   }
