@@ -1,12 +1,12 @@
 import { createResendClient } from '@/lib/resend/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-async function logEmailError(context: string, err: unknown) {
+async function logEmailTrace(context: string, note: string) {
   try {
     const admin = createAdminClient()
     await admin.from('email_errors').insert({
       context,
-      error_message: err instanceof Error ? err.message : String(err),
+      error_message: note,
     })
   } catch {
     // el logging también es best-effort
@@ -36,11 +36,14 @@ export async function notifyNewRequest({
   message: string | null
 }) {
   const email = await getProfileEmail(professionalId)
-  if (!email) return
+  if (!email) {
+    await logEmailTrace('notifyNewRequest', `sin email para professionalId=${professionalId}`)
+    return
+  }
 
   try {
     const resend = createResendClient()
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: FROM,
       to: email,
       subject: 'Tenés una nueva solicitud en Tratoo',
@@ -48,9 +51,10 @@ export async function notifyNewRequest({
         message ? `<p>"${message}"</p>` : ''
       }<p>Entrá a tu panel para aceptarla o rechazarla.</p>`,
     })
+    await logEmailTrace('notifyNewRequest', `ok to=${email} result=${JSON.stringify(result)}`)
   } catch (err) {
     // best-effort: un fallo de email nunca debe romper el flujo principal
-    await logEmailError('notifyNewRequest', err)
+    await logEmailTrace('notifyNewRequest', `error to=${email}: ${err instanceof Error ? err.message : String(err)}`)
   }
 }
 
@@ -85,6 +89,9 @@ export async function notifyRequestStatusChange({
     })
   } catch (err) {
     // best-effort: un fallo de email nunca debe romper el flujo principal
-    await logEmailError('notifyRequestStatusChange', err)
+    await logEmailTrace(
+      'notifyRequestStatusChange',
+      `error to=${email}: ${err instanceof Error ? err.message : String(err)}`
+    )
   }
 }
