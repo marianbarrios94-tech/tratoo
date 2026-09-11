@@ -51,7 +51,10 @@ export async function notifyNewRequest({
         message ? `<p>"${message}"</p>` : ''
       }<p>Entrá a tu panel para aceptarla o rechazarla.</p>`,
     })
-    await logEmailTrace('notifyNewRequest', `ok to=${email} result=${JSON.stringify(result)}`)
+    await logEmailTrace(
+      'notifyNewRequest',
+      `ok from=${FROM} envHasVar=${Boolean(process.env.RESEND_FROM_EMAIL)} to=${email} result=${JSON.stringify(result)}`
+    )
   } catch (err) {
     // best-effort: un fallo de email nunca debe romper el flujo principal
     await logEmailTrace('notifyNewRequest', `error to=${email}: ${err instanceof Error ? err.message : String(err)}`)
