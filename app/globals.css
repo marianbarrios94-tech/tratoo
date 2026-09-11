@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* iOS/Android hacen zoom automático al enfocar un campo con letra menor a
+   16px — forzamos ese mínimo solo en mobile, sin tocar el tamaño visual en
+   desktop. */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
