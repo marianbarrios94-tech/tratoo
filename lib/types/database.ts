@@ -202,6 +202,22 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['webhook_logs']['Insert']>
         Relationships: []
       }
+      email_errors: {
+        Row: {
+          id: string
+          context: string
+          error_message: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          context: string
+          error_message?: string | null
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['email_errors']['Insert']>
+        Relationships: []
+      }
       profile_events: {
         Row: {
           id: string

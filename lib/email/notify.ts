@@ -1,6 +1,18 @@
 import { createResendClient } from '@/lib/resend/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
+async function logEmailError(context: string, err: unknown) {
+  try {
+    const admin = createAdminClient()
+    await admin.from('email_errors').insert({
+      context,
+      error_message: err instanceof Error ? err.message : String(err),
+    })
+  } catch {
+    // el logging también es best-effort
+  }
+}
+
 // Hasta que tratoo.ar esté verificado en Resend, esto sigue apuntando a la
 // dirección de pruebas compartida (onboarding@resend.dev), que solo entrega
 // a la propia casilla verificada en Resend — no a usuarios reales. Una vez
@@ -36,8 +48,9 @@ export async function notifyNewRequest({
         message ? `<p>"${message}"</p>` : ''
       }<p>Entrá a tu panel para aceptarla o rechazarla.</p>`,
     })
-  } catch {
+  } catch (err) {
     // best-effort: un fallo de email nunca debe romper el flujo principal
+    await logEmailError('notifyNewRequest', err)
   }
 }
 
@@ -70,7 +83,8 @@ export async function notifyRequestStatusChange({
       subject: `${professionalName} ${statusText}`,
       html: `<p><strong>${professionalName}</strong> ${statusText} en Tratoo. Entrá a tu cuenta para ver el detalle.</p>`,
     })
-  } catch {
+  } catch (err) {
     // best-effort: un fallo de email nunca debe romper el flujo principal
+    await logEmailError('notifyRequestStatusChange', err)
   }
 }
