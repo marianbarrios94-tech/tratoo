@@ -104,7 +104,20 @@ export async function leaveReview(formData: FormData) {
     .eq('id', requestId)
     .maybeSingle()
 
-  if (!request || request.client_id !== user.id || request.status !== 'accepted') {
+  if (!request || request.client_id !== user.id) {
+    redirect(`/cuenta/solicitudes?error=${encodeURIComponent('No se pudo dejar la reseña')}`)
+  }
+
+  // Un doble tap manda dos submits del mismo formulario: el primero ya deja
+  // la reseña y pasa la solicitud a "completed", así que el segundo no debe
+  // mostrar error — la reseña de todos modos quedó guardada.
+  if (request.status === 'completed') {
+    redirect(
+      `/cuenta/solicitudes?message=${encodeURIComponent('¡Gracias por tu reseña! Marcamos tu solicitud como resuelta.')}`
+    )
+  }
+
+  if (request.status !== 'accepted') {
     redirect(`/cuenta/solicitudes?error=${encodeURIComponent('No se pudo dejar la reseña')}`)
   }
 
