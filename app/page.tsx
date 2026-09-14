@@ -208,7 +208,7 @@ export default async function Home() {
               Resistencia, Formosa o cualquier ciudad del NEA.
             </p>
           </div>
-          <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-xl gap-6 sm:grid-cols-2">
             {PLANS.map((plan) => (
               <Link
                 key={plan.slug}
