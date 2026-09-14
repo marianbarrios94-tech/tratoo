@@ -27,17 +27,9 @@ const PLANS = [
     highlighted: true,
     cta: 'Suscribirme',
   },
-  {
-    slug: 'premium',
-    name: 'Premium',
-    price: 35000,
-    features: [
-      'Todo lo de Pro',
-      'Prioridad en resultados de búsqueda',
-      'Soporte prioritario',
-    ],
-    cta: 'Suscribirme',
-  },
+  // Premium todavía no se lanzó — se muestra desde el panel de suscripción
+  // recién cuando haya demanda real de profesionales pidiendo más
+  // visibilidad. Ver app/panel/suscripcion/page.tsx.
 ]
 
 export default async function Home() {

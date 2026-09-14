@@ -36,10 +36,13 @@ export default async function SuscripcionPage({
   const isSubscribed = hasActiveSubscription(professional?.subscription_status)
 
   // El plan Básico se retiró de la oferta a nuevos suscriptores: queda
-  // redundante frente al tier gratuito. Se sigue mostrando solo si es el
-  // plan que ya tiene contratado un profesional existente.
+  // redundante frente al tier gratuito. Premium todavía no se lanzó: se
+  // espera a tener demanda real de profesionales pidiendo más visibilidad.
+  // Ambos se siguen mostrando solo si son el plan que ya tiene contratado
+  // un profesional existente.
+  const hiddenSlugs = ['basico', 'premium']
   const visiblePlans = (plans ?? []).filter(
-    (plan) => plan.slug !== 'basico' || plan.id === professional?.subscription_plan_id
+    (plan) => !hiddenSlugs.includes(plan.slug) || plan.id === professional?.subscription_plan_id
   )
 
   return (
