@@ -35,3 +35,23 @@ body {
     font-size: 16px;
   }
 }
+
+/* Splash de apertura: solo se ve si <html> tiene la clase que agrega el
+   script bloqueante de app/layout.tsx (app corriendo instalada). */
+#tratoo-splash {
+  display: none;
+}
+
+html.tratoo-standalone #tratoo-splash {
+  display: flex;
+  animation: tratoo-splash-out 400ms ease forwards;
+  animation-delay: 1800ms;
+}
+
+@keyframes tratoo-splash-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
