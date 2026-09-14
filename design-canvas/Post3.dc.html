@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .post {
+      width: 540px; height: 540px; background: #09090b;
+      display: flex; flex-direction: column; gap: 26px;
+      padding: 48px; box-sizing: border-box;
+    }
+    .headline { font-size: 27px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em; }
+    .steps { display: flex; flex-direction: column; flex: 1; justify-content: center; }
+    .step { display: flex; gap: 18px; align-items: flex-start; position: relative; padding-bottom: 30px; }
+    .step:last-child { padding-bottom: 0; }
+    .step-line { position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: #27272a; }
+    .step:last-child .step-line { display: none; }
+    .num {
+      width: 40px; height: 40px; border-radius: 50%; background: #18181b; border: 1.5px solid #059669;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 16px; font-weight: 700; color: #34d399;
+    }
+    .step-body { display: flex; flex-direction: column; gap: 4px; padding-top: 6px; }
+    .step-title { font-size: 19px; font-weight: 700; color: #ffffff; }
+    .step-desc { font-size: 14.5px; color: #a1a1aa; line-height: 1.45; max-width: 380px; }
+    .footer { display: flex; align-items: center; gap: 10px; }
+    .footer-mark { width: 22px; height: 22px; border-radius: 6px; background: #18181b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .footer-text { font-size: 13px; color: #71717a; }
+  </style>
+</helmet>
+<div class="post">
+  <h1 class="headline">Cómo funciona</h1>
+  <div class="steps">
+    <div class="step">
+      <div class="step-line"></div>
+      <span class="num">1</span>
+      <div class="step-body">
+        <span class="step-title">Buscá</span>
+        <span class="step-desc">Elegí la categoría y mirá perfiles verificados cerca tuyo.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <span class="num">2</span>
+      <div class="step-body">
+        <span class="step-title">Contactá</span>
+        <span class="step-desc">Contale al profesional qué necesitás, sin vueltas.</span>
+      </div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div class="step-body">
+        <span class="step-title">Cerrá el trato</span>
+        <span class="step-desc">Coordiná directo con el profesional y listo.</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-mark">
+      <svg width="13" height="13" viewBox="0 0 100 100" fill="none">
+        <path d="M6 20 H26" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <path d="M32 20 H52" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+        <path d="M29 26 V78" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="78" cy="30" r="14" fill="none" stroke="#059669" stroke-width="11"/>
+        <circle cx="78" cy="70" r="14" fill="none" stroke="#ffffff" stroke-width="11"/>
+      </svg>
+    </div>
+    <span class="footer-text">tratoo.ar</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

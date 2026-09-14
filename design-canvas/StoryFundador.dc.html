@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .story {
+      width: 540px; height: 960px; background: #09090b;
+      display: flex; flex-direction: column;
+      padding: 100px 56px 84px; box-sizing: border-box;
+    }
+    .mark {
+      width: 84px; height: 84px; border-radius: 20px; background: #18181b;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+    .kicker {
+      font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #34d399;
+    }
+    .headline { font-size: 50px; font-weight: 800; color: #ffffff; line-height: 1.1; letter-spacing: -0.01em; max-width: 420px; }
+    .sub { font-size: 18px; color: #a1a1aa; line-height: 1.5; max-width: 400px; }
+    .benefits { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+    .benefit { display: flex; align-items: center; gap: 12px; }
+    .check { width: 26px; height: 26px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .benefit-text { font-size: 17px; color: #e4e4e7; font-weight: 500; }
+    .footer { display: flex; flex-direction: column; gap: 22px; flex-shrink: 0; }
+    .cta { display: flex; align-items: center; gap: 14px; }
+    .cta-btn { background: #ffffff; color: #09090b; font-size: 16px; font-weight: 700; padding: 14px 26px; border-radius: 999px; }
+    .cta-note { font-size: 14px; color: #71717a; }
+    .wordmark { display: flex; align-items: center; gap: 10px; }
+    .wordmark-mark { width: 26px; height: 26px; border-radius: 6px; background: #18181b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .wordmark-name { font-size: 15px; font-weight: 700; color: #ffffff; }
+  </style>
+</helmet>
+<div class="story">
+  <div class="mark">
+    <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+      <path d="M6 20 H26" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+      <path d="M32 20 H52" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+      <path d="M29 26 V78" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="78" cy="30" r="13" fill="none" stroke="#059669" stroke-width="9"/>
+      <circle cx="78" cy="70" r="13" fill="none" stroke="#ffffff" stroke-width="9"/>
+    </svg>
+  </div>
+  <div class="body">
+    <span class="kicker">Primeros profesionales</span>
+    <h1 class="headline">Plan Pro gratis por 3 meses.</h1>
+    <p class="sub">Por sumarte entre los primeros a Tratoo. Sin tarjeta, sin trámite.</p>
+    <div class="benefits">
+      <div class="benefit">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="benefit-text">Solicitudes ilimitadas</span>
+      </div>
+      <div class="benefit">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="benefit-text">Insignia de verificado</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="cta">
+      <span class="cta-btn">Sumarme</span>
+      <span class="cta-note">Link en la bio</span>
+    </div>
+    <div class="wordmark">
+      <div class="wordmark-mark">
+        <svg width="14" height="14" viewBox="0 0 100 100" fill="none">
+          <path d="M6 20 H26" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+          <path d="M32 20 H52" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+          <path d="M29 26 V78" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="78" cy="30" r="14" fill="none" stroke="#059669" stroke-width="11"/>
+          <circle cx="78" cy="70" r="14" fill="none" stroke="#ffffff" stroke-width="11"/>
+        </svg>
+      </div>
+      <span class="wordmark-name">tratoo.ar</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .post {
+      width: 540px; height: 540px; background: #fafafa;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 48px; box-sizing: border-box;
+    }
+    .badge {
+      align-self: flex-start; background: #d1fae5; color: #047857; font-size: 12.5px; font-weight: 700;
+      letter-spacing: 0.03em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px;
+    }
+    .body { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+    .headline { font-size: 32px; font-weight: 800; color: #09090b; letter-spacing: -0.01em; max-width: 400px; }
+    .sub { font-size: 15.5px; color: #52525b; line-height: 1.5; max-width: 380px; }
+    .benefits { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+    .benefit { display: flex; align-items: center; gap: 10px; }
+    .check { width: 22px; height: 22px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .benefit-text { font-size: 14.5px; color: #27272a; font-weight: 500; }
+    .cta { display: flex; align-items: center; gap: 12px; }
+    .cta-mark { width: 22px; height: 22px; border-radius: 6px; background: #09090b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cta-btn { background: #09090b; color: #ffffff; font-size: 14.5px; font-weight: 700; padding: 12px 22px; border-radius: 999px; }
+    .cta-note { font-size: 13px; color: #71717a; }
+  </style>
+</helmet>
+<div class="post">
+  <span class="badge">Para profesionales</span>
+  <div class="body">
+    <h1 class="headline">Sumate al directorio y recibí clientes.</h1>
+    <p class="sub">Publicá tu perfil y llegá a gente de tu ciudad que ya está buscando lo que vos ofrecés.</p>
+    <div class="benefits">
+      <div class="benefit">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="benefit-text">Empezá gratis, sin suscripción</span>
+      </div>
+      <div class="benefit">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="benefit-text">Tu perfil visible en el directorio</span>
+      </div>
+      <div class="benefit">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="benefit-text">Vos elegís qué solicitudes aceptar</span>
+      </div>
+    </div>
+  </div>
+  <div class="cta">
+    <div class="cta-mark">
+      <svg width="13" height="13" viewBox="0 0 100 100" fill="none">
+        <path d="M6 20 H26" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <path d="M32 20 H52" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+        <path d="M29 26 V78" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="78" cy="30" r="14" fill="none" stroke="#059669" stroke-width="11"/>
+        <circle cx="78" cy="70" r="14" fill="none" stroke="#ffffff" stroke-width="11"/>
+      </svg>
+    </div>
+    <span class="cta-btn">Sumarme</span>
+    <span class="cta-note">Link en la bio</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

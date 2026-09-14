@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .post {
+      width: 540px; height: 540px; background: #fafafa;
+      display: flex; flex-direction: column; gap: 22px;
+      padding: 44px; box-sizing: border-box;
+    }
+    .headline { font-size: 27px; font-weight: 800; color: #09090b; letter-spacing: -0.01em; max-width: 420px; }
+    .cards { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .card {
+      flex: 1; background: #ffffff; border: 1px solid #e4e4e7; border-radius: 16px;
+      padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; gap: 8px;
+    }
+    .card-top { display: flex; align-items: center; gap: 10px; }
+    .icon { width: 34px; height: 34px; border-radius: 9px; background: #d1fae5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .vname { font-size: 18px; font-weight: 700; color: #09090b; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { font-size: 12px; color: #52525b; background: #f4f4f5; border-radius: 999px; padding: 4px 10px; }
+    .footer { display: flex; align-items: center; gap: 10px; }
+    .footer-mark { width: 22px; height: 22px; border-radius: 6px; background: #09090b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .footer-text { font-size: 13px; color: #71717a; }
+  </style>
+</helmet>
+<div class="post">
+  <h1 class="headline">¿Qué podés resolver con Tratoo?</h1>
+  <div class="cards">
+    <div class="card">
+      <div class="card-top">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        </div>
+        <span class="vname">Hogar</span>
+      </div>
+      <div class="chips">
+        <span class="chip">Plomería</span><span class="chip">Electricidad</span><span class="chip">Gas</span><span class="chip">Limpieza</span><span class="chip">Cerrajería</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+        </div>
+        <span class="vname">Consultoría</span>
+      </div>
+      <div class="chips">
+        <span class="chip">Abogacía</span><span class="chip">Contabilidad</span><span class="chip">Diseño</span><span class="chip">Marketing</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        </div>
+        <span class="vname">Salud y bienestar</span>
+      </div>
+      <div class="chips">
+        <span class="chip">Psicología</span><span class="chip">Nutrición</span><span class="chip">Kinesiología</span><span class="chip">Yoga y Pilates</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-mark">
+      <svg width="13" height="13" viewBox="0 0 100 100" fill="none">
+        <path d="M6 20 H26" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <path d="M32 20 H52" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+        <path d="M29 26 V78" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="78" cy="30" r="14" fill="none" stroke="#059669" stroke-width="11"/>
+        <circle cx="78" cy="70" r="14" fill="none" stroke="#ffffff" stroke-width="11"/>
+      </svg>
+    </div>
+    <span class="footer-text">Perfiles verificados en Misiones, Corrientes, Chaco y Formosa.</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

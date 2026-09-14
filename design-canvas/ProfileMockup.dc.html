@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #f4f4f5; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .phone { width: 375px; margin: 24px auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.10); }
+    .topbar { display: flex; align-items: center; justify-content: center; padding: 14px 16px; border-bottom: 1px solid #e4e4e7; }
+    .handle { font-size: 14px; font-weight: 700; color: #09090b; }
+    .header { display: flex; align-items: center; gap: 20px; padding: 20px 20px 8px 20px; }
+    .avatar { width: 84px; height: 84px; border-radius: 50%; background: #09090b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .stats { display: flex; flex: 1; justify-content: space-around; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .stat-num { font-size: 16px; font-weight: 700; color: #09090b; }
+    .stat-label { font-size: 12px; color: #71717a; }
+    .bio { padding: 10px 20px 4px 20px; display: flex; flex-direction: column; gap: 2px; }
+    .display-name { font-size: 14px; font-weight: 700; color: #09090b; }
+    .category { font-size: 13px; color: #09090b; }
+    .bio-text { font-size: 13px; color: #09090b; line-height: 1.4; margin-top: 2px; }
+    .link { font-size: 13px; font-weight: 600; color: #00376b; }
+    .actions { display: flex; gap: 8px; padding: 14px 20px 20px 20px; }
+    .btn { flex: 1; text-align: center; padding: 8px 0; border-radius: 8px; font-size: 13px; font-weight: 600; }
+    .btn-primary { background: #059669; color: #ffffff; }
+    .btn-secondary { background: #f4f4f5; color: #09090b; }
+    .note { max-width: 375px; margin: 0 auto; font-size: 11.5px; color: #a1a1aa; padding: 0 4px; line-height: 1.5; }
+  </style>
+</helmet>
+<div>
+  <div class="phone">
+    <div class="topbar"><span class="handle">tratoo.ar</span></div>
+    <div class="header">
+      <div class="avatar">
+        <svg width="38" height="38" viewBox="0 0 100 100" fill="none">
+          <path d="M6 20 H26" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+          <path d="M32 20 H52" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+          <path d="M29 26 V78" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+          <circle cx="78" cy="30" r="13" fill="none" stroke="#059669" stroke-width="9"/>
+          <circle cx="78" cy="70" r="13" fill="none" stroke="#ffffff" stroke-width="9"/>
+        </svg>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="stat-num">—</span><span class="stat-label">publicaciones</span></div>
+        <div class="stat"><span class="stat-num">—</span><span class="stat-label">seguidores</span></div>
+        <div class="stat"><span class="stat-num">—</span><span class="stat-label">seguidos</span></div>
+      </div>
+    </div>
+    <div class="bio">
+      <span class="display-name">Tratoo</span>
+      <span class="category">Marketplace de servicios</span>
+      <span class="bio-text">Conectamos clientes con profesionales de hogar, consultoría y salud<br>Cerrá el trato con el profesional que necesitás.<br>Misiones·Corrientes·Chaco·Formosa</span>
+      <span class="link">tratoo.com.ar</span>
+    </div>
+    <div class="actions">
+      <div class="btn btn-primary">Seguir</div>
+      <div class="btn btn-secondary">Mensaje</div>
+    </div>
+  </div>
+  <p class="note">"@tratoo" solo ya está tomado (cuenta de otra persona), por eso el usuario acá es "tratoo.ar" — ese sí está libre. Dominio tratoo.com.ar confirmado disponible en nic.ar.</p>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

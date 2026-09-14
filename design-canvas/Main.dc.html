@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #fafafa; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .wrap { padding: 40px; display: flex; flex-direction: column; gap: 28px; }
+    .heading { display: flex; flex-direction: column; gap: 4px; }
+    .kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #059669; }
+    .title { font-size: 22px; font-weight: 700; color: #09090b; margin: 0; }
+    .sub { font-size: 13px; color: #71717a; margin: 0; max-width: 640px; line-height: 1.5; }
+    .row { display: flex; gap: 32px; align-items: flex-start; }
+    .card { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 280px; }
+    .avatar { width: 220px; height: 220px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08); }
+    .label { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+    .name { font-size: 15px; font-weight: 700; color: #09090b; }
+    .desc { font-size: 12px; color: #71717a; line-height: 1.5; max-width: 250px; }
+  </style>
+</helmet>
+<div class="wrap">
+  <div class="heading">
+    <span class="kicker">Identidad visual · Instagram</span>
+    <h1 class="title">Probando el nombre "Tratoo"</h1>
+    <p class="sub">Mismo sistema visual de antes (zinc + esmeralda), ahora con la T de Tratoo como letra protagonista del ícono.</p>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <div class="avatar" style="background: #09090b;">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <path d="M6 20 H26" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+          <path d="M32 20 H52" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+          <path d="M29 26 V78" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+          <circle cx="78" cy="30" r="13" fill="none" stroke="#059669" stroke-width="9"/>
+          <circle cx="78" cy="70" r="13" fill="none" stroke="#ffffff" stroke-width="9"/>
+        </svg>
+      </div>
+      <div class="label">
+        <span class="name">T — Tratoo</span>
+        <span class="desc">La T con el travesaño partido (cliente y profesional llegando al mismo punto) más las dos "o" del final del nombre como aros huecos, del mismo tamaño que se lean como letra y no como puntos.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="avatar" style="background: #09090b;">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <path d="M50 24 V80 M26 24 H74" stroke="#059669" stroke-width="11" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="label">
+        <span class="name">T — Directa</span>
+        <span class="desc">Versión más simple, un solo trazo geométrico. Más neutra, funciona bien como favicon/ícono de app además de para Instagram.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

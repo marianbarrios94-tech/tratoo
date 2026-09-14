@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #ffffff; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .wrap { padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+    .kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #059669; }
+    .title { font-size: 20px; font-weight: 700; color: #09090b; }
+    .sub { font-size: 12.5px; color: #71717a; line-height: 1.5; }
+    .heading { display: flex; flex-direction: column; gap: 4px; }
+    .group { display: flex; flex-direction: column; gap: 10px; }
+    .group-title { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #a1a1aa; }
+    .swatch { display: flex; align-items: center; gap: 12px; }
+    .chip { width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.06); }
+    .meta { display: flex; flex-direction: column; }
+    .swname { font-size: 13px; font-weight: 600; color: #09090b; }
+    .swhex { font-family: "Geist Mono", monospace; font-size: 11.5px; color: #71717a; }
+    .swuse { font-size: 11.5px; color: #a1a1aa; margin-top: 1px; }
+  </style>
+</helmet>
+<div class="wrap">
+  <div class="heading">
+    <span class="kicker">Identidad visual · Instagram</span>
+    <h1 class="title">Paleta</h1>
+    <p class="sub">Misma paleta que ya usa la web (zinc + esmeralda) — nada nuevo que inventar, solo reusar para que la marca se vea igual en todos lados.</p>
+  </div>
+
+  <div class="group">
+    <span class="group-title">Base</span>
+    <div class="swatch">
+      <div class="chip" style="background:#09090b;"></div>
+      <div class="meta"><span class="swname">Zinc 950</span><span class="swhex">#09090b</span><span class="swuse">Fondos oscuros, avatar, posts</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:#ffffff;"></div>
+      <div class="meta"><span class="swname">Blanco</span><span class="swhex">#ffffff</span><span class="swuse">Fondos claros, texto sobre oscuro</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:#71717a;"></div>
+      <div class="meta"><span class="swname">Zinc 500</span><span class="swhex">#71717a</span><span class="swuse">Texto secundario</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:#e4e4e7;"></div>
+      <div class="meta"><span class="swname">Zinc 200</span><span class="swhex">#e4e4e7</span><span class="swuse">Bordes, separadores</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <span class="group-title">Acento principal</span>
+    <div class="swatch">
+      <div class="chip" style="background:#059669;"></div>
+      <div class="meta"><span class="swname">Emerald 600</span><span class="swhex">#059669</span><span class="swuse">CTA, links, ícono de marca</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:#d1fae5;"></div>
+      <div class="meta"><span class="swname">Emerald 100</span><span class="swhex">#d1fae5</span><span class="swuse">Badges y fondos suaves (ej: "Verificado")</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <span class="group-title">Uso puntual (ya existe en el producto)</span>
+    <div class="swatch">
+      <div class="chip" style="background:#b45309;"></div>
+      <div class="meta"><span class="swname">Amber 700</span><span class="swhex">#b45309</span><span class="swuse">Avisos / urgencia — usar poco, no como color de marca</span></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
