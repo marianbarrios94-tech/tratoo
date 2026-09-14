@@ -22,7 +22,7 @@ const PLANS = [
   {
     slug: 'pro',
     name: 'Pro',
-    price: 15000,
+    price: 14999,
     features: ['Solicitudes ilimitadas', 'Insignia de verificado', 'Estadísticas básicas'],
     highlighted: true,
     cta: 'Suscribirme',
