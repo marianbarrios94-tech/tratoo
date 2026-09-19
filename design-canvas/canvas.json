@@ -79,6 +79,22 @@
       "w": 540,
       "h": 540,
       "title": "Post 5 · Consejo (semana 2)"
+    },
+    {
+      "file": "StoryPregunta.dc.html",
+      "x": 3540,
+      "y": 1360,
+      "w": 540,
+      "h": 960,
+      "title": "Historia · Pregunta jueves"
+    },
+    {
+      "file": "StoryConsejo.dc.html",
+      "x": 4140,
+      "y": 1360,
+      "w": 540,
+      "h": 960,
+      "title": "Historia · Consejo viernes"
     }
   ],
   "launch": {

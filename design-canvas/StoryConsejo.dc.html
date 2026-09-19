@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .story {
+      width: 540px; height: 960px; background: #fafafa;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 64px 56px; box-sizing: border-box;
+    }
+    .badge {
+      align-self: flex-start; background: #d1fae5; color: #047857; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.03em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px;
+    }
+    .body { display: flex; flex-direction: column; gap: 18px; margin-top: 26px; }
+    .headline { font-size: 38px; font-weight: 800; color: #09090b; letter-spacing: -0.01em; line-height: 1.15; max-width: 420px; }
+    .sub { font-size: 17px; color: #52525b; line-height: 1.5; max-width: 400px; }
+    .signals { display: flex; flex-direction: column; gap: 22px; margin-top: 16px; }
+    .signal { display: flex; align-items: flex-start; gap: 14px; }
+    .check { width: 28px; height: 28px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .signal-text { font-size: 19px; color: #27272a; font-weight: 500; line-height: 1.4; }
+    .footer { display: flex; align-items: center; gap: 10px; margin-top: 56px; }
+    .footer-mark { width: 28px; height: 28px; border-radius: 7px; background: #18181b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .footer-name { font-size: 16px; font-weight: 700; color: #09090b; }
+  </style>
+</helmet>
+<div class="story">
+  <span class="badge">Consejo Tratoo</span>
+  <div class="body">
+    <h1 class="headline">3 señales de que un profesional es confiable.</h1>
+    <p class="sub">Fijate esto antes de contratar a alguien para tu casa o tu negocio.</p>
+    <div class="signals">
+      <div class="signal">
+        <div class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="signal-text">Tiene reseñas reales de otros clientes</span>
+      </div>
+      <div class="signal">
+        <div class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="signal-text">Te confirma el precio antes de empezar</span>
+      </div>
+      <div class="signal">
+        <div class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="signal-text">Responde rápido y es claro con los tiempos</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-mark">
+      <svg width="16" height="16" viewBox="0 0 100 100" fill="none">
+        <path d="M6 20 H26" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <path d="M32 20 H52" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+        <path d="M29 26 V78" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="78" cy="30" r="14" fill="none" stroke="#059669" stroke-width="11"/>
+        <circle cx="78" cy="70" r="14" fill="none" stroke="#ffffff" stroke-width="11"/>
+      </svg>
+    </div>
+    <span class="footer-name">Tratoo</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>
