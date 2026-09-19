@@ -9,12 +9,8 @@ export default function ReembolsosPage() {
     <div className="mx-auto w-full max-w-2xl px-6 py-10">
       <BackButton fallbackHref="/" />
       <h1 className="mt-4 text-2xl font-semibold">Política de reembolsos y cancelación</h1>
-      <p className="mt-1 text-sm text-zinc-500">Última actualización: agosto de 2026.</p>
+      <p className="mt-1 text-sm text-zinc-500">Última actualización: septiembre de 2026.</p>
 
-      <p className="mt-6 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
-        Este documento es un borrador base y debe ser revisado por un profesional legal antes de
-        su publicación definitiva.
-      </p>
 
       <div className="mt-8 flex flex-col gap-6 text-sm text-zinc-700 dark:text-zinc-300">
         <section>
@@ -59,7 +55,18 @@ export default function ReembolsosPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            4. Servicios entre cliente y profesional
+            4. Meses promocionales sin cargo
+          </h2>
+          <p className="mt-2">
+            Los meses de plan pago que Tratoo otorga como beneficio promocional no generan cobro
+            alguno ni son reembolsables. Al finalizar el período promocional tu cuenta vuelve al
+            plan gratuito, salvo que elijas suscribirte a un plan pago.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+            5. Servicios entre cliente y profesional
           </h2>
           <p className="mt-2">
             Esta política cubre únicamente los pagos de suscripción realizados a Tratoo. Tratoo no
@@ -70,7 +77,7 @@ export default function ReembolsosPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">5. Contacto</h2>
+          <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">6. Contacto</h2>
           <p className="mt-2">
             Para solicitar un reembolso o resolver cualquier duda sobre tu suscripción, escribinos
             a{' '}

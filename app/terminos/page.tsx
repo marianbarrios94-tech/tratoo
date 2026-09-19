@@ -9,12 +9,8 @@ export default function TerminosPage() {
     <div className="mx-auto w-full max-w-2xl px-6 py-10">
       <BackButton fallbackHref="/" />
       <h1 className="mt-4 text-2xl font-semibold">Términos y condiciones</h1>
-      <p className="mt-1 text-sm text-zinc-500">Última actualización: agosto de 2026.</p>
+      <p className="mt-1 text-sm text-zinc-500">Última actualización: septiembre de 2026.</p>
 
-      <p className="mt-6 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-amber-950 dark:text-amber-400">
-        Este documento es un borrador base y debe ser revisado por un profesional legal antes de
-        su publicación definitiva.
-      </p>
 
       <div className="mt-8 flex flex-col gap-6 text-sm text-zinc-700 dark:text-zinc-300">
         <section>
@@ -80,9 +76,12 @@ export default function TerminosPage() {
             6. Suscripciones de profesionales
           </h2>
           <p className="mt-2">
-            Los profesionales pueden suscribirse a un plan pago para aparecer en el directorio
-            público y recibir solicitudes de clientes. Los pagos se procesan a través de Mercado
-            Pago.
+            Los profesionales pueden publicar su perfil en el directorio de forma gratuita, con un
+            límite mensual de contactos de clientes nuevos, o suscribirse a un plan pago para
+            recibir solicitudes sin ese límite y acceder a funciones adicionales. Los pagos se
+            procesan a través de Mercado Pago. Tratoo también puede ofrecer beneficios
+            promocionales temporales, por ejemplo meses de plan pago sin cargo para los primeros
+            profesionales que se registren, sujetos a un cupo limitado.
             Ver la{' '}
             <a href="/reembolsos" className="underline">
               política de reembolsos y cancelación
