@@ -3,9 +3,10 @@ import { createAdminClient } from '@/lib/supabase/admin'
 // Código de invitación para el lanzamiento en Posadas: quien se registra como
 // profesional con ?promo=fundador en el link recibe el plan Pro gratis por
 // FOUNDING_PRO_MONTHS meses, sin pasar por Mercado Pago, hasta un máximo de
-// FOUNDING_PROMO_CAP profesionales en total (no hay expiración automática del
-// código en sí — promo_pro_until queda como referencia para revisar
-// manualmente).
+// FOUNDING_PROMO_CAP profesionales en total. El vencimiento lo hace un job
+// diario en la base (expire_founding_promos, migración 0026) que devuelve al
+// plan gratuito a quien ya pasó promo_pro_until; ese campo se conserva porque
+// también sirve para contar el cupo.
 export const FOUNDING_PROMO_CODE = 'fundador'
 export const FOUNDING_PRO_MONTHS = 3
 export const FOUNDING_PROMO_CAP = 100
