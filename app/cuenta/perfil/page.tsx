@@ -41,6 +41,20 @@ export default async function PerfilClientePage({
 
       <form action={saveClientProfile} className="flex max-w-lg flex-col gap-4">
         <div>
+          <label htmlFor="email" className="block text-sm font-medium">
+            Email de tu cuenta
+          </label>
+          <input
+            id="email"
+            type="email"
+            readOnly
+            value={user?.email ?? ''}
+            className="mt-1 w-full rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400"
+          />
+          <p className="mt-1 text-xs text-zinc-500">Es el que usás para iniciar sesión.</p>
+        </div>
+
+        <div>
           <label htmlFor="full_name" className="block text-sm font-medium">
             Nombre completo
           </label>

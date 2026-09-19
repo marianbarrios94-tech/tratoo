@@ -33,6 +33,11 @@ export default async function CuentaPage() {
           Hola{profile?.full_name ? `, ${profile.full_name}` : ''}
         </h1>
         <p className="mt-1 text-zinc-500">Este es tu espacio como cliente en Tratoo.</p>
+        {user?.email && (
+          <p className="mt-1 text-sm text-zinc-500">
+            Tu cuenta: <span className="font-medium">{user.email}</span>
+          </p>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
