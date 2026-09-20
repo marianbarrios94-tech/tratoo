@@ -129,7 +129,7 @@ export default async function Home() {
           </p>
           <HomeHeroSearch />
 
-          <div className="flex flex-col gap-2 text-sm sm:flex-row">
+          <div className="flex flex-col gap-2 text-sm sm:flex-row sm:gap-8">
             {user ? (
               <>
                 <Link
