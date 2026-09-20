@@ -95,6 +95,22 @@
       "w": 540,
       "h": 960,
       "title": "Historia · Consejo viernes"
+    },
+    {
+      "file": "StoryLanzamiento.dc.html",
+      "x": 4740,
+      "y": 1360,
+      "w": 540,
+      "h": 960,
+      "title": "Historia personal · Lanzamiento (teaser)"
+    },
+    {
+      "file": "StoryLanzamientoInfo.dc.html",
+      "x": 5340,
+      "y": 1360,
+      "w": 540,
+      "h": 960,
+      "title": "Historia personal · Muy pronto (con info)"
     }
   ],
   "launch": {

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .story {
+      position: relative; width: 540px; height: 960px; background: #09090b; overflow: hidden;
+      box-sizing: border-box;
+    }
+    .ghost {
+      position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+      display: flex; flex-direction: column; gap: 16px; padding: 200px 40px 0;
+      filter: blur(9px); opacity: 0.5;
+    }
+    .ghost-card { display: flex; align-items: center; gap: 14px; background: #18181b; border-radius: 18px; padding: 16px; }
+    .ghost-avatar { width: 52px; height: 52px; border-radius: 50%; background: #27272a; flex-shrink: 0; }
+    .ghost-lines { display: flex; flex-direction: column; gap: 9px; flex: 1; }
+    .ghost-line { height: 11px; border-radius: 6px; background: #3f3f46; }
+    .ghost-pill { width: 62px; height: 24px; border-radius: 12px; background: #059669; flex-shrink: 0; }
+    .content {
+      position: relative; height: 100%; display: flex; flex-direction: column; align-items: center;
+      padding: 130px 48px 0; box-sizing: border-box; text-align: center;
+    }
+    .mark {
+      width: 84px; height: 84px; border-radius: 20px; background: #18181b;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .kicker {
+      margin-top: 44px; font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #34d399;
+    }
+    .headline { margin: 14px 0 0; font-size: 62px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; line-height: 1.02; }
+    .sub { margin-top: 22px; font-size: 20px; color: #d4d4d8; line-height: 1.4; max-width: 380px; font-weight: 500; }
+    .region { margin-top: 18px; font-size: 14px; color: #a1a1aa; }
+    .url { position: absolute; left: 0; right: 0; bottom: 96px; text-align: center; font-size: 16px; font-weight: 700; color: #ffffff; }
+  </style>
+</helmet>
+<div class="story">
+  <div class="ghost">
+    <div class="ghost-card"><div class="ghost-avatar"></div><div class="ghost-lines"><div class="ghost-line" style="width: 70%"></div><div class="ghost-line" style="width: 45%"></div></div><div class="ghost-pill"></div></div>
+    <div class="ghost-card"><div class="ghost-avatar"></div><div class="ghost-lines"><div class="ghost-line" style="width: 60%"></div><div class="ghost-line" style="width: 50%"></div></div><div class="ghost-pill"></div></div>
+    <div class="ghost-card"><div class="ghost-avatar"></div><div class="ghost-lines"><div class="ghost-line" style="width: 75%"></div><div class="ghost-line" style="width: 40%"></div></div><div class="ghost-pill"></div></div>
+    <div class="ghost-card"><div class="ghost-avatar"></div><div class="ghost-lines"><div class="ghost-line" style="width: 55%"></div><div class="ghost-line" style="width: 48%"></div></div><div class="ghost-pill"></div></div>
+    <div class="ghost-card"><div class="ghost-avatar"></div><div class="ghost-lines"><div class="ghost-line" style="width: 68%"></div><div class="ghost-line" style="width: 42%"></div></div><div class="ghost-pill"></div></div>
+  </div>
+  <div class="content">
+    <div class="mark">
+      <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+        <path d="M6 20 H26" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+        <path d="M32 20 H52" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+        <path d="M29 26 V78" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+        <circle cx="78" cy="30" r="13" fill="none" stroke="#059669" stroke-width="9"/>
+        <circle cx="78" cy="70" r="13" fill="none" stroke="#ffffff" stroke-width="9"/>
+      </svg>
+    </div>
+    <span class="kicker">Muy pronto</span>
+    <h1 class="headline">Lanzamiento</h1>
+    <p class="sub">El profesional que necesitás, a un trato de distancia.</p>
+    <p class="region">Hecho para el NEA: Misiones, Corrientes, Chaco y Formosa</p>
+  </div>
+  <span class="url">tratoo.ar</span>
+</div>
+</x-dc>
+<script data-dc-script>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>
