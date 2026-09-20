@@ -72,11 +72,17 @@ const day = (iso) => {
 
 const yesNo = (b) => (b ? 'Sí' : 'No')
 
+const PROMO_COL = 'Meses gratis por ser de los primeros'
+const PROMO_OPCIONES = ['Corresponde (avisar al lanzar)', 'Avisado', 'Activado', 'No corresponde']
+// Marca inicial para quienes se acuerdan a mano: PROMO_EMAILS=a@x.com,b@y.com node scripts/exportUsers.mjs
+// (los emails no se guardan en el repo). Solo se aplica si la celda está vacía.
+const PROMO_EMAILS = (process.env.PROMO_EMAILS ?? '').toLowerCase().split(',').map((e) => e.trim()).filter(Boolean)
+
 // Cuentas que se ven de prueba por el email (las de familia hay que marcarlas a mano).
 const TEST_EMAIL = /@example\.com$|^zolvi\.|smoketest|^qa\./
 
 // Lo escrito a mano en una corrida anterior.
-const MANUAL_KEYS = ['test', 'origen', 'contactadoPor', 'estado', 'notas']
+const MANUAL_KEYS = ['test', 'origen', 'contactadoPor', 'estado', 'promoMarca', 'notas']
 const previous = new Map()
 if (fs.existsSync(OUT_PATH)) {
   const wb = new ExcelJS.Workbook()
@@ -91,6 +97,7 @@ if (fs.existsSync(OUT_PATH)) {
       origen: col('Origen'),
       contactadoPor: col('Contactado por'),
       estado: col('Estado de seguimiento'),
+      promoMarca: col(PROMO_COL),
       notas: col('Notas'),
     }
     ws.eachRow((row, n) => {
@@ -99,7 +106,7 @@ if (fs.existsSync(OUT_PATH)) {
       if (!email) return
       const saved = {}
       for (const k of MANUAL_KEYS) {
-        const v = row.getCell(idx[k]).value
+        const v = idx[k] > 0 ? row.getCell(idx[k]).value : null
         saved[k] = v == null ? '' : String(v)
       }
       previous.set(email, saved)
@@ -149,6 +156,7 @@ const rows = authUsers
       origen: saved.origen ?? '',
       contactadoPor: saved.contactadoPor ?? '',
       estado: saved.estado ?? '',
+      promoMarca: saved.promoMarca || (PROMO_EMAILS.includes(email) ? PROMO_OPCIONES[0] : ''),
       notas: saved.notas ?? '',
     }
   })
@@ -177,6 +185,7 @@ const columns = [
   ['Origen', 'origen', 18, 'manual'],
   ['Contactado por', 'contactadoPor', 18, 'manual'],
   ['Estado de seguimiento', 'estado', 22, 'manual'],
+  [PROMO_COL, 'promoMarca', 26, 'manual'],
   ['Notas', 'notas', 46, 'manual'],
 ]
 const colLetter = (title) => {
@@ -232,6 +241,7 @@ const listValidation = (title, options) => {
 listValidation('¿Cuenta de prueba?', ['Sí', 'No'])
 listValidation('Origen', ORIGENES)
 listValidation('Estado de seguimiento', ESTADOS)
+listValidation(PROMO_COL, PROMO_OPCIONES)
 
 // ---------- Hoja Solicitudes ----------
 const wr = wb.addWorksheet('Solicitudes', { views: [{ state: 'frozen', ySplit: 1 }] })
@@ -299,6 +309,7 @@ const summary = [
   ['Profesionales con promo Pro vigente', `COUNTIFS(${R('Promo Pro hasta')},">"&TODAY(),${TEST},"No")`, cnt(real, (r) => r.promoHasta && r.promoHasta > today), ''],
   ['Cupo de la promo usado (incluye pruebas)', `COUNT(${R('Promo Pro hasta')})`, cnt(rows, (r) => r.promoHasta), `Así lo cuenta la app: el cupo total es ${PROMO_CAP}.`],
   ['Cupo de la promo que queda', `${PROMO_CAP}-B10`, PROMO_CAP - cnt(rows, (r) => r.promoHasta), ''],
+  ['Profesionales a los que les corresponden los meses gratis (por avisar)', `COUNTIF(${R(PROMO_COL)},"Corresponde (avisar al lanzar)")`, cnt(rows, (r) => r.promoMarca === PROMO_OPCIONES[0]), 'Marcados en la columna verde "Meses gratis por ser de los primeros" de la hoja Usuarios.'],
   ['Solicitudes enviadas en total', `SUM(${R('Solicitudes enviadas')})`, rows.reduce((s, r) => s + (r.enviadas || 0), 0), 'Detalle en la hoja Solicitudes.'],
 ]
 wsum.addRow(['Tratoo — Base de usuarios']).font = { name: FONT, bold: true, size: 14 }
