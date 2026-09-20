@@ -111,6 +111,14 @@
       "w": 540,
       "h": 960,
       "title": "Historia · Muy pronto (con info)"
+    },
+    {
+      "file": "StoryLanzamientoUrl.dc.html",
+      "x": 5940,
+      "y": 1360,
+      "w": 540,
+      "h": 960,
+      "title": "Historia · tratoo.ar (teaser)"
     }
   ],
   "launch": {
