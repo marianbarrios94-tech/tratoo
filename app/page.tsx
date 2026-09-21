@@ -6,6 +6,7 @@ import { formatPrice } from '@/lib/currency'
 import { LogoMark } from '@/components/Logo'
 import { InstallPrompt } from '@/components/InstallPrompt'
 import { HomeHeroSearch } from '@/components/HomeHeroSearch'
+import { InstagramLink } from '@/components/InstagramLink'
 
 const PLANS = [
   {
@@ -73,6 +74,7 @@ export default async function Home() {
           )}
         </span>
         <nav className="flex items-center gap-4 text-sm font-medium">
+          <InstagramLink className="hidden text-zinc-600 dark:text-zinc-400 sm:inline-flex" />
           <Link
             href="/profesionales"
             className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -239,7 +241,8 @@ export default async function Home() {
       </main>
 
       <footer className="border-t border-zinc-200 py-8 text-center text-sm text-zinc-500 dark:border-zinc-800">
-        <p>© {new Date().getFullYear()} Tratoo</p>
+        <InstagramLink label="Seguinos en Instagram" className="inline-flex font-medium" />
+        <p className="mt-3">© {new Date().getFullYear()} Tratoo</p>
         <nav className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
           <Link href="/terminos" className="hover:text-zinc-950 dark:hover:text-white">
             Términos y condiciones

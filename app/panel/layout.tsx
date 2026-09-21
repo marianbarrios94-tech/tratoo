@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { InstagramLink } from '@/components/InstagramLink'
 import { logout } from '@/app/(auth)/actions'
 import { BackButton } from '@/components/BackButton'
 import { LogoMark } from '@/components/Logo'
@@ -46,6 +47,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
         <Link href="/contacto" className="underline">
           Escribinos
         </Link>
+        <InstagramLink label="Seguinos en Instagram" className="mt-3 flex justify-center" />
       </footer>
     </div>
   )
