@@ -73,6 +73,12 @@ export async function saveProfessionalProfile(formData: FormData) {
     redirect(`/panel/perfil?error=${encodeURIComponent(contactError.message)}`)
   }
 
+  // Alguien puede haberse registrado como cliente y completar igual un perfil
+  // profesional (ej. desde "Cambiar a cuenta profesional"). Guardar un perfil
+  // completo ya implica que quiere operar como profesional, así que
+  // corregimos el rol acá en vez de dejarlo mandado al panel de cliente.
+  await supabase.from('profiles').update({ role: 'professional' }).eq('id', user.id).neq('role', 'admin')
+
   revalidatePath('/panel')
   revalidatePath('/panel/perfil')
   revalidatePath('/profesionales')
