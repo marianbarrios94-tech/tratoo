@@ -119,6 +119,22 @@
       "w": 540,
       "h": 960,
       "title": "Historia · tratoo.ar (teaser)"
+    },
+    {
+      "file": "PostLanzamientoInfo.dc.html",
+      "x": 6540,
+      "y": 1360,
+      "w": 540,
+      "h": 540,
+      "title": "Post · Muy pronto (con info)"
+    },
+    {
+      "file": "PostLanzamientoUrl.dc.html",
+      "x": 7140,
+      "y": 1360,
+      "w": 540,
+      "h": 540,
+      "title": "Post · tratoo.ar (teaser)"
     }
   ],
   "launch": {

@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .post {
+      width: 540px; height: 540px; background: #09090b;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 44px 48px; box-sizing: border-box;
+    }
+    .mark {
+      width: 68px; height: 68px; border-radius: 16px; background: #18181b;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .body { display: flex; flex-direction: column; gap: 14px; }
+    .kicker {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #34d399;
+    }
+    .headline { font-size: 38px; font-weight: 800; color: #ffffff; line-height: 1.06; letter-spacing: -0.01em; }
+    .list { display: flex; flex-direction: column; gap: 10px; margin-top: 2px; }
+    .item { display: flex; align-items: flex-start; gap: 11px; }
+    .check { width: 22px; height: 22px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .item-text { font-size: 15.5px; color: #d4d4d8; font-weight: 500; line-height: 1.35; }
+    .footer { display: flex; align-items: center; gap: 10px; }
+    .footer-mark { width: 26px; height: 26px; border-radius: 6px; background: #18181b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .footer-name { font-size: 15px; font-weight: 700; color: #ffffff; }
+  </style>
+</helmet>
+<div class="post">
+  <div class="mark">
+    <svg width="46" height="46" viewBox="0 0 100 100" fill="none">
+      <path d="M6 20 H26" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+      <path d="M32 20 H52" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+      <path d="M29 26 V78" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="78" cy="30" r="13" fill="none" stroke="#059669" stroke-width="9"/>
+      <circle cx="78" cy="70" r="13" fill="none" stroke="#ffffff" stroke-width="9"/>
+    </svg>
+  </div>
+  <div class="body">
+    <span class="kicker">Muy pronto</span>
+    <h1 class="headline">Tratoo llega al NEA.</h1>
+    <div class="list">
+      <div class="item">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="item-text">Encontrá profesionales de hogar, consultoría y salud</span>
+      </div>
+      <div class="item">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="item-text">Contactalos directo por WhatsApp</span>
+      </div>
+      <div class="item">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <span class="item-text">Hecho para Misiones, Corrientes, Chaco y Formosa</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-mark">
+      <svg width="15" height="15" viewBox="0 0 100 100" fill="none">
+        <path d="M6 20 H26" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <path d="M32 20 H52" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+        <path d="M29 26 V78" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="78" cy="30" r="14" fill="none" stroke="#059669" stroke-width="11"/>
+        <circle cx="78" cy="70" r="14" fill="none" stroke="#ffffff" stroke-width="11"/>
+      </svg>
+    </div>
+    <span class="footer-name">tratoo.ar</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

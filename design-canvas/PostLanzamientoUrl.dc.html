@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; }
+    a { color: #059669; } a:hover { color: #047857; }
+    .post {
+      width: 540px; height: 540px; background: #09090b;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+      padding: 0 48px; box-sizing: border-box; text-align: center;
+    }
+    .mark {
+      width: 64px; height: 64px; border-radius: 15px; background: #18181b;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .kicker {
+      margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #34d399;
+    }
+    .headline { margin: 0; font-size: 46px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
+    .sub { margin: 0; font-size: 15.5px; color: #d4d4d8; line-height: 1.4; max-width: 380px; font-weight: 500; }
+    .region { margin: 0; font-size: 12.5px; color: #a1a1aa; }
+  </style>
+</helmet>
+<div class="post">
+  <div class="mark">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+      <path d="M6 20 H26" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+      <path d="M32 20 H52" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+      <path d="M29 26 V78" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="78" cy="30" r="13" fill="none" stroke="#059669" stroke-width="9"/>
+      <circle cx="78" cy="70" r="13" fill="none" stroke="#ffffff" stroke-width="9"/>
+    </svg>
+  </div>
+  <span class="kicker">Muy pronto</span>
+  <h1 class="headline">tratoo.ar</h1>
+  <p class="sub">El profesional que necesitás, a un trato de distancia.</p>
+  <p class="region">Hecho para el NEA: Misiones, Corrientes, Chaco y Formosa</p>
+</div>
+</x-dc>
+<script data-dc-script>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>
