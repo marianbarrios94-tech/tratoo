@@ -146,7 +146,7 @@ export default async function ProfesionalDetallePage({
               <Link href="/panel/suscripcion" className="underline">
                 Pasate a un plan pago
               </Link>{' '}
-              para solicitudes ilimitadas y aparecer primero en el directorio.
+              para solicitudes ilimitadas y prioridad en el directorio.
             </p>
           )}
         </div>

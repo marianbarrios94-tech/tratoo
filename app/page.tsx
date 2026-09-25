@@ -26,7 +26,7 @@ const PLANS = [
     price: 14999,
     features: [
       'Solicitudes ilimitadas',
-      'Aparecés primero en el directorio',
+      'Prioridad en el directorio',
       'Distintivo Pro en tu perfil',
     ],
     highlighted: true,

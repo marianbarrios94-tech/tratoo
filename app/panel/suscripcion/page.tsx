@@ -50,7 +50,7 @@ export default async function SuscripcionPage({
       <div>
         <h1 className="text-2xl font-semibold">Tu suscripción</h1>
         <p className="mt-1 text-zinc-500">
-          Pasate a un plan pago para clientes ilimitados y aparecer primero en el
+          Pasate a un plan pago para clientes ilimitados y prioridad en el
           directorio.
         </p>
       </div>
