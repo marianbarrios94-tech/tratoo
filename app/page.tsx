@@ -24,7 +24,11 @@ const PLANS = [
     slug: 'pro',
     name: 'Pro',
     price: 14999,
-    features: ['Solicitudes ilimitadas', 'Insignia de verificado', 'Estadísticas básicas'],
+    features: [
+      'Solicitudes ilimitadas',
+      'Aparecés primero en el directorio',
+      'Distintivo Pro en tu perfil',
+    ],
     highlighted: true,
     cta: 'Suscribirme',
   },

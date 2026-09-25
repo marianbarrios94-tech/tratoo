@@ -9,6 +9,7 @@ type ProfessionalCard = {
   user_id: string
   business_name: string | null
   verified: boolean
+  isPro: boolean
   city: string | null
   province: string | null
   avg_rating: number
@@ -51,6 +52,11 @@ export function ProfessionalDirectoryGrid({
             }`}
           >
             <div className="absolute right-4 top-4 z-10 flex flex-col items-end gap-1">
+              {p.isPro && (
+                <span className="rounded-full bg-zinc-950 px-2 py-0.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-950">
+                  Pro
+                </span>
+              )}
               {p.verified && (
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
                   Verificado

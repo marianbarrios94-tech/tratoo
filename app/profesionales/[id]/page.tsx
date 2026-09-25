@@ -82,11 +82,18 @@ export default async function ProfesionalDetallePage({
         )}
         <div className="flex flex-1 items-start justify-between gap-2">
           <h1 className="text-2xl font-semibold">{professional.business_name}</h1>
-          {professional.verified && (
-            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-              Verificado
-            </span>
-          )}
+          <div className="flex flex-col items-end gap-1">
+            {hasActiveSubscription(professional.subscription_status) && (
+              <span className="rounded-full bg-zinc-950 px-2 py-0.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-950">
+                Pro
+              </span>
+            )}
+            {professional.verified && (
+              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                Verificado
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -139,7 +146,7 @@ export default async function ProfesionalDetallePage({
               <Link href="/panel/suscripcion" className="underline">
                 Pasate a un plan pago
               </Link>{' '}
-              para solicitudes ilimitadas y prioridad en resultados.
+              para solicitudes ilimitadas y aparecer primero en el directorio.
             </p>
           )}
         </div>

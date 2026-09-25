@@ -73,8 +73,8 @@ export default async function PanelPage() {
           </h2>
           <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-400">
             Por ser de los primeros en sumarte, tenés el plan Pro gratis
-            {promoUntilLabel ? ` hasta el ${promoUntilLabel}` : ''}: solicitudes ilimitadas e
-            insignia de verificado, sin costo.
+            {promoUntilLabel ? ` hasta el ${promoUntilLabel}` : ''}: solicitudes ilimitadas,
+            prioridad en el directorio y distintivo Pro, sin costo.
           </p>
         </div>
       )}

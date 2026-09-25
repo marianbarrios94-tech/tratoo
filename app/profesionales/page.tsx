@@ -4,6 +4,7 @@ import { PROVINCES } from '@/lib/constants/provinces'
 import { stripAccents } from '@/lib/text'
 import { CATEGORY_SYNONYMS } from '@/lib/constants/categorySynonyms'
 import { haversineDistanceKm } from '@/lib/geo'
+import { hasActiveSubscription } from '@/lib/constants/subscriptions'
 import { BackButton } from '@/components/BackButton'
 import { ProfessionalDirectoryGrid } from '@/components/ProfessionalDirectoryGrid'
 import { ProfesionalesFilters } from '@/components/ProfesionalesFilters'
@@ -99,7 +100,14 @@ export default async function ProfesionalesPage({
           if (b.distanceKm == null) return -1
           return a.distanceKm - b.distanceKm
         })
-      : withDistance
+      : // Sin ubicación, los profesionales con plan Pro van primero. El sort es
+        // estable: dentro de cada grupo se mantiene el orden por verificado y
+        // calificación que ya trae la consulta.
+        [...withDistance].sort(
+          (a, b) =>
+            Number(hasActiveSubscription(b.subscription_status)) -
+            Number(hasActiveSubscription(a.subscription_status))
+        )
 
   const userIds = sortedProfessionals.map((p) => p.user_id)
   const { data: avatarRows } = userIds.length
@@ -135,6 +143,7 @@ export default async function ProfesionalesPage({
             user_id: p.user_id,
             business_name: p.business_name,
             verified: p.verified,
+            isPro: hasActiveSubscription(p.subscription_status),
             city: p.city,
             province: p.province,
             avg_rating: p.avg_rating,

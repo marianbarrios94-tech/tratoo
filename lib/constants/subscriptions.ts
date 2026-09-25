@@ -5,8 +5,9 @@ import type { SubscriptionStatus } from '@/lib/types/database'
 // configured). Any status other than 'active' (trialing/past_due/canceled) is
 // the free tier: visible in the directory, capped at
 // FREE_TIER_MONTHLY_REQUEST_LIMIT requests per month. Only a subscription
-// Stripe reports as 'active' unlocks unlimited requests, the verified badge
-// eligibility, and search priority.
+// Stripe reports as 'active' unlocks unlimited requests, the "Pro" badge and
+// first-position priority in the directory (the "Verificado" badge is not
+// tied to the plan — every complete profile gets it).
 export const ACTIVE_SUBSCRIPTION_STATUSES: SubscriptionStatus[] = ['active']
 
 export function hasActiveSubscription(status: SubscriptionStatus | null | undefined) {
