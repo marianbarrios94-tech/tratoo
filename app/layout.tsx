@@ -42,7 +42,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true){document.documentElement.classList.add('tratoo-standalone')}}catch(e){}`,
+            __html: `try{if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true){document.documentElement.classList.add('tratoo-standalone')}}catch(e){}try{window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__tratooInstall=e})}catch(e){}`,
           }}
         />
       </head>
