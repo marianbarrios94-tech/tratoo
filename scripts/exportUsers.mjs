@@ -56,12 +56,18 @@ const contactById = byId(contacts, 'user_id')
 const categoryById = byId(categories)
 const planById = byId(plans)
 
+const STATUS_ES = { pending: 'Pendiente', accepted: 'Aceptada', completed: 'Completada', cancelled: 'Cancelada' }
+
 const sentBy = new Map()
 const receivedBy = new Map()
+const requestsByPro = new Map()
 for (const r of requests) {
   sentBy.set(r.client_id, (sentBy.get(r.client_id) ?? 0) + 1)
   receivedBy.set(r.professional_id, (receivedBy.get(r.professional_id) ?? 0) + 1)
+  if (!requestsByPro.has(r.professional_id)) requestsByPro.set(r.professional_id, [])
+  requestsByPro.get(r.professional_id).push(r)
 }
+const MS_PER_DAY = 24 * 3600 * 1000
 
 // Fecha en hora de Argentina (UTC-3), sin hora, para que Excel muestre el día correcto.
 const day = (iso) => {
@@ -133,6 +139,19 @@ const rows = authUsers
       if (onPromo) plan += ' (promo)'
     }
     const saved = previous.get(email) ?? {}
+    // Para el seguimiento manual: si el profesional recibió una solicitud y
+    // no la revisó, el email pudo caerle en spam o simplemente no entró — acá
+    // se ve para poder escribirle directo y avisarle.
+    const proRequests = (requestsByPro.get(u.id) ?? [])
+      .slice()
+      .sort((a, b) => b.created_at.localeCompare(a.created_at))
+    const lastRequest = proRequests[0] ?? null
+    const oldestPending = proRequests
+      .filter((r) => r.status === 'pending')
+      .reduce((o, r) => (!o || r.created_at < o.created_at ? r : o), null)
+    const diasSinResponder = oldestPending
+      ? Math.floor((Date.now() - new Date(oldestPending.created_at).getTime()) / MS_PER_DAY)
+      : ''
     return {
       alta: day(u.created_at),
       nombre: p?.full_name ?? '',
@@ -153,6 +172,9 @@ const rows = authUsers
       promoHasta: day(pro?.promo_pro_until),
       enviadas: sentBy.get(u.id) ?? 0,
       recibidas: isPro ? (receivedBy.get(u.id) ?? 0) : '',
+      ultimaSolicitud: isPro ? day(lastRequest?.created_at) : null,
+      estadoUltimaSolicitud: isPro && lastRequest ? STATUS_ES[lastRequest.status] ?? lastRequest.status : '',
+      diasSinResponder: isPro ? diasSinResponder : '',
       origen: saved.origen ?? '',
       contactadoPor: saved.contactadoPor ?? '',
       estado: saved.estado ?? '',
@@ -182,16 +204,26 @@ const columns = [
   ['Promo Pro hasta', 'promoHasta', 14, 'auto'],
   ['Solicitudes enviadas', 'enviadas', 12, 'auto'],
   ['Solicitudes recibidas', 'recibidas', 12, 'auto'],
+  ['Última solicitud recibida', 'ultimaSolicitud', 14, 'auto'],
+  ['Estado de la última solicitud', 'estadoUltimaSolicitud', 16, 'auto'],
+  ['Días sin responder', 'diasSinResponder', 12, 'auto'],
   ['Origen', 'origen', 18, 'manual'],
   ['Contactado por', 'contactadoPor', 18, 'manual'],
   ['Estado de seguimiento', 'estado', 22, 'manual'],
   [PROMO_COL, 'promoMarca', 26, 'manual'],
   ['Notas', 'notas', 46, 'manual'],
 ]
-const colLetter = (title) => {
-  const i = columns.findIndex((c) => c[0] === title)
-  return String.fromCharCode(65 + i)
+// Soporta más de 26 columnas (AA, AB, ...), no solo A-Z.
+const excelColumnLetter = (n) => {
+  let s = ''
+  while (n > 0) {
+    const rem = (n - 1) % 26
+    s = String.fromCharCode(65 + rem) + s
+    n = Math.floor((n - 1) / 26)
+  }
+  return s
 }
+const colLetter = (title) => excelColumnLetter(columns.findIndex((c) => c[0] === title) + 1)
 
 const ORIGENES = ['Instagram (DM)', 'WhatsApp', 'Conocido', 'Post / Story', 'Boca a boca', 'Otro']
 const ESTADOS = ['Nuevo', 'Contactado', 'Respondió', 'Perfil completo', 'Necesita ayuda', 'Sin respuesta', 'Descartado']
@@ -223,10 +255,39 @@ ws.eachRow((row, n) => {
     cell.border = { bottom: border }
   })
 })
-for (const title of ['Fecha de alta', 'Último ingreso', 'Promo Pro hasta']) {
+for (const title of ['Fecha de alta', 'Último ingreso', 'Promo Pro hasta', 'Última solicitud recibida']) {
   ws.getColumn(columns.findIndex((c) => c[0] === title) + 1).numFmt = 'dd/mm/yyyy'
 }
-ws.autoFilter = { from: 'A1', to: `${String.fromCharCode(64 + columns.length)}1` }
+ws.autoFilter = { from: 'A1', to: `${excelColumnLetter(columns.length)}1` }
+
+// Si hace 2 días o más que una solicitud quedó sin responder, resaltarlo:
+// probablemente el profesional no entró a revisar el mail.
+const diasCol = colLetter('Días sin responder')
+ws.addConditionalFormatting({
+  ref: `${diasCol}2:${diasCol}${MAX_ROWS}`,
+  rules: [
+    {
+      type: 'cellIs',
+      operator: 'greaterThanOrEqual',
+      formulae: [4],
+      priority: 1,
+      style: {
+        fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFFEE2E2' } },
+        font: { bold: true, color: { argb: 'FFB91C1C' } },
+      },
+    },
+    {
+      type: 'cellIs',
+      operator: 'greaterThanOrEqual',
+      formulae: [2],
+      priority: 2,
+      style: {
+        fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFFEF3C7' } },
+        font: { bold: true, color: { argb: 'FF92400E' } },
+      },
+    },
+  ],
+})
 
 const listValidation = (title, options) => {
   const letter = colLetter(title)
@@ -258,7 +319,6 @@ wr.getRow(1).eachCell((cell) => {
   cell.font = { name: FONT, bold: true, color: { argb: 'FFFFFFFF' }, size: 10 }
   cell.alignment = { vertical: 'middle', horizontal: 'center' }
 })
-const STATUS_ES = { pending: 'Pendiente', accepted: 'Aceptada', completed: 'Completada', cancelled: 'Cancelada' }
 const authById = byId(authUsers)
 for (const r of [...requests].sort((a, b) => b.created_at.localeCompare(a.created_at))) {
   const pro = proById.get(r.professional_id)
@@ -311,6 +371,7 @@ const summary = [
   ['Cupo de la promo que queda', `${PROMO_CAP}-B10`, PROMO_CAP - cnt(rows, (r) => r.promoHasta), ''],
   ['Profesionales a los que les corresponden los meses gratis (por avisar)', `COUNTIF(${R(PROMO_COL)},"Corresponde (avisar al lanzar)")`, cnt(rows, (r) => r.promoMarca === PROMO_OPCIONES[0]), 'Marcados en la columna verde "Meses gratis por ser de los primeros" de la hoja Usuarios.'],
   ['Solicitudes enviadas en total', `SUM(${R('Solicitudes enviadas')})`, rows.reduce((s, r) => s + (r.enviadas || 0), 0), 'Detalle en la hoja Solicitudes.'],
+  ['Profesionales con una solicitud sin responder hace 2 días o más', `COUNTIFS(${R('Días sin responder')},">=2",${TEST},"No")`, cnt(real, (r) => typeof r.diasSinResponder === 'number' && r.diasSinResponder >= 2), 'Filtrá por la columna "Días sin responder" (se resalta en amarillo o rojo): puede que no hayan visto el mail del aviso. Convendría escribirles vos.'],
 ]
 wsum.addRow(['Tratoo — Base de usuarios']).font = { name: FONT, bold: true, size: 14 }
 wsum.addRow([`Actualizado: ${new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' })}`]).font = {
@@ -357,6 +418,7 @@ const legend = [
   '  · ¿Cuenta de prueba?: marcá "Sí" en las de prueba o de familia; así no cuentan en el Resumen.',
   '  · Origen: cómo llegó (ej: "Instagram (DM)"). Contactado por: quién le escribió (ej: "Marian").',
   '  · Estado de seguimiento: elegí de la lista. Notas: texto libre (ej: "Dijo que se registra el viernes").',
+  '  · Días sin responder: cuántos días lleva pendiente la solicitud más vieja de ese profesional (se resalta en amarillo desde 2 días, en rojo desde 4). Si ves un número alto, escribile vos por WhatsApp o Instagram para avisarle que revise el mail.',
   'Para actualizar con las cuentas nuevas: pedirle a Claude "actualizá el Excel de usuarios" (con el archivo cerrado).',
   'Este archivo tiene datos personales de usuarios: no lo compartas ni lo subas a lugares públicos.',
 ]
