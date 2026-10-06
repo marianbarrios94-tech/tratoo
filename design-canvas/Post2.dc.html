@@ -17,7 +17,7 @@
       display: flex; flex-direction: column; gap: 22px;
       padding: 44px; box-sizing: border-box;
     }
-    .headline { font-size: 27px; font-weight: 800; color: #09090b; letter-spacing: -0.01em; max-width: 420px; }
+    .headline { font-size: 24px; font-weight: 800; color: #09090b; letter-spacing: -0.01em; white-space: nowrap; }
     .cards { display: flex; flex-direction: column; gap: 12px; flex: 1; }
     .card {
       flex: 1; background: #ffffff; border: 1px solid #e4e4e7; border-radius: 16px;
@@ -27,7 +27,8 @@
     .icon { width: 34px; height: 34px; border-radius: 9px; background: #d1fae5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .vname { font-size: 18px; font-weight: 700; color: #09090b; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font-size: 12px; color: #52525b; background: #f4f4f5; border-radius: 999px; padding: 4px 10px; }
+    .chip { font-size: 12px; color: #52525b; background: #f4f4f5; border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+    .chip-more { color: #047857; background: #ecfdf5; font-weight: 600; }
     .footer { display: flex; align-items: center; gap: 10px; }
     .footer-mark { width: 22px; height: 22px; border-radius: 6px; background: #09090b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .footer-text { font-size: 13px; color: #71717a; }
@@ -44,7 +45,7 @@
         <span class="vname">Hogar</span>
       </div>
       <div class="chips">
-        <span class="chip">Plomería</span><span class="chip">Electricidad</span><span class="chip">Gas</span><span class="chip">Limpieza</span><span class="chip">Cerrajería</span>
+        <span class="chip">Plomería</span><span class="chip">Electricidad</span><span class="chip">Cerrajería</span><span class="chip">Refrigeración</span><span class="chip chip-more">y más</span>
       </div>
     </div>
     <div class="card">
@@ -55,7 +56,7 @@
         <span class="vname">Consultoría</span>
       </div>
       <div class="chips">
-        <span class="chip">Abogacía</span><span class="chip">Contabilidad</span><span class="chip">Diseño</span><span class="chip">Marketing</span>
+        <span class="chip">Abogacía</span><span class="chip">Contabilidad</span><span class="chip">Arquitectura</span><span class="chip">Diseño</span><span class="chip chip-more">y más</span>
       </div>
     </div>
     <div class="card">
@@ -66,7 +67,7 @@
         <span class="vname">Salud y bienestar</span>
       </div>
       <div class="chips">
-        <span class="chip">Psicología</span><span class="chip">Nutrición</span><span class="chip">Kinesiología</span><span class="chip">Yoga y Pilates</span>
+        <span class="chip">Kinesiología</span><span class="chip">Psicología</span><span class="chip">Masoterapia</span><span class="chip">Nutrición</span><span class="chip chip-more">y más</span>
       </div>
     </div>
   </div>
