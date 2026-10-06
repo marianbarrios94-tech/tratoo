@@ -143,6 +143,22 @@
       "w": 540,
       "h": 960,
       "title": "Historia · Para profesionales (miércoles)"
+    },
+    {
+      "file": "TarjetaProfesionales.dc.html",
+      "x": 8340,
+      "y": 1360,
+      "w": 1063,
+      "h": 591,
+      "title": "Tarjeta QR · Profesionales (90×50 mm)"
+    },
+    {
+      "file": "TarjetaClientes.dc.html",
+      "x": 9483,
+      "y": 1360,
+      "w": 1063,
+      "h": 591,
+      "title": "Tarjeta QR · Clientes (90×50 mm)"
     }
   ],
   "launch": {
