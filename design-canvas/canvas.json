@@ -159,6 +159,14 @@
       "w": 1063,
       "h": 591,
       "title": "Tarjeta QR · Clientes (90×50 mm)"
+    },
+    {
+      "file": "YaEstoyEnTratoo.dc.html",
+      "x": 10646,
+      "y": 1360,
+      "w": 540,
+      "h": 960,
+      "title": "Historia · Ya estoy en Tratoo (plantilla para profesionales)"
     }
   ],
   "launch": {
